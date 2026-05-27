@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "cmd": "tsx src/cmd",
+    "syncSDK": "tsx src/cmd/syncSDK.ts",
+    "gfn": "node scripts/generateFN.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.8",
+    "node-schedule": "^2.1.1",
+    "yup": "^1.4.0",
+    "commonlib": "workspace:*",
+    "backendsdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.10.2",
+    "@types/node-schedule": "^2.1.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.4.5"
+  }
+}

@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+*.tsbuildinfo
+
+# Accidental tsc emit into src/ (real output goes to dist/)
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.d.ts.map
+packages/*/src/**/*.js.map
+
+# Environment (keep examples)
+.env
+.env.*
+!.env*.example
+!.env.local.example
+
+# Next.js
+.next/
+out/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+.local
+
+# Test / deploy
+coverage/
+.vercel
+
+# Lockfiles from other package managers (we use pnpm)
+package-lock.json
+yarn.lock
