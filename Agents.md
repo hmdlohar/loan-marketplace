@@ -134,19 +134,39 @@ The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Eve
 
 ## 5. Frontend Architecture
 
-### 5.1 SDK Usage
+### 5.1 MUI & Theme
+- **MUI v7** with Lending Core design tokens in `theme/tokens.ts` and `theme/lendingCoreTheme.ts`.
+- Light/dark mode via MUI `colorSchemes` + shared `modeStorageKey` (`lending-core-color-mode`) in `_app` and `_document`.
+- For mode-specific styles use `theme.applyStyles('dark', {...})` in `theme/styleHelpers.ts` — **not** `theme.palette.mode` checks (unreliable with CSS variables).
+- `_app.tsx` is generic: theme, CssBaseline, react-query only — **no layout or auth logic**.
+
+### 5.2 Layout Rules (strict)
+- **Per-page layout only.** Each page wraps its content explicitly:
+  - Public/marketing (`/`, `/about`, `/contact`, …) → `<LandingLayout>`
+  - App/authenticated (`/app/**`) → `<AuthGuard><AppLayout>…</AppLayout></AuthGuard>`
+- **No** global layout in `_app` / `_document`. **No** pathname conditionals there.
+- **No** `/login` route. `AuthGuard` renders `LoginPanel` inline when unauthenticated.
+
+### 5.3 Routing
+| Area | Path | Layout |
+|------|------|--------|
+| Landing & static | `/`, `/about`, `/contact` | `LandingLayout` |
+| Borrower app flow | `/app/products`, `/app/apply`, `/app/apply/documents`, `/app/matching`, `/app/offers`, `/app/dashboard` | `AppLayout` + `AuthGuard` |
+
+### 5.4 Mock Data (current phase)
+- UI-first: `services/mock/applicationMock.ts` supplies products, offers, application state.
+- Pages call mock services today; swap to `bSdk` RPC when backend collections exist.
+- Mock data shapes must align with `commonlib` enums (`LOAN_PRODUCT`, `APPLICATION_STATUS`, etc.).
+
+### 5.5 SDK Usage
 - Import `bSdk` from `services/BackendSDKService` only. Do not instantiate `BackendSDK` elsewhere.
-- After backend RPC changes, run `npm run cmd syncSDK` in `packages/backend`, then rebuild/watch `backendsdk`.
-- Env: copy `packages/frontend/.env.local.example` → `.env.local`. Set `NEXT_PUBLIC_ROOT_URL` to backend origin (default `http://localhost:4000`).
+- After backend RPC changes, run `npm run cmd syncSDK` in `packages/backend`, then `pnpm watchlib` from root.
+- Env: copy `packages/frontend/.env.local.example` → `.env.local`. Set `NEXT_PUBLIC_ROOT_URL` to backend origin.
 
-### 5.2 Pages & Routing
-- Pages live in `packages/frontend/pages/` (Pages Router, not App Router).
-- Landing (`/`), apply flow (`/apply`), auth (`/login`) share one Next app — no separate landing repo.
-- Use MUI + `react-query` for UI and server state (same stack direction as `aa-system`).
-
-### 5.3 Auth (frontend)
+### 5.6 Auth (frontend)
 - `services/AuthServices.ts` holds token/user in localStorage. Pass token via `bSdk` `getAuthToken`.
-- Extend when `system-user` (or borrower) collection + login RPC exist.
+- `AuthGuard` checks auth per page; shows `LoginPanel` (mock login for now) when not authenticated.
+- Extend when borrower auth RPC exists — no route changes needed.
 
 ---
 

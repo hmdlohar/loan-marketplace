@@ -12,7 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@mui/material": "^5.16.9",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
     "backendsdk": "workspace:*",
     "commonlib": "workspace:*",
     "next": "^14.2.28",
