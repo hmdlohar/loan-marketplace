@@ -22,11 +22,12 @@ export default function PartnerBankLogos() {
         }),
       })}
     >
-      <PageContainer py={0} pt={0} pb={{ xs: 1.5, md: 2 }}>
+      <PageContainer py={0} pt={0} pb={0}>
         <Typography
           variant="overline"
           sx={(theme) => ({
             display: "block",
+            mb: { xs: 1.5, md: 2 },
             letterSpacing: "0.08em",
             fontWeight: 600,
             color: light.onSurfaceVariant,
@@ -35,64 +36,63 @@ export default function PartnerBankLogos() {
         >
           Trusted partner lenders
         </Typography>
-      </PageContainer>
 
-      <Box
-        sx={{
-          overflowX: "auto",
-          overflowY: "hidden",
-          WebkitOverflowScrolling: "touch",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          "&::-webkit-scrollbar": { display: "none" },
-        }}
-      >
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={{ xs: 3.5, md: 5 }}
+        <Box
           sx={{
-            flexWrap: "nowrap",
-            width: "max-content",
-            minWidth: "100%",
-            px: { xs: 2, sm: 3, md: 5 },
-            py: 0.5,
+            overflowX: "auto",
+            overflowY: "hidden",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": { display: "none" },
           }}
         >
-          {partnerBanks.map((bank) => (
-            <Box
-              key={bank.id}
-              component="img"
-              src={bank.logo}
-              alt={`${bank.name} logo`}
-              loading="lazy"
-              draggable={false}
-              sx={(theme) => ({
-                height: { xs: 26, md: 30 },
-                width: "auto",
-                maxWidth: { xs: 96, md: 120 },
-                objectFit: "contain",
-                flexShrink: 0,
-                opacity: 0.68,
-                filter: "grayscale(100%)",
-                transition: "opacity 0.2s ease, filter 0.2s ease",
-                "&:hover": {
-                  opacity: 0.92,
-                  filter: "grayscale(0%)",
-                },
-                ...theme.applyStyles("dark", {
-                  opacity: 0.78,
-                  filter: "grayscale(35%) brightness(1.12)",
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={{ xs: 3.5, md: 5 }}
+            sx={{
+              flexWrap: "nowrap",
+              width: "max-content",
+              minWidth: "100%",
+              py: 0.5,
+            }}
+          >
+            {partnerBanks.map((bank) => (
+              <Box
+                key={bank.id}
+                component="img"
+                src={bank.logo}
+                alt={`${bank.name} logo`}
+                loading="lazy"
+                draggable={false}
+                sx={(theme) => ({
+                  height: { xs: 26, md: 30 },
+                  width: "auto",
+                  maxWidth: { xs: 96, md: 120 },
+                  objectFit: "contain",
+                  flexShrink: 0,
+                  opacity: 0.68,
+                  filter: "grayscale(100%)",
+                  transition: "opacity 0.2s ease, filter 0.2s ease",
                   "&:hover": {
-                    opacity: 1,
-                    filter: "grayscale(0%) brightness(1.05)",
+                    opacity: 0.92,
+                    filter: "grayscale(0%)",
                   },
-                }),
-              })}
-            />
-          ))}
-        </Stack>
-      </Box>
+                  ...theme.applyStyles("dark", {
+                    opacity: 0.78,
+                    filter: "grayscale(35%) brightness(1.12)",
+                    "&:hover": {
+                      opacity: 1,
+                      filter: "grayscale(0%) brightness(1.05)",
+                    },
+                  }),
+                })}
+              />
+            ))}
+          </Stack>
+        </Box>
+      </PageContainer>
     </Box>
   );
 }
