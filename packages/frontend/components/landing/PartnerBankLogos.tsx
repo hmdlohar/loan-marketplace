@@ -22,7 +22,7 @@ export default function PartnerBankLogos() {
         }),
       })}
     >
-      <PageContainer sx={{ mb: { xs: 1.5, md: 2 } }}>
+      <PageContainer py={0} pt={0} pb={{ xs: 1.5, md: 2 }}>
         <Typography
           variant="overline"
           sx={(theme) => ({
