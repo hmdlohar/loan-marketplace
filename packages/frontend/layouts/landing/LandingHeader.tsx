@@ -7,7 +7,10 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
+import { APP_DESCRIPTION, APP_NAME } from "commonlib";
+import AppLogo from "../../components/common/AppLogo";
 import ThemeModeToggle from "../../components/common/ThemeModeToggle";
+import LandingMobileNav from "./LandingMobileNav";
 
 const navLinks = [
   { label: "Products", href: "/#products" },
@@ -28,22 +31,16 @@ export default function LandingHeader() {
         borderColor: "divider",
       }}
     >
-      <Container maxWidth="lg">
-        <Toolbar disableGutters sx={{ minHeight: 72, gap: 2 }}>
-          <Typography
-            component={NextLink}
-            href="/"
-            variant="h6"
-            sx={{
-              flexGrow: 1,
-              fontWeight: 700,
-              color: "primary.main",
-              textDecoration: "none",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            LendingCore
-          </Typography>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 } }}>
+        <Toolbar disableGutters sx={{ minHeight: { xs: 56, md: 72 }, gap: { xs: 0.75, md: 2 } }}>
+          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+            <Box sx={{ display: { xs: "block", sm: "none" } }}>
+              <AppLogo href="/" size="sm" />
+            </Box>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <AppLogo href="/" size="md" showName />
+            </Box>
+          </Box>
           <Stack direction="row" spacing={3} sx={{ display: { xs: "none", md: "flex" } }}>
             {navLinks.map((item) => (
               <Link
@@ -58,10 +55,25 @@ export default function LandingHeader() {
               </Link>
             ))}
           </Stack>
-          <ThemeModeToggle />
-          <Button component={NextLink} href="/app/products" variant="contained" color="secondary" size="medium">
-            Check eligibility
-          </Button>
+          <Stack direction="row" spacing={{ xs: 0.25, sm: 0.75 }} alignItems="center" sx={{ flexShrink: 0 }}>
+            <ThemeModeToggle />
+            <Button
+              component={NextLink}
+              href="/app/products"
+              variant="contained"
+              color="secondary"
+              size="small"
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                whiteSpace: "nowrap",
+                px: { sm: 2 },
+                flexShrink: 0,
+              }}
+            >
+              Check eligibility
+            </Button>
+            <LandingMobileNav />
+          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
@@ -82,14 +94,14 @@ export function LandingFooter() {
       <Container maxWidth="lg">
         <Stack direction={{ xs: "column", md: "row" }} spacing={3} justifyContent="space-between">
           <Box>
-            <Typography variant="h6" fontWeight={700} gutterBottom color="primary.main">
-              LendingCore
-            </Typography>
+            <Box sx={{ mb: 1.5 }}>
+              <AppLogo size="sm" showName />
+            </Box>
             <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 360 }}>
-              Compare loan offers from banks and NBFCs. Apply once, get matched to the right product.
+              {APP_DESCRIPTION}
             </Typography>
           </Box>
-          <Stack direction="row" spacing={4}>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={{ xs: 3, sm: 4 }}>
             <Stack spacing={1}>
               <Typography variant="overline" color="text.secondary">
                 Company
@@ -115,7 +127,7 @@ export function LandingFooter() {
           </Stack>
         </Stack>
         <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 4 }}>
-          © {new Date().getFullYear()} LendingCore. All rights reserved.
+          © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
         </Typography>
       </Container>
     </Box>

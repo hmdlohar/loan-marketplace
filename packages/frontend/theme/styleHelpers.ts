@@ -33,6 +33,19 @@ export function footerSectionSx(theme: Theme) {
   };
 }
 
+export function lottieWellSx(theme: Theme) {
+  return {
+    borderRadius: lendingCoreTokens.radius.lg,
+    bgcolor: "rgba(216, 226, 255, 0.45)",
+    border: "1px solid rgba(182, 198, 240, 0.35)",
+    ...theme.applyStyles("dark", {
+      bgcolor: "rgba(54, 70, 105, 0.55)",
+      border: "1px solid rgba(182, 198, 240, 0.14)",
+      boxShadow: "inset 0 1px 0 rgba(216, 226, 255, 0.06)",
+    }),
+  };
+}
+
 export function iconWellSx(theme: Theme, tone: "primary" | "secondary" = "secondary") {
   if (tone === "primary") {
     return {

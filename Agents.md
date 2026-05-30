@@ -134,6 +134,12 @@ The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Eve
 
 ## 5. Frontend Architecture
 
+### 5.0 Branding
+- **Single source**: `packages/commonlib/src/brand.ts` — change `APP_NAME` to rename the product everywhere.
+- **Logo**: replace `packages/frontend/public/brand/logo-source.png`, then run `pnpm --filter frontend brand:icons` (ImageMagick `convert` generates sizes + favicon).
+- To swap logo file naming, change `APP_LOGO_STEM` in `brand.ts` and the `STEM` variable in `scripts/generate-brand-icons.sh`.
+- Exports: `APP_NAME`, `APP_TAGLINE`, `APP_DESCRIPTION`, `APP_PAGE_TITLE`, `APP_LOGO`, `APP_LOGO_BY_SIZE`. Use `components/common/AppLogo.tsx` in UI — do not hardcode logo paths in pages.
+
 ### 5.1 MUI & Theme
 - **MUI v7** with Lending Core design tokens in `theme/tokens.ts` and `theme/lendingCoreTheme.ts`.
 - Light/dark mode via MUI `colorSchemes` + shared `modeStorageKey` (`lending-core-color-mode`) in `_app` and `_document`.

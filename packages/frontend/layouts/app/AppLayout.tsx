@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import AppLogo from "../../components/common/AppLogo";
 import ThemeModeToggle from "../../components/common/ThemeModeToggle";
 import AuthServices from "../../services/AuthServices";
 
@@ -38,10 +39,8 @@ export default function AppLayout(props: { children: React.ReactNode }) {
 
   const drawer = (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Toolbar sx={{ px: 2 }}>
-        <Typography variant="h6" fontWeight={700} color="primary.main">
-          LendingCore
-        </Typography>
+      <Toolbar sx={{ px: 2, minHeight: 72 }}>
+        <AppLogo href="/" size="sm" showName />
       </Toolbar>
       <List sx={{ flex: 1, px: 1 }}>
         {navItems.map((item) => {

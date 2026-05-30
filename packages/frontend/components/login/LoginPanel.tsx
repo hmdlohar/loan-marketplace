@@ -6,6 +6,8 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { APP_NAME } from "commonlib";
+import AppLogo from "../../components/common/AppLogo";
 import AuthServices from "../../services/AuthServices";
 
 export default function LoginPanel(props: { onSuccess: () => void }) {
@@ -26,14 +28,17 @@ export default function LoginPanel(props: { onSuccess: () => void }) {
       <Card sx={{ width: "100%", maxWidth: 440, boxShadow: 3 }}>
         <CardContent sx={{ p: 4 }}>
           <Stack spacing={3}>
-            <Box>
-              <Typography variant="h5" fontWeight={700} gutterBottom>
-                Sign in to continue
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Use your mobile number to access your loan application. Backend auth will replace this mock flow.
-              </Typography>
-            </Box>
+            <Stack spacing={2} alignItems="center" textAlign="center">
+              <AppLogo size="xl" />
+              <Box>
+                <Typography variant="h5" fontWeight={700} gutterBottom>
+                  Sign in to {APP_NAME}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Use your mobile number to access your loan application. Backend auth will replace this mock flow.
+                </Typography>
+              </Box>
+            </Stack>
             <TextField
               label="Mobile number"
               value={mobile}

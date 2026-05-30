@@ -35,6 +35,7 @@ export default function ThemeModeToggle() {
         }}
         size="small"
         color="inherit"
+        sx={{ minWidth: 44, minHeight: 44 }}
       >
         {isDark ? <LightModeOutlinedIcon fontSize="small" /> : <DarkModeOutlinedIcon fontSize="small" />}
       </IconButton>

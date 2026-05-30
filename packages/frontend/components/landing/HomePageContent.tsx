@@ -2,7 +2,6 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
-import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -13,8 +12,13 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
 import PageContainer from "../common/PageContainer";
-import { footerSectionSx, heroSectionSx, iconWellSx, trustShadowSx } from "../../theme/styleHelpers";
+import HeroSection from "./HeroSection";
+import HowItWorksInfographic from "./HowItWorksInfographic";
+import PartnerBankLogos from "./PartnerBankLogos";
+import { footerSectionSx, iconWellSx, trustShadowSx } from "../../theme/styleHelpers";
 import { lendingCoreTokens } from "../../theme/tokens";
+
+const dark = lendingCoreTokens.colors.dark;
 
 const features = [
   {
@@ -42,122 +46,20 @@ const products = [
   { label: "Credit Card", apr: "Rewards & lounge", amount: "Limit up to ₹5 L" },
 ];
 
-const stats = [
-  { value: "50+", label: "Partner lenders" },
-  { value: "₹500Cr+", label: "Loans matched" },
-  { value: "48 hrs", label: "Avg. offer turnaround" },
-];
-
-const steps = [
-  "Choose your loan product",
-  "Complete eligibility & upload documents",
-  "Review matched offers",
-  "Accept and track to disbursal",
-];
 
 export default function HomePageContent() {
   return (
     <>
-      <Box sx={(theme) => ({ ...heroSectionSx(theme), py: { xs: 6, md: 10 } })}>
-        <PageContainer>
-          <Grid container spacing={6} alignItems="center">
-            <Grid size={{ xs: 12, md: 7 }}>
-              <Stack spacing={3}>
-                <Chip label="Trusted loan marketplace" color="secondary" sx={{ alignSelf: "flex-start" }} />
-                <Typography variant="h1" component="h1" sx={{ fontSize: { xs: "2rem", md: "3rem" }, maxWidth: 640 }}>
-                  Find the right loan with confidence
-                </Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ fontSize: "1.125rem", maxWidth: 560, lineHeight: 1.75 }}>
-                  Compare offers from leading lenders. One guided journey from eligibility to approval — engineered for
-                  clarity at every step.
-                </Typography>
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                  <Button
-                    component={NextLink}
-                    href="/app/products"
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    endIcon={<ArrowForwardIcon />}
-                  >
-                    Check eligibility
-                  </Button>
-                  <Button component={NextLink} href="/#how-it-works" variant="outlined" color="primary" size="large">
-                    See how it works
-                  </Button>
-                </Stack>
-                <Grid container spacing={2} sx={{ pt: 1 }}>
-                  {stats.map((stat) => (
-                    <Grid key={stat.label} size={{ xs: 4 }}>
-                      <Typography variant="h4" sx={{ fontVariantNumeric: "tabular-nums", color: "primary.main" }}>
-                        {stat.value}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-                        {stat.label}
-                      </Typography>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Stack>
-            </Grid>
-            <Grid size={{ xs: 12, md: 5 }}>
-              <Card sx={(theme) => ({ ...trustShadowSx(theme), bgcolor: "background.paper" })}>
-                <CardContent sx={{ p: 3 }}>
-                  <Stack direction="row" justifyContent="space-between" alignItems="center">
-                    <Typography variant="overline" color="text.secondary">
-                      Sample offer
-                    </Typography>
-                    <Chip icon={<VerifiedUserOutlinedIcon />} label="Pre-qualified" color="secondary" size="small" />
-                  </Stack>
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontVariantNumeric: "tabular-nums",
-                      fontWeight: 700,
-                      color: "primary.main",
-                      mt: 1,
-                    }}
-                  >
-                    8.65% APR
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Home loan · HDFC Bank
-                  </Typography>
-                  <Stack spacing={1.5} sx={{ mt: 2 }}>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography variant="body2" color="text.secondary">
-                        Loan amount
-                      </Typography>
-                      <Typography variant="body2" fontWeight={600} sx={{ fontVariantNumeric: "tabular-nums" }}>
-                        ₹45,00,000
-                      </Typography>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography variant="body2" color="text.secondary">
-                        EMI (120 mo)
-                      </Typography>
-                      <Typography variant="body2" fontWeight={600} sx={{ fontVariantNumeric: "tabular-nums" }}>
-                        ₹42,891
-                      </Typography>
-                    </Stack>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography variant="body2" color="text.secondary">
-                        Total repayment
-                      </Typography>
-                      <Typography variant="body2" fontWeight={600} sx={{ fontVariantNumeric: "tabular-nums" }}>
-                        ₹51,46,920
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </PageContainer>
-      </Box>
+      <HeroSection />
+
+      <PartnerBankLogos />
+
+      <PageContainer pt={{ xs: 1, md: 1.5 }} pb={{ xs: 3, md: 4 }}>
+        <HowItWorksInfographic />
+      </PageContainer>
 
       <PageContainer>
-        <Box id="products" sx={{ scrollMarginTop: 96, py: 2 }}>
+        <Box id="products" sx={{ scrollMarginTop: { xs: 72, md: 96 }, py: { xs: 1, md: 2 } }}>
           <Typography variant="h2" gutterBottom>
             Products we match
           </Typography>
@@ -171,6 +73,10 @@ export default function HomePageContent() {
                   sx={(theme) => ({
                     height: "100%",
                     transition: "transform 0.2s, box-shadow 0.2s",
+                    ...theme.applyStyles("dark", {
+                      bgcolor: dark.surfaceContainerLow,
+                      borderColor: "rgba(74, 225, 131, 0.14)",
+                    }),
                     "&:hover": {
                       transform: "translateY(-2px)",
                       ...trustShadowSx(theme),
@@ -182,7 +88,18 @@ export default function HomePageContent() {
                       {product.label}
                     </Typography>
                     <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1.5 }}>
-                      <Chip label={product.apr} color="secondary" size="small" variant="outlined" />
+                      <Chip
+                        label={product.apr}
+                        color="secondary"
+                        size="small"
+                        variant="outlined"
+                        sx={(theme) =>
+                          theme.applyStyles("dark", {
+                            borderColor: "rgba(74, 225, 131, 0.45)",
+                            color: dark.secondary,
+                          })
+                        }
+                      />
                     </Stack>
                     <Typography variant="body2" color="text.secondary">
                       {product.amount} · verified partner lenders
@@ -195,7 +112,19 @@ export default function HomePageContent() {
         </Box>
       </PageContainer>
 
-      <Box sx={{ bgcolor: "background.paper", borderTop: 1, borderBottom: 1, borderColor: "divider", py: 7 }}>
+      <Box
+        sx={(theme) => ({
+          bgcolor: "background.paper",
+          borderTop: 1,
+          borderBottom: 1,
+          borderColor: "divider",
+          py: { xs: 5, md: 7 },
+          ...theme.applyStyles("dark", {
+            bgcolor: dark.surfaceContainerLow,
+            borderColor: "rgba(182, 198, 240, 0.1)",
+          }),
+        })}
+      >
         <PageContainer>
           <Grid container spacing={4}>
             {features.map((feature) => {
@@ -228,47 +157,14 @@ export default function HomePageContent() {
         </PageContainer>
       </Box>
 
-      <PageContainer>
-        <Box id="how-it-works" sx={{ scrollMarginTop: 96, py: 2 }}>
-          <Typography variant="h2" gutterBottom>
-            How it works
-          </Typography>
-          <Stack spacing={2} sx={{ mt: 3, maxWidth: 720 }}>
-            {steps.map((step, index) => (
-              <Stack key={step} direction="row" spacing={2} alignItems="flex-start">
-                <Box
-                  sx={(theme) => ({
-                    width: 36,
-                    height: 36,
-                    borderRadius: lendingCoreTokens.radius.full,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: "0.875rem",
-                    flexShrink: 0,
-                    ...iconWellSx(theme, "primary"),
-                  })}
-                >
-                  {index + 1}
-                </Box>
-                <Typography variant="body1" sx={{ pt: 0.75, lineHeight: 1.6 }}>
-                  {step}
-                </Typography>
-              </Stack>
-            ))}
-          </Stack>
-        </Box>
-      </PageContainer>
-
-      <Box sx={(theme) => ({ ...footerSectionSx(theme), py: 6, mt: 4 })}>
+      <Box sx={(theme) => ({ ...footerSectionSx(theme), py: { xs: 5, md: 6 }, mt: { xs: 2, md: 4 } })}>
         <PageContainer>
           <Stack direction={{ xs: "column", md: "row" }} spacing={3} alignItems={{ md: "center" }} justifyContent="space-between">
             <Box>
-              <Typography variant="h5" fontWeight={700} gutterBottom>
+              <Typography variant="h5" fontWeight={700} gutterBottom sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }}>
                 Ready to compare your options?
               </Typography>
-              <Typography variant="body1" sx={{ opacity: 0.9, maxWidth: 520 }}>
+              <Typography variant="body1" sx={{ opacity: 0.9, maxWidth: 520, fontSize: { xs: "0.9375rem", md: "1rem" } }}>
                 Start with eligibility — no obligation. See matched offers before you commit.
               </Typography>
             </Box>
@@ -279,7 +175,8 @@ export default function HomePageContent() {
               color="secondary"
               size="large"
               endIcon={<ArrowForwardIcon />}
-              sx={{ flexShrink: 0 }}
+              fullWidth
+              sx={{ flexShrink: 0, width: { xs: "100%", md: "auto" } }}
             >
               Start your application
             </Button>
