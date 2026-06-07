@@ -102,6 +102,16 @@ The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Eve
   }
   ```
 
+### 3.4 S3 File Storage & Proxy
+Files are stored in S3. There is **no public S3 bucket URL** — all reads go through the backend file proxy.
+
+* **Upload**: presigned PUT URLs via RPC (e.g. `partners/GetLogoUploadUrl`).
+* **Read**: `GET /api/files/{s3-key}` — streams the object from S3.
+* **Public files**: any key starting with `public/` is served without auth (e.g. `public/banks/logos/{partnerId}.png`).
+* **Private files**: all other keys require a valid JWT (`authDecode` must set `req.User`).
+* **Stored URLs**: RPCs store proxy URLs built with `API_BASE_URL` + `/api/files/{key}` in fields like `Logo`; the S3 key is also kept in `LogoPath`.
+* Future: add per-key or per-prefix access rules beyond the public/private split.
+
 ---
 
 ## 4. CLI Commands & Scaffolding Guides
@@ -150,6 +160,8 @@ The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Eve
 - **Per-page layout only.** Each page wraps its content explicitly:
   - Public/marketing (`/`, `/about`, `/contact`, …) → `<LandingLayout>`
   - App/authenticated (`/app/**`) → `<AuthGuard><AppLayout>…</AppLayout></AuthGuard>`
+  - Admin (`/admin/**`) → `<AuthGuard><RoleGuard roles={[SYSTEM_ADMIN]}><AdminLayout>…`
+  - Partner (`/partner/**`) → `<AuthGuard><RoleGuard roles={[PARTNER]}><PartnerLayout>…`
 - **No** global layout in `_app` / `_document`. **No** pathname conditionals there.
 - **No** `/login` route. `AuthGuard` renders `LoginPanel` inline when unauthenticated.
 
@@ -158,21 +170,34 @@ The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Eve
 |------|------|--------|
 | Landing & static | `/`, `/about`, `/contact` | `LandingLayout` |
 | Borrower app flow | `/app/products`, `/app/apply`, `/app/apply/documents`, `/app/matching`, `/app/offers`, `/app/dashboard` | `AppLayout` + `AuthGuard` |
+| Admin panel | `/admin/partners`, … | `AdminLayout` + `AuthGuard` + `RoleGuard` |
+| Partner panel | `/partner/products`, … | `PartnerLayout` + `AuthGuard` + `RoleGuard` |
 
-### 5.4 Mock Data (current phase)
-- UI-first: `services/mock/applicationMock.ts` supplies products, offers, application state.
-- Pages call mock services today; swap to `bSdk` RPC when backend collections exist.
+Post-login redirect (`AuthServices.getDefaultRoute()`): admin → `/admin/partners`, partner → `/partner/products`, customer → `/app/products`.
+
+### 5.4 Shared UI (`components/common/`)
+- **`AppDataTable`** — MUI X DataGrid wrapper; use for all list/table views (never hand-roll tables per page).
+- **`AppModal`** — standard modal shell for create/edit forms.
+- **`ConfirmDialog`** — delete confirmation.
+- **`LogoUploadField`** — presigned S3 upload; logos served via `/api/files/public/banks/logos/{partnerId}.png`.
+- **CRUD rule**: all create/edit/delete flows use modals, not inline forms or separate routes.
+
+### 5.5 Mock Data (borrower flow)
+- UI-first: `services/mock/applicationMock.ts` supplies products, offers, application state on `/app/*`.
+- Admin/partner panels call `bSdk` RPCs (`Partners_*`, `Products_*`, `User_*`).
 - Mock data shapes must align with `commonlib` enums (`LOAN_PRODUCT`, `APPLICATION_STATUS`, etc.).
 
-### 5.5 SDK Usage
+### 5.6 SDK Usage
 - Import `bSdk` from `services/BackendSDKService` only. Do not instantiate `BackendSDK` elsewhere.
 - After backend RPC changes, run `npm run cmd syncSDK` in `packages/backend`, then `pnpm watchlib` from root.
 - Env: copy `packages/frontend/.env.local.example` → `.env.local`. Set `NEXT_PUBLIC_ROOT_URL` to backend origin.
 
-### 5.6 Auth (frontend)
+### 5.7 Auth (frontend)
 - `services/AuthServices.ts` holds token/user in localStorage. Pass token via `bSdk` `getAuthToken`.
-- `AuthGuard` checks auth per page; shows `LoginPanel` (mock login for now) when not authenticated.
-- Extend when borrower auth RPC exists — no route changes needed.
+- `AuthGuard` checks auth per page; shows `LoginPanel` (email/password via `User_Login` RPC) when not authenticated.
+- `RoleGuard` redirects users to their default panel if role does not match the route.
+- Helpers: `AuthServices.isSystemAdmin()`, `AuthServices.isPartner()`, `AuthServices.getDefaultRoute()`.
+- Bootstrap admin: copy `packages/backend/.env.example` → `.env`, set seed vars, run `pnpm --filter backend seedAdmin`.
 
 ---
 
@@ -184,7 +209,7 @@ Run **three terminals** (user starts all; agents do not unless asked):
 |----------|-----------|---------|
 | 1 | repo root | `pnpm watchlib` — rebuilds `commonlib` + `backendsdk` on change |
 | 2 | `packages/backend` | `pnpm dev` — Express + tsx watch |
-| 3 | `packages/frontend` | `pnpm dev` — Next.js on port 3000 |
+| 3 | `packages/frontend` | `pnpm dev` — Next.js on port 2554 |
 
 - **Agent Restrictions**: **NEVER start or restart** `pnpm watchlib`, `pnpm dev`, or similar long-running processes unless the user explicitly asks. Codegen (`syncSDK`, `generateTypes`, `tsc`) is allowed.
 - **Build libs**: `npx tsc --project packages/commonlib/tsconfig.json` and `packages/backendsdk/tsconfig.json`.

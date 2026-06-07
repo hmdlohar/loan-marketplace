@@ -10,6 +10,7 @@ import { collections } from "@root/collections";
 import { populateCollectionRoutes } from "@lib/initRouteHandler";
 import authDecode from "./middlewares/authDecode";
 import { initCron } from "./cron/initCron";
+import { registerS3FileProxy } from "./routes/s3FileProxy";
 
 const app: Express = express();
 const server: Server = createServer(app);
@@ -18,6 +19,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cors());
 app.use(authDecode);
 
+registerS3FileProxy(app);
 populateCollectionRoutes(collections, app);
 
 const port = process.env.PORT || config.PORT;

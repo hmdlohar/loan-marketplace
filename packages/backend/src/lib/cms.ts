@@ -3,12 +3,7 @@ import { Model } from "mongoose";
 import { getMongoConnection, IMongoConnections } from "./initMongo";
 import configureDBHooks from "./configureDBHooks";
 
-export const dataModifierSchema = {
-  CreatedAt: { type: Date, required: true, default: Date.now },
-  ModifiedAt: { type: Date, required: false },
-  ModifiedBy: { type: String, required: false },
-  CreatedBy: { type: String, required: false },
-};
+export { dataModifierSchema } from "./dataModifierSchema";
 
 export function getModal<T>(key: string, options: { connection?: IMongoConnections } = {}): Model<T> {
   const collName = key as keyof typeof collections;

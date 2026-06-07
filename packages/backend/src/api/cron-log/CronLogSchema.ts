@@ -1,5 +1,5 @@
 import { Schema, InferSchemaType } from "mongoose";
-import { dataModifierSchema } from "@lib/cms";
+import { dataModifierSchema } from "@lib/dataModifierSchema";
 import { createOIdString } from "@root/utils/commonUtils";
 
 export const CronLogCollectionKey = "cron-log";

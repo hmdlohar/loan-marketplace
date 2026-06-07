@@ -16,6 +16,7 @@
     "@lottiefiles/dotlottie-react": "^0.19.4",
     "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
+    "@mui/x-data-grid": "^9.4.0",
     "backendsdk": "workspace:*",
     "commonlib": "workspace:*",
     "next": "^14.2.28",

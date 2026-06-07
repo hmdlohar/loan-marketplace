@@ -5,14 +5,19 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { APP_NAME } from "commonlib";
 import AppLogo from "../../components/common/AppLogo";
 import AuthServices from "../../services/AuthServices";
+import { bSdk } from "../../services/BackendSDKService";
 
 export default function LoginPanel(props: { onSuccess: () => void }) {
-  const [mobile, setMobile] = useState("9876543210");
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <Box
@@ -35,38 +40,62 @@ export default function LoginPanel(props: { onSuccess: () => void }) {
                   Sign in to {APP_NAME}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Use your mobile number to access your loan application. Backend auth will replace this mock flow.
+                  Use your email and password to access your panel.
                 </Typography>
               </Box>
             </Stack>
             <TextField
-              label="Mobile number"
-              value={mobile}
-              onChange={(event) => setMobile(event.target.value)}
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               fullWidth
-              inputProps={{ inputMode: "numeric" }}
+              autoComplete="email"
             />
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              fullWidth
+              autoComplete="current-password"
+            />
+            {error ? (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            ) : null}
             <Button
               variant="contained"
               color="primary"
               size="large"
-              disabled={loading || mobile.length < 10}
-              onClick={() => {
+              disabled={loading || !email || !password}
+              onClick={async () => {
                 setLoading(true);
-                AuthServices.setToken("mock-demo-token");
-                AuthServices.setUserData({
-                  FullName: "Demo Borrower",
-                  Mobile: mobile,
-                  Role: "CUSTOMER",
-                });
-                props.onSuccess();
+                setError("");
+                try {
+                  const response = await bSdk.User_Login({
+                    Email: email.trim(),
+                    Password: password,
+                  });
+
+                  if (!response.status || !response.data?.token) {
+                    throw new Error(response.message || "Login failed.");
+                  }
+
+                  AuthServices.setToken(response.data.token);
+                  AuthServices.setUserData(response.data.user);
+                  props.onSuccess();
+                  router.replace(AuthServices.getDefaultRoute());
+                } catch (ex: any) {
+                  setError(ex.response?.data?.message || ex.message || "Login failed.");
+                } finally {
+                  setLoading(false);
+                }
               }}
             >
-              Continue
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
-            <Typography variant="caption" color="text.secondary" textAlign="center">
-              Mock login — no OTP sent. For UI development only.
-            </Typography>
           </Stack>
         </CardContent>
       </Card>

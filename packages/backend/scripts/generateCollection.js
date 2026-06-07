@@ -58,7 +58,7 @@ export default createController(${jsName}CollectionKey, []);
 fs.writeFileSync(
   path.join(collPath, `${schemaName}.ts`),
   `import { Schema, InferSchemaType } from "mongoose";
-import { dataModifierSchema } from "@lib/cms";
+import { dataModifierSchema } from "@lib/dataModifierSchema";
 import { createOIdString } from "@root/utils/commonUtils";
 
 export const ${jsName}CollectionKey = "${collectionKey}";

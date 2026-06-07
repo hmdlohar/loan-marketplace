@@ -66,6 +66,76 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.ICronLog_RunCronJobReturnType>> {
     return this.cmsQuery("cron-log", args, { method: "post", route: "/RunCronJob" });
   }
+  async User_GetProfile(
+    args: types.IUser_GetProfileArgs
+  ): Promise<ITHTResponse<types.IUser_GetProfileReturnType>> {
+    return this.cmsQuery("user", args, { method: "post", route: "/GetProfile" });
+  }
+  async User_Login(
+    args: types.IUser_LoginArgs
+  ): Promise<ITHTResponse<types.IUser_LoginReturnType>> {
+    return this.cmsQuery("user", args, { method: "post", route: "/Login" });
+  }
+  async Partners_UploadLogo(
+    args: types.IPartners_UploadLogoArgs
+  ): Promise<ITHTResponse<types.IPartners_UploadLogoReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/UploadLogo" });
+  }
+  async Partners_ConfirmLogo(
+    args: types.IPartners_ConfirmLogoArgs
+  ): Promise<ITHTResponse<types.IPartners_ConfirmLogoReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/ConfirmLogo" });
+  }
+  async Partners_GetLogoUploadUrl(
+    args: types.IPartners_GetLogoUploadUrlArgs
+  ): Promise<ITHTResponse<types.IPartners_GetLogoUploadUrlReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/GetLogoUploadUrl" });
+  }
+  async Partners_Get(
+    args: types.IPartners_GetArgs
+  ): Promise<ITHTResponse<types.IPartners_GetReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/Get" });
+  }
+  async Partners_Update(
+    args: types.IPartners_UpdateArgs
+  ): Promise<ITHTResponse<types.IPartners_UpdateReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/Update" });
+  }
+  async Partners_Create(
+    args: types.IPartners_CreateArgs
+  ): Promise<ITHTResponse<types.IPartners_CreateReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/Create" });
+  }
+  async Partners_List(
+    args: types.IPartners_ListArgs
+  ): Promise<ITHTResponse<types.IPartners_ListReturnType>> {
+    return this.cmsQuery("partners", args, { method: "post", route: "/List" });
+  }
+  async Products_Get(
+    args: types.IProducts_GetArgs
+  ): Promise<ITHTResponse<types.IProducts_GetReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/Get" });
+  }
+  async Products_Delete(
+    args: types.IProducts_DeleteArgs
+  ): Promise<ITHTResponse<types.IProducts_DeleteReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/Delete" });
+  }
+  async Products_Update(
+    args: types.IProducts_UpdateArgs
+  ): Promise<ITHTResponse<types.IProducts_UpdateReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/Update" });
+  }
+  async Products_Create(
+    args: types.IProducts_CreateArgs
+  ): Promise<ITHTResponse<types.IProducts_CreateReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/Create" });
+  }
+  async Products_List(
+    args: types.IProducts_ListArgs
+  ): Promise<ITHTResponse<types.IProducts_ListReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/List" });
+  }
 
   // Methods End
 }

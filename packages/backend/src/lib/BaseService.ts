@@ -5,7 +5,6 @@ import {
   IRequestQueryParams,
   SystemContext,
 } from "@root/types/cms";
-import { getCollection, getModal } from "./cms";
 import {
   AggregateOptions,
   AnyKeys,
@@ -28,6 +27,14 @@ export interface IMutationData<T = any> {
 }
 
 export type IMutationOperation = "create" | "delete" | "deleteMany" | "updateMany" | "updateOne";
+
+function lazyGetModal<T>(key: string) {
+  return require("./cms").getModal<T>(key);
+}
+
+function lazyGetCollection(key: string) {
+  return require("./cms").getCollection(key);
+}
 
 export class BaseService<T> {
   constructor(collectionKey: string, context: ICMSContext) {
@@ -72,7 +79,7 @@ export class BaseService<T> {
     addTotalRowCountToHeader?: boolean;
   } = {}): Promise<HydratedDocument<T, {}, {}>[]> => {
     this.validateContext("list");
-    let coll = getCollection(this.collectionKey);
+    let coll = lazyGetCollection(this.collectionKey);
     let project = io.project || coll.defaultProject;
 
     let q: any = null;
@@ -85,9 +92,9 @@ export class BaseService<T> {
         },
         ...io.aggregate,
       ];
-      q = getModal<T>(this.collectionKey).aggregate<T>(ary);
+      q = lazyGetModal<T>(this.collectionKey).aggregate<T>(ary);
     } else {
-      let dbQuery = getModal<T>(this.collectionKey).find(
+      let dbQuery = lazyGetModal<T>(this.collectionKey).find(
         { ...io.filter },
         project
       );
@@ -110,7 +117,7 @@ export class BaseService<T> {
     } = {}
   ): Promise<number> => {
     this.validateContext("count");
-    return await getModal<T>(this.collectionKey).countDocuments(io.filter);
+    return await lazyGetModal<T>(this.collectionKey).countDocuments(io.filter);
   };
 
   get = async (
@@ -119,7 +126,7 @@ export class BaseService<T> {
   ): Promise<HydratedDocument<T, {}, {}> | null> => {
     this.validateContext("get");
     let project = options?.project;
-    let q = getModal<T>(this.collectionKey).findOne({ _id }, project);
+    let q = lazyGetModal<T>(this.collectionKey).findOne({ _id }, project);
     if (options?.session) q.session(options.session);
     let result = await q.exec();
     return result;
@@ -137,7 +144,7 @@ export class BaseService<T> {
   create = async (obj: Partial<T>, options: { session?: any } = {}) => {
     this.validateContext("create");
 
-    let res = await getModal<T>(this.collectionKey).create(
+    let res = await lazyGetModal<T>(this.collectionKey).create(
       [
         {
           ...obj,
@@ -182,7 +189,7 @@ export class BaseService<T> {
     options?: { session?: any }
   ): Promise<any> => {
     this.validateContext("delete");
-    let res = await getModal<T>(this.collectionKey).findOneAndDelete(filter, {
+    let res = await lazyGetModal<T>(this.collectionKey).findOneAndDelete(filter, {
       session: options?.session,
     });
     this.onMutation("delete", { old: res?.toObject(), args: { filter } });
@@ -197,7 +204,7 @@ export class BaseService<T> {
 
   __getModel = () => {
     this.validateContext("getModel");
-    return getModal<T>(this.collectionKey);
+    return lazyGetModal<T>(this.collectionKey);
   };
 
   aggregate = async (pipeline?: PipelineStage[], options?: AggregateOptions) => {
