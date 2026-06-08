@@ -5,11 +5,27 @@ import { LOAN_PRODUCT } from "commonlib";
 
 export const ProductsCollectionKey = "products";
 
+const FormFieldValidationSchema = new Schema(
+  {
+    min: { type: Number, required: false },
+    max: { type: Number, required: false },
+    minAge: { type: Number, required: false },
+    maxAge: { type: Number, required: false },
+    errorMessage: { type: String, required: false },
+  },
+  { _id: false }
+);
+
 const FormFieldSchema = new Schema(
   {
+    Key: { type: String, required: true },
     Label: { type: String, required: true },
     Type: { type: String, required: true },
+    Section: { type: String, required: false },
     Required: { type: Boolean, required: true, default: false },
+    Placeholder: { type: String, required: false },
+    Options: { type: [String], default: undefined },
+    Validation: { type: FormFieldValidationSchema, required: false },
   },
   { _id: false }
 );
@@ -20,14 +36,14 @@ export const ProductsSchema = new Schema({
   Title: { type: String, required: true },
   Slug: { type: String, required: true },
   ShortDescription: { type: String, required: true },
-  LongDescription: { type: String, required: true },
+  KeyBenefits: { type: [String], default: [] },
   LoanType: {
     type: String,
     required: true,
     enum: Object.values(LOAN_PRODUCT),
   },
+  BankID: { type: String, required: true, index: true },
   PartnerID: { type: String, required: true, index: true },
-  MainImage: { type: String, required: false },
   FormFields: { type: [FormFieldSchema], default: [] },
 });
 

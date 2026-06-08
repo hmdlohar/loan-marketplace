@@ -48,6 +48,24 @@ export function getPartnerLogoPath(partnerId: string) {
   return `public/banks/logos/${partnerId}.png`;
 }
 
+export function getBankLogoPath(bankId: string, extension: string) {
+  const ext = extension.startsWith(".") ? extension : `.${extension}`;
+  return `public/lender-logos/${bankId}${ext}`;
+}
+
+export function extensionFromImageUrl(url: string) {
+  try {
+    const pathname = new URL(url).pathname.toLowerCase();
+    if (pathname.endsWith(".svg")) return ".svg";
+    if (pathname.endsWith(".webp")) return ".webp";
+    if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg")) return ".jpg";
+    if (pathname.endsWith(".png")) return ".png";
+  } catch {
+    // fall through
+  }
+  return ".png";
+}
+
 export function getFileProxyUrl(key: string) {
   const baseUrl = config.API_BASE_URL.replace(/\/$/, "");
   return `${baseUrl}/api/files/${key}`;
@@ -102,6 +120,21 @@ export async function getPartnerLogoUploadUrl(partnerId: string) {
 
 export async function uploadPartnerLogo(partnerId: string, fileBuffer: Buffer, contentType: string) {
   const key = getPartnerLogoPath(partnerId);
+  await uploadS3Object(key, fileBuffer, contentType);
+
+  return {
+    key,
+    logoUrl: getFileProxyUrl(key),
+  };
+}
+
+export async function uploadBankLogo(
+  bankId: string,
+  fileBuffer: Buffer,
+  contentType: string,
+  extension: string
+) {
+  const key = getBankLogoPath(bankId, extension);
   await uploadS3Object(key, fileBuffer, contentType);
 
   return {

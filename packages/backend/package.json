@@ -12,6 +12,7 @@
     "cmd": "tsx src/cmd",
     "syncSDK": "tsx src/cmd/syncSDK.ts",
     "seedAdmin": "tsx src/cmd/seedAdmin.ts",
+    "seedImport": "tsx src/cmd/seedImport.ts",
     "gfn": "node scripts/generateFN.js"
   },
   "dependencies": {

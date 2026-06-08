@@ -1,4 +1,4 @@
-export type ICollectionKeys = "cron-log" | "user" | "partners" | "products";
+export type ICollectionKeys = "cron-log" | "user" | "partners" | "banks" | "products";
 
 export type ICronLog_RunCronJobArgs = {
 
@@ -63,6 +63,36 @@ export type IPartners_ListArgs = {
 };
 
 export type IPartners_ListReturnType = any;
+export type IBanks_DeleteArgs = {
+  _id?: string;
+};
+
+export type IBanks_DeleteReturnType = any;
+export type IBanks_UpdateArgs = {
+  _id?: string;
+  Name?: string;
+  LogoPath?: string;
+};
+
+export type IBanks_UpdateReturnType = any;
+export type IBanks_GetArgs = {
+  _id?: string;
+};
+
+export type IBanks_GetReturnType = any;
+export type IBanks_CreateArgs = {
+  Name?: string;
+  LogoPath?: string;
+};
+
+export type IBanks_CreateReturnType = any;
+export type IBanks_ListArgs = {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+};
+
+export type IBanks_ListReturnType = any;
 export type IProducts_GetArgs = {
   _id?: string;
 };
@@ -73,23 +103,32 @@ export type IProducts_DeleteArgs = {
 };
 
 export type IProducts_DeleteReturnType = any;
-export type IProducts_UpdateArgs = {
+export type IProducts_SaveArgs = {
   _id?: string;
   Title?: string;
   ShortDescription?: string;
-  LongDescription?: string;
+  KeyBenefits?: string[];
   LoanType?: string;
+  BankID?: string;
+  FormFields?: {
+    Key?: string;
+    Label?: string;
+    Type?: string;
+    Section?: string;
+    Required?: boolean;
+    Placeholder?: string;
+    Options?: string[];
+    Validation?: {
+      min?: number;
+      max?: number;
+      minAge?: number;
+      maxAge?: number;
+      errorMessage?: string;
+    };
+  }[];
 };
 
-export type IProducts_UpdateReturnType = any;
-export type IProducts_CreateArgs = {
-  Title?: string;
-  ShortDescription?: string;
-  LongDescription?: string;
-  LoanType?: string;
-};
-
-export type IProducts_CreateReturnType = any;
+export type IProducts_SaveReturnType = any;
 export type IProducts_ListArgs = {
   page?: number;
   pageSize?: number;

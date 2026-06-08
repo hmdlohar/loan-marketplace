@@ -48,11 +48,3 @@ export async function assertPartnerAccess(context: ICMSContext, partnerId: strin
 
   return user;
 }
-
-export function getDefaultProductFormFields() {
-  return [
-    { Label: "Full Name", Type: "text", Required: true },
-    { Label: "Email", Type: "email", Required: true },
-    { Label: "Mobile", Type: "tel", Required: true },
-  ];
-}

@@ -1,0 +1,5051 @@
+[
+  {
+    "id": "prefr_pl",
+    "code": "PREFR_PL",
+    "name": "Prefr Personal Loan",
+    "category": "Personal Loan",
+    "lender": "Prefr",
+    "imageUrl": "https://elasticbeanstalk-ap-south-1-812175807951.s3.ap-south-1.amazonaws.com/static-resources/notification-resources/notification_images/1694242041_Prefr_re.svg",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "API_DIRECT",
+    "ranking": 4,
+    "additionalFields": [
+      {
+        "section": "Basic Details",
+        "label": "Applicant's Mobile Number",
+        "type": "mobile",
+        "key": "mobile",
+        "required": true
+      },
+      {
+        "section": "Basic Details",
+        "label": "First Name",
+        "type": "text",
+        "key": "firstName",
+        "required": true
+      },
+      {
+        "section": "Basic Details",
+        "label": "Middle Name",
+        "type": "text",
+        "key": "middleName",
+        "required": false
+      },
+      {
+        "section": "Basic Details",
+        "label": "Last Name",
+        "type": "text",
+        "key": "lastName",
+        "required": true
+      },
+      {
+        "section": "Basic Details",
+        "label": "PAN Number",
+        "placeholder": "Enter PAN (e.g. ABCDE1234F)",
+        "type": "text",
+        "key": "panNumber",
+        "required": true
+      },
+      {
+        "section": "Basic Details",
+        "label": "Date of Birth",
+        "type": "date",
+        "key": "dob",
+        "required": true
+      },
+      {
+        "section": "Basic Details",
+        "label": "Email Address",
+        "type": "email",
+        "key": "email",
+        "required": true
+      },
+      {
+        "options": [
+          "Male",
+          "Female"
+        ],
+        "section": "Personal Details",
+        "label": "Gender",
+        "type": "select",
+        "key": "gender",
+        "required": true
+      },
+      {
+        "section": "Personal Details",
+        "label": "Current Address (Line 1)",
+        "type": "text",
+        "key": "addressLine1",
+        "required": true
+      },
+      {
+        "section": "Personal Details",
+        "label": "Current Address (Line 2)",
+        "type": "text",
+        "key": "addressLine2",
+        "required": false
+      },
+      {
+        "section": "Personal Details",
+        "label": "Current Address Pincode",
+        "placeholder": "Enter 6-digit pincode",
+        "type": "number",
+        "key": "pinCode",
+        "required": true
+      },
+      {
+        "section": "Personal Details",
+        "label": "City",
+        "type": "text",
+        "key": "city",
+        "required": true
+      },
+      {
+        "section": "Personal Details",
+        "label": "State",
+        "type": "text",
+        "key": "state",
+        "required": true
+      },
+      {
+        "options": [
+          "Owned",
+          "Self Owned",
+          "Family Owned",
+          "Rented",
+          "PG",
+          "Hostel",
+          "Company Provided",
+          "Parental"
+        ],
+        "section": "Personal Details",
+        "label": "Residence Type",
+        "type": "select",
+        "key": "residenceType",
+        "required": false
+      },
+      {
+        "options": [
+          "Salaried",
+          "Self-Employed"
+        ],
+        "section": "Professional Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employmentType",
+        "required": true
+      },
+      {
+        "options": [
+          "Bank Transfer",
+          "Cash",
+          "Cheque"
+        ],
+        "section": "Professional Details",
+        "label": "Mode of Salary/Income",
+        "type": "select",
+        "key": "incomeMode",
+        "required": true
+      },
+      {
+        "section": "Professional Details",
+        "label": "Net Monthly Income",
+        "placeholder": "Enter monthly income in ₹",
+        "type": "number",
+        "key": "netIncome",
+        "required": true
+      },
+      {
+        "section": "Loan Requirement Details",
+        "label": "Desired Loan Amount",
+        "placeholder": "Enter amount in ₹",
+        "type": "number",
+        "key": "desiredLoanAmount",
+        "required": true
+      },
+      {
+        "section": "Loan Requirement Details",
+        "label": "Loan Tenure (Months)",
+        "placeholder": "Enter tenure in months",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true
+      },
+      {
+        "options": [
+          "Medical",
+          "Marriage",
+          "Cash Need",
+          "Vacation",
+          "Property",
+          "Vehicle",
+          "Electronics",
+          "Education",
+          "Business",
+          "Repay Loans"
+        ],
+        "section": "Loan Requirement Details",
+        "label": "Loan Purpose",
+        "type": "select",
+        "key": "loanPurpose",
+        "required": false
+      }
+    ],
+    "applicationConfig": {
+      "apiEndpoint": "prefr_lead_submission"
+    },
+    "content": {
+      "headline": "Instant Personal Loan up to ₹5 Lakhs",
+      "keyBenefits": [
+        "Zero Paperwork",
+        "Instant Loan Approval",
+        "Same Day Disbursal",
+        "For Salaried & Self-Employed"
+      ]
+    }
+  },
+  {
+    "id": "indusind_pl",
+    "code": "INDUSIND_PL",
+    "name": "IndusInd Personal Loan",
+    "category": "Personal Loan",
+    "lender": "IndusInd Bank",
+    "imageUrl": "https://yt3.googleusercontent.com/ytc/AIdro_lrGegp6ZaJYoTk_fCeOgguHPZtuGQnV7d1nc4j1RqxtuA=s900-c-k-c0x00ffffff-no-rj",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 8,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹"
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Months)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in months"
+      },
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://induseasycredit.indusind.com/customer/personal-loan/new-lead?utm_source=partnerships&utm_medium=MyMoneyMantra&utm_campaign=personal-loan&utm_content=NSHS200",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 1)",
+          "type": "text",
+          "key": "addressLine1",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 2)",
+          "type": "text",
+          "key": "addressLine2",
+          "required": false
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Mode of Salary/Income received",
+          "type": "select",
+          "key": "incomeMode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Net Monthly Salary/Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan amount required",
+          "type": "number",
+          "key": "loanAmount",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan Tenure",
+          "type": "number",
+          "key": "loanTenure",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "poonawalla_pl",
+    "code": "POONAWALLA_PL",
+    "name": "Poonawalla Fincorp Personal Loan",
+    "category": "Personal Loan",
+    "lender": "Poonawalla Fincorp",
+    "imageUrl": "https://cdn.gromo.in/static-resources/notification-resources/notification_images/1736245597_PFL-Logo.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "DIRECT",
+    "ranking": 9,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹"
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Months)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in months"
+      },
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://instant-pocket-loan.poonawallafincorp.com/?utm_DSA_Code=PDL00142&UTM_Partner_Name=MyMoneyMantra&UTM_Partner_Medium=sms&UTM_Partner_AgentCode=PFLMMM&UTM_Partner_ReferenceID=MMMPFL-NSHS200",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 1)",
+          "type": "text",
+          "key": "addressLine1",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 2)",
+          "type": "text",
+          "key": "addressLine2",
+          "required": false
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Mode of Salary/Income received",
+          "type": "select",
+          "key": "incomeMode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Net Monthly Salary/Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan amount required",
+          "type": "number",
+          "key": "loanAmount",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan Tenure",
+          "type": "number",
+          "key": "loanTenure",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Instant Personal Loan up to ₹5 Lakhs",
+      "keyBenefits": [
+        "100% Online Application",
+        "Quick Approval",
+        "Zero Hidden Charges",
+        "No Foreclosure Charges (if paid from own sources)"
+      ]
+    }
+  },
+  {
+    "id": "flexiloans_bl",
+    "code": "FLEXILOANS_BL",
+    "name": "FlexiLoans Business Loan",
+    "category": "Business Loan",
+    "lender": "FlexiLoans",
+    "imageUrl": "https://flexiloans.com/hi/images/flexi_new_header.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 10,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹ (50,000 - 15,00,000)"
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Years)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in years (1-5)"
+      },
+      {
+        "section": "Financial Details",
+        "label": "Net Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter net monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://loans.flexiloans.com/?nlp=1&partnerCode=685e2dd3ivmcn&utm_source=partner&utm_medium=clickpe&utm_campaign=clickPe",
+      "consent": "By clicking here, you agree to our T&C and Privacy Policy and authorize FlexiLoans and lending partners to access your credit report and CKYC records to tailor the best loan offers for you.",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Your Name (as per PAN Card)",
+          "type": "text",
+          "key": "fullName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "section": "Business Details",
+          "label": "Is your Business GST registered?",
+          "type": "select",
+          "key": "gstRegistered",
+          "required": true
+        },
+        {
+          "options": [
+            "Upto 2 L",
+            "2 L - 4 L",
+            "4 L - 10 L",
+            "10 L +"
+          ],
+          "section": "Business Details",
+          "label": "Choose your Monthly Sales (in Lakhs)",
+          "type": "select",
+          "key": "monthlySales",
+          "required": true
+        },
+        {
+          "section": "Communication Preferences",
+          "label": "Send me updates on WhatsApp",
+          "type": "checkbox",
+          "key": "whatsappUpdates",
+          "required": false
+        }
+      ]
+    },
+    "content": {
+      "requiredDocuments": [
+        "PAN & Aadhar Details",
+        "Business Registration Proof",
+        "6 Months Bank Statement"
+      ],
+      "trustBadge": "Trusted by over 1 lakh MSMEs across India",
+      "partners": "Our Partners",
+      "footer": "FlexiLoans is a brand owned by Epimoney Private Limited, which is an RBI registered NBFC. All Rights Reserved.",
+      "contact": {
+        "phone": "+91 9867554327",
+        "email": "support@flexiloans.com",
+        "address": "7th Floor, South Annexe, Tower 2, One World Centre, 841, Senapati Bapat Marg, Saidham Nagar, Lower Parel, Mumbai-400013"
+      },
+      "whyFlexiLoans": {
+        "description": "FlexiLoans which is a brand owned by Epimoney Private Limited an RBI registered NBFC offers quick and hassle-free business loans without any collateral and paperwork. Whether you're a trader, retailer, service provider, or manufacturer, our loans are designed to help you grow.",
+        "features": [
+          {
+            "title": "Quick Money",
+            "description": "Get your loan amount fast so you can grab new opportunities and keep your business running smoothly.",
+            "subtitle": "Fast disbursal directly to your account"
+          },
+          {
+            "title": "Manage Expenses",
+            "description": "Use the loan to pay for stock, rent, salaries, or any business needs without worrying about cash shortages.",
+            "subtitle": "Manage Your Expenses Easily"
+          },
+          {
+            "title": "Simple Process",
+            "description": "Apply with minimal documents and get funds without unnecessary delays.",
+            "subtitle": "Simple & Hassle-Free Process"
+          },
+          {
+            "title": "Low Cost",
+            "description": "Get a loan at a good interest rate so you can repay easily without extra burden.",
+            "subtitle": "Unsecured Business Loans up to ₹50 Lakhs"
+          },
+          {
+            "title": "Grow Business",
+            "description": "Repaying on time can help you get bigger loans in the future whenever you need them.",
+            "subtitle": "Flexible repayment options"
+          },
+          {
+            "title": "No Collateral",
+            "description": "Get a loan without providing any assets as security, making it easier and stress-free for your business.",
+            "subtitle": "No collateral, no branch visit"
+          }
+        ]
+      },
+      "keyBenefits": [
+        "Unsecured Business Loans up to ₹50 Lakhs",
+        "No collateral, no branch visit",
+        "Quick disbursal directly to your account",
+        "Simple & Hassle-Free Process",
+        "Flexible repayment options",
+        "Interest rates starting from 1% per month"
+      ],
+      "headline": "Check Your Eligibility Instantly",
+      "subheadline": "Get Your Business Loan Offer in just 2 Minutes",
+      "steps": [
+        {
+          "title": "KYC Verification",
+          "description": "We securely fetch your PAN, Aadhaar, and business details as per government rules to keep your loan process smooth and hassle-free."
+        },
+        {
+          "title": "Bank Statement",
+          "description": "Upload your last 6 months' Current Account statement or fetch it instantly via OTP for faster loan processing."
+        },
+        {
+          "title": "Loan Eligibility",
+          "description": "Your loan eligibility is calculated based on your financial details and business performance to offer you the best possible loan amount."
+        }
+      ]
+    }
+  },
+  {
+    "id": "muthoot_emi_bl",
+    "code": "MUTHOOT_EMI_BL",
+    "name": "Muthoot EMI Business Loan",
+    "category": "Business Loan",
+    "lender": "Muthoot Finance",
+    "imageUrl": "https://muthootlogo.s3.ap-south-1.amazonaws.com/354436169_637904195038213_1801764638886683857_n-removebg-preview.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "DIRECT",
+    "ranking": 20,
+    "applicationConfig": {
+      "applyLink": "https://creditlink.finbox.in/?partnerCode=LS_POIOUY&agentCode=cp001&productType=business_loan_emi"
+    }
+  },
+  {
+    "id": "muthoot_daily_bl",
+    "code": "MUTHOOT_DAILY_BL",
+    "name": "Muthoot Daily Business Loan",
+    "category": "Business Loan",
+    "lender": "Muthoot Finance",
+    "imageUrl": "https://muthootlogo.s3.ap-south-1.amazonaws.com/354436169_637904195038213_1801764638886683857_n-removebg-preview.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "DIRECT",
+    "ranking": 30,
+    "applicationConfig": {
+      "applyLink": "https://creditlink.finbox.in/?partnerCode=LS_NUSHZC&agentCode=cp001&productType=business_loan_edi"
+    }
+  },
+  {
+    "id": "vivifi_pl",
+    "code": "VIVIFI_PL",
+    "name": "Vivifi Personal Loan",
+    "category": "Personal Loan",
+    "lender": "Vivifi India Finance",
+    "imageUrl": "https://www.vivifin.com/images/vivifi-logo.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "API_DIRECT",
+    "ranking": 40,
+    "additionalFields": [
+      {
+        "section": "Personal Details",
+        "label": "PAN Number",
+        "type": "text",
+        "key": "panNumber",
+        "required": true,
+        "placeholder": "Enter 10-character PAN"
+      },
+      {
+        "section": "Personal Details",
+        "label": "Gender",
+        "type": "select",
+        "key": "gender",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Others"
+        ]
+      },
+      {
+        "section": "Personal Details",
+        "label": "Marital Status",
+        "type": "select",
+        "key": "maritalStatus",
+        "required": false,
+        "options": [
+          "Married",
+          "Unmarried"
+        ]
+      },
+      {
+        "section": "Personal Details",
+        "label": "Education",
+        "type": "select",
+        "key": "education",
+        "required": false,
+        "options": [
+          "Diploma Holder",
+          "Under Graduate",
+          "Graduate",
+          "Post Graduate",
+          "Professional Qualified"
+        ]
+      },
+      {
+        "section": "Address Details",
+        "label": "Residence Type",
+        "type": "select",
+        "key": "residenceType",
+        "required": false,
+        "options": [
+          "Owned",
+          "Rented",
+          "Company Provided",
+          "Parental",
+          "Bachelor Sharing",
+          "PG"
+        ]
+      },
+      {
+        "section": "Address Details",
+        "label": "Address Line 1",
+        "type": "text",
+        "key": "addressLine1",
+        "required": false,
+        "placeholder": "Flat/House No, Building Name"
+      },
+      {
+        "section": "Address Details",
+        "label": "Address Line 2",
+        "type": "text",
+        "key": "addressLine2",
+        "required": false,
+        "placeholder": "Street, Area, Landmark"
+      },
+      {
+        "section": "Address Details",
+        "label": "PIN Code",
+        "type": "text",
+        "key": "pinCode",
+        "required": true,
+        "placeholder": "6-digit PIN code"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "incomeType",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed"
+        ]
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employer Name",
+        "type": "text",
+        "key": "employerName",
+        "required": false,
+        "placeholder": "Company name"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employer Phone",
+        "type": "text",
+        "key": "employerPhone",
+        "required": false,
+        "placeholder": "10-digit phone number"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employer Address",
+        "type": "text",
+        "key": "employerAddress",
+        "required": false,
+        "placeholder": "Office address"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employer PIN Code",
+        "type": "text",
+        "key": "employerPinCode",
+        "required": false,
+        "placeholder": "6-digit PIN code"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Total Work Experience (Years)",
+        "type": "number",
+        "key": "totalExperience",
+        "required": false,
+        "placeholder": "e.g., 2.5"
+      },
+      {
+        "section": "Income Details",
+        "label": "Monthly Gross Income",
+        "type": "number",
+        "key": "grossIncome",
+        "required": true,
+        "placeholder": "Enter monthly gross salary"
+      },
+      {
+        "section": "Income Details",
+        "label": "Monthly Net Income",
+        "type": "number",
+        "key": "netIncome",
+        "required": false,
+        "placeholder": "Enter monthly net salary"
+      },
+      {
+        "section": "Bank Details",
+        "label": "Bank Account Number",
+        "type": "text",
+        "key": "accountNumber",
+        "required": false,
+        "placeholder": "Enter account number"
+      },
+      {
+        "section": "Bank Details",
+        "label": "Account Type",
+        "type": "select",
+        "key": "accountType",
+        "required": false,
+        "options": [
+          "Savings",
+          "Current"
+        ]
+      },
+      {
+        "section": "Bank Details",
+        "label": "IFSC Code",
+        "type": "text",
+        "key": "ifscCode",
+        "required": false,
+        "placeholder": "11-character IFSC"
+      }
+    ],
+    "applicationConfig": {
+      "apiEndpoint": "vivifi_lead_submission",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "placeholder": "Enter 10-character PAN",
+          "type": "text",
+          "key": "panNumber",
+          "required": true
+        },
+        {
+          "options": [
+            "Male",
+            "Female",
+            "Others"
+          ],
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "options": [
+            "Married",
+            "Unmarried"
+          ],
+          "section": "Personal Details",
+          "label": "Marital Status",
+          "type": "select",
+          "key": "maritalStatus",
+          "required": false
+        },
+        {
+          "options": [
+            "Diploma Holder",
+            "Under Graduate",
+            "Graduate",
+            "Post Graduate",
+            "Professional Qualified"
+          ],
+          "section": "Personal Details",
+          "label": "Education",
+          "type": "select",
+          "key": "education",
+          "required": false
+        },
+        {
+          "options": [
+            "Owned",
+            "Rented",
+            "Company Provided",
+            "Parental",
+            "Bachelor Sharing",
+            "PG"
+          ],
+          "section": "Address Details",
+          "label": "Residence Type",
+          "type": "select",
+          "key": "residenceType",
+          "required": false
+        },
+        {
+          "section": "Address Details",
+          "label": "Address Line 1",
+          "placeholder": "Flat/House No, Building Name",
+          "type": "text",
+          "key": "addressLine1",
+          "required": false
+        },
+        {
+          "section": "Address Details",
+          "label": "Address Line 2",
+          "placeholder": "Street, Area, Landmark",
+          "type": "text",
+          "key": "addressLine2",
+          "required": false
+        },
+        {
+          "section": "Address Details",
+          "label": "PIN Code",
+          "placeholder": "6-digit PIN code",
+          "type": "text",
+          "key": "pinCode",
+          "required": true
+        },
+        {
+          "options": [
+            "Salaried",
+            "Self-Employed"
+          ],
+          "section": "Employment Details",
+          "label": "Employment Type",
+          "type": "select",
+          "key": "incomeType",
+          "required": true
+        },
+        {
+          "section": "Employment Details",
+          "label": "Employer Name",
+          "placeholder": "Company name",
+          "type": "text",
+          "key": "employerName",
+          "required": false
+        },
+        {
+          "section": "Employment Details",
+          "label": "Employer Phone",
+          "placeholder": "10-digit phone number",
+          "type": "text",
+          "key": "employerPhone",
+          "required": false
+        },
+        {
+          "section": "Employment Details",
+          "label": "Employer Address",
+          "placeholder": "Office address",
+          "type": "text",
+          "key": "employerAddress",
+          "required": false
+        },
+        {
+          "section": "Employment Details",
+          "label": "Employer PIN Code",
+          "placeholder": "6-digit PIN code",
+          "type": "text",
+          "key": "employerPinCode",
+          "required": false
+        },
+        {
+          "section": "Employment Details",
+          "label": "Total Work Experience (Years)",
+          "placeholder": "e.g., 2.5",
+          "type": "number",
+          "key": "totalExperience",
+          "required": false
+        },
+        {
+          "section": "Income Details",
+          "label": "Monthly Gross Income",
+          "placeholder": "Enter monthly gross salary",
+          "type": "number",
+          "key": "grossIncome",
+          "required": true
+        },
+        {
+          "section": "Income Details",
+          "label": "Monthly Net Income",
+          "placeholder": "Enter monthly net salary",
+          "type": "number",
+          "key": "netIncome",
+          "required": false
+        },
+        {
+          "section": "Bank Details",
+          "label": "Bank Account Number",
+          "placeholder": "Enter account number",
+          "type": "text",
+          "key": "accountNumber",
+          "required": false
+        },
+        {
+          "options": [
+            "Savings",
+            "Current"
+          ],
+          "section": "Bank Details",
+          "label": "Account Type",
+          "type": "select",
+          "key": "accountType",
+          "required": false
+        },
+        {
+          "section": "Bank Details",
+          "label": "IFSC Code",
+          "placeholder": "11-character IFSC",
+          "type": "text",
+          "key": "ifscCode",
+          "required": false
+        }
+      ]
+    },
+    "content": {
+      "headline": "Zero Balance Digital Savings Account",
+      "keyBenefits": [
+        "Earn up to 4% interest p.a.",
+        "Lifetime Free Virtual Debit Card",
+        "No maintenance fees",
+        "Digital banking support"
+      ]
+    }
+  },
+  {
+    "id": "bharatpe_pl",
+    "code": "BHARATPE_PL",
+    "name": "BharatPe Personal Loan",
+    "category": "Personal Loan",
+    "lender": "BharatPe",
+    "imageUrl": "https://bharatpe.com/wp-content/uploads/2023/05/group-24@3x.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 60,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹ (10,000 - 5,00,000)",
+        "validation": {
+          "min": 10000,
+          "max": 500000,
+          "errorMessage": "Loan amount must be between ₹10,000 and ₹5,00,000"
+        }
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Months)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in months (3-30)",
+        "validation": {
+          "min": 3,
+          "max": 30,
+          "errorMessage": "Tenure must be between 3 and 30 months"
+        }
+      },
+      {
+        "section": "Financial Details",
+        "label": "Net Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter net monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://consumer-credit.bharatpe.in/creditHome.html?utm_campaign=trillionloan&utm_campaign=trillionloans&utm_partner=CPTL&utm_content=12345&utm_medium=Agent",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true,
+          "validation": {
+            "errorMessage": "Age must be between 21 and 60 years",
+            "maxAge": 60,
+            "minAge": 21
+          }
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Unlock Your Dreams with Instant Personal Loan up to ₹5,00,000",
+      "keyBenefits": [
+        "Loan up to ₹5,00,000",
+        "Interest starting 1.66%/month",
+        "Processing fee starting ₹0",
+        "Flexible tenure up to 30 months",
+        "Instant Disbursal",
+        "No Collateral Required"
+      ]
+    }
+  },
+  {
+    "id": "kiwi_cc",
+    "code": "KIWI_CC",
+    "name": "KIWI Rupay Credit Card",
+    "category": "Credit Card",
+    "lender": "Kiwi",
+    "imageUrl": "https://ibsintelligence.com/wp-content/uploads/2023/05/Kiwi.jpg",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 64,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://gokiwi.sng.link/E5owq/geq6/tuji?utm_source=clickpe&utm_medium=apply",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Annual Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Lifetime Free KIWI Rupay Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Lifetime Free - No Fees",
+        "2x Cashback on Scan & Pay",
+        "Instant Virtual Card",
+        "UPI Ready"
+      ]
+    }
+  },
+  {
+    "id": "tide_business_account",
+    "code": "TIDE_BUSINESS_ACCOUNT",
+    "name": "Tide Zero Balance Account",
+    "category": "Savings Account",
+    "lender": "Transcorp International Ltd",
+    "imageUrl": "https://web-assets.tide.co/assets/images/logo/Tide_Logo_Blue_RGB.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 70,
+    "additionalFields": [
+      {
+        "section": "Business Details",
+        "label": "Business Type",
+        "type": "select",
+        "key": "businessType",
+        "required": true,
+        "options": [
+          "Sole Proprietorship",
+          "Partnership",
+          "Private Limited",
+          "LLP",
+          "Other"
+        ]
+      },
+      {
+        "section": "Business Details",
+        "label": "Business Name",
+        "type": "text",
+        "key": "businessName",
+        "required": true,
+        "placeholder": "Enter your business name"
+      },
+      {
+        "section": "Business Details",
+        "label": "Monthly Business Turnover",
+        "type": "number",
+        "key": "monthlyTurnover",
+        "required": true,
+        "placeholder": "Enter monthly turnover in ₹"
+      },
+      {
+        "section": "Identity Details",
+        "label": "Do you have an Aadhaar linked to your mobile number?",
+        "type": "radio",
+        "key": "aadhaarLinked",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://tide.u9ilnk.me/d/wfMzcF2nYl?deep_link_sub1=OM1008",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Business Details",
+          "label": "Business Type",
+          "type": "select",
+          "key": "businessType",
+          "required": true
+        },
+        {
+          "section": "Business Details",
+          "label": "Business Name",
+          "type": "text",
+          "key": "businessName",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Tide Zero Balance Account",
+      "keyBenefits": [
+        "Eligible for payout through ClickPe link or signup code OM1008",
+        "Zero Balance Account - No Minimum Balance",
+        "1.5%* Real Cashback on Every Spend",
+        "Add Funds via Credit Card (T&C Applied)",
+        "Buy 1 Get 1 Free on BookMyShow",
+        "EaseMyTrip - Up to Rs.3,500 OFF",
+        "Zomato and Blinkit Exclusive Discounts"
+      ]
+    }
+  },
+  {
+    "id": "tata_neu_cc",
+    "code": "TATA_NEU_CC",
+    "name": "Tata Neu HDFC Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "HDFC Bank",
+    "imageUrl": "https://play-lh.googleusercontent.com/bpb_kXJa-7mtKs6e8utyMQYS_IIf_AfQFTSegg108dOxmts51sjayOscDYTZDzl6NN0=w240-h480-rw",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 72,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://www.tataneu.com/creditcard/?utm_source=Partnerships_external&utm_medium=clickpe&utm_campaign=CP_Campaign1_RB01",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Tata Neu HDFC Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹499",
+        "Annual Fees: ₹499",
+        "10% Cashback as NeuCoins",
+        "Fee Reversal on 1st Transaction",
+        "Complimentary Lounge Access",
+        "1 NeuCoin = ₹1"
+      ]
+    }
+  },
+  {
+    "id": "zet_fd_backed_cc",
+    "code": "ZET_FD_BACKED_CC",
+    "name": "Zet FD Backed Credit Card",
+    "category": "Credit Card",
+    "lender": "SBM Bank",
+    "imageUrl": "https://zetapp.in/_next/static/media/zet_new.096e9227.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 76,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Student",
+          "Homemaker"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://sbm-zet-card.zetapp.in/onboarding/verify?utm_campaign=zet-rupay&utm_source=clickpe",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": false
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Zet FD Backed Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Approval Rate: Excellent",
+        "100 Percent Guaranteed Approval",
+        "FD Starts at Just ₹2,000",
+        "Build 750+ Credit Score",
+        "UPI Enabled RuPay Card",
+        "Lifetime Free - Zero Fees"
+      ]
+    }
+  },
+  {
+    "id": "bharatpe_credit_line",
+    "code": "BHARATPE_CREDIT_LINE",
+    "name": "BharatPe Credit Line",
+    "category": "Credit Card",
+    "lender": "BharatPe",
+    "imageUrl": "https://bharatpe.com/wp-content/uploads/2023/05/group-24@3x.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 80,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Net Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter net monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://link.postpe.app/CHvc?af_xp=custom&pid=CreditLine_ClickPe&c=CreditLine_ClickPe&deep_link_value=postpe%3A%2F%2Fdynamic%3Fkey%3Dcredit-home-uat1%26wroute%3DcreditHome%26redirection%3Dtrue&deep_link_sub1=postpe%3A%2F%2Fdynamic%3Fkey%3Dcredit-home-uat1%26wroute%3DcreditHome%26redirection%3Dtrue&af_dp=postpe%3A%2F%2Fdynamic%3Fkey%3Dcredit-home-uat1%26wroute%3DcreditHome%26redirection%3Dtrue",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true,
+          "validation": {
+            "errorMessage": "Age must be between 21 and 60 years",
+            "maxAge": 60,
+            "minAge": 21
+          }
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "BharatPe UPI Credit Line - Instant Credit on Every UPI Payment",
+      "keyBenefits": [
+        "Pre-approved Credit Line on UPI",
+        "Use Anywhere UPI Is Accepted",
+        "No Physical Card Needed",
+        "Borrow Only What You Need",
+        "Flexible Repayment Terms",
+        "Effortless Scan & Pay"
+      ]
+    }
+  },
+  {
+    "id": "bajaj_insta_emi_card",
+    "code": "BAJAJ_INSTA_EMI_CARD",
+    "name": "Bajaj Finserv Insta EMI Card",
+    "category": "Credit Card",
+    "lender": "Bajaj Finserv",
+    "imageUrl": "https://wp.logos-download.com/wp-content/uploads/2024/04/Bajaj_Finserv_Logo.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 90,
+    "additionalFields": [
+      {
+        "section": "Business Details",
+        "label": "Business Type",
+        "type": "select",
+        "key": "businessType",
+        "required": true,
+        "options": [
+          "Sole Proprietorship",
+          "Partnership",
+          "Private Limited",
+          "LLP",
+          "Other"
+        ]
+      },
+      {
+        "section": "Business Details",
+        "label": "Business Name",
+        "type": "text",
+        "key": "businessName",
+        "required": true,
+        "placeholder": "Enter your business name"
+      },
+      {
+        "section": "Business Details",
+        "label": "Monthly Business Turnover",
+        "type": "number",
+        "key": "monthlyTurnover",
+        "required": true,
+        "placeholder": "Enter monthly turnover in ₹"
+      },
+      {
+        "section": "Identity Details",
+        "label": "Do you have an Aadhaar linked to your mobile number?",
+        "type": "radio",
+        "key": "aadhaarLinked",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://los-prod.dailype.in/provider/link?provider=BAJAJ&utm_source=customer_portal",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Business Details",
+          "label": "Business Type",
+          "type": "select",
+          "key": "businessType",
+          "required": true
+        },
+        {
+          "section": "Business Details",
+          "label": "Business Name",
+          "type": "text",
+          "key": "businessName",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Bajaj Finserv Insta EMI Card",
+      "keyBenefits": [
+        "Pre-qualified offer up to ₹3,00,000",
+        "Shop 1 million+ products on Easy EMIs",
+        "5 lakh+ partner stores across 4,000+ cities",
+        "Flexible tenure up to 60 months",
+        "No annual fee - ₹530 one-time joining",
+        "₹1,000 cashback on first transaction"
+      ]
+    }
+  },
+  {
+    "id": "lap_google_form",
+    "code": "LAP_EXT_01",
+    "name": "Loan Against Property",
+    "category": "Loan Against Property",
+    "lender": "ClickPe",
+    "imageUrl": "https://elasticbeanstalk-ap-south-1-812175807951.s3.ap-south-1.amazonaws.com/static-resources/notification-resources/notification_images/home_loan_icon.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "DIRECT",
+    "ranking": 100,
+    "applicationConfig": {
+      "applyLink": "https://docs.google.com/forms/d/e/1FAIpQLScD-zaUWL9dzu0xaV28vicX9dyCn9ABGCZRQIByt0JIgUAHIw/viewform"
+    }
+  },
+  {
+    "id": "indusind_cc",
+    "code": "INDUSIND_CC",
+    "name": "IndusInd Credit Card",
+    "category": "Credit Card",
+    "lender": "IndusInd Bank",
+    "imageUrl": "https://yt3.googleusercontent.com/ytc/AIdro_lrGegp6ZaJYoTk_fCeOgguHPZtuGQnV7d1nc4j1RqxtuA=s900-c-k-c0x00ffffff-no-rj",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 130,
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/IC",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "IndusInd Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Lifetime Free Credit Card on Select Variants",
+        "Reward Points That Never Expire",
+        "Airport Lounge Access",
+        "Fuel Surcharge Benefits"
+      ]
+    }
+  },
+  {
+    "id": "airtel_payments_bank",
+    "code": "AIRTEL_SAVINGS",
+    "name": "Airtel Payments Bank Saving Account",
+    "category": "Savings Account",
+    "lender": "Airtel Payments Bank",
+    "imageUrl": "https://elasticbeanstalk-ap-south-1-812175807951.s3.ap-south-1.amazonaws.com/static-resources/notification-resources/notification_images/1710162404_Logo+1.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 140,
+    "additionalFields": [
+      {
+        "section": "Account Details",
+        "label": "Expected Monthly Balance",
+        "type": "number",
+        "key": "expectedBalance",
+        "required": true,
+        "placeholder": "Enter expected balance in ₹"
+      },
+      {
+        "section": "Account Details",
+        "label": "Primary Usage Purpose",
+        "type": "select",
+        "key": "usagePurpose",
+        "required": true,
+        "options": [
+          "Salary Account",
+          "Savings",
+          "Digital Payments",
+          "Business Transactions",
+          "Investments"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/ZD",
+      "formFields": [
+        {
+          "label": "Customer Name",
+          "type": "text",
+          "key": "fullName",
+          "required": true
+        },
+        {
+          "label": "Customer Mobile number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "label": "Customer Email Id",
+          "type": "email",
+          "key": "email",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Open Digital Savings Account",
+      "keyBenefits": [
+        "Earn 7%* interest",
+        "Unlock ₹15,000+ discounts",
+        "24X7 payment service",
+        "Zero balance account opening"
+      ]
+    }
+  },
+  {
+    "id": "moneydot_pl",
+    "code": "MONEYDOT_PL",
+    "name": "MoneyDot Personal Loan",
+    "category": "Personal Loan",
+    "lender": "MoneyDot",
+    "imageUrl": "https://moneydot.in/assets/13f7a4d8c39150c73e49f0f6cf16936ad062faec-CQgSPpPa.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 150,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹ (5,000 - 25,000)",
+        "validation": {
+          "min": 5000,
+          "max": 25000,
+          "errorMessage": "Loan amount must be between ₹5,000 and ₹25,000"
+        }
+      },
+      {
+        "section": "Financial Details",
+        "label": "Net Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter net monthly income in ₹",
+        "validation": {
+          "min": 15000,
+          "errorMessage": "Minimum monthly income must be ₹15,000"
+        }
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://play.google.com/store/apps/details?id=com.yrs.moneydot&referrer=utm_source%3Dclickpe%26utm_medium%3Dbanner%26utm_term%3Dloan_offer",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true,
+          "validation": {
+            "errorMessage": "Age must be between 22 and 58 years",
+            "maxAge": 58,
+            "minAge": 22
+          }
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Instant Personal Loan up to ₹25,000",
+      "keyBenefits": [
+        "Loan from ₹5,000 to ₹25,000",
+        "Quick 3-Month Repayment",
+        "No Collateral Required",
+        "100% Digital Process",
+        "For Salaried & Self-Employed",
+        "Minimal Documentation"
+      ]
+    }
+  },
+  {
+    "id": "hero_fincorp_pl",
+    "code": "HERO_FINCORP_PL",
+    "name": "Hero FinCorp Personal Loan",
+    "category": "Personal Loan",
+    "lender": "Hero FinCorp",
+    "imageUrl": "https://www.herofincorp.com/img/logo_dc3ab7afd1.webp",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 160,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹ (10,000 - 5,00,000)",
+        "validation": {
+          "min": 10000,
+          "max": 500000,
+          "errorMessage": "Loan amount must be between ₹10,000 and ₹5,00,000"
+        }
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Months)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in months (6-48)",
+        "validation": {
+          "min": 6,
+          "max": 48,
+          "errorMessage": "Tenure must be between 6 and 48 months"
+        }
+      },
+      {
+        "section": "Financial Details",
+        "label": "Net Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter net monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://hipl.onelink.me/1OrE?af_ios_url=https%3A%2F%2Floans.apps.herofincorp.com%2Fen%2Fpersonal-loan&af_android_url=https%3A%2F%2Floans.apps.herofincorp.com%2Fen%2Fpersonal-loan&af_web_dp=https%3A%2F%2Floans.apps.herofincorp.com%2Fen%2Fpersonal-loan&af_xp=custom&pid=Mymoneymantra&is_retargeting=true&af_reengagement_window=30d&c=Mymoneymantra&utm_source=partnership&utm_campaign=mymoneymantra&utm_content=DM&utm_medium=MMMNSHS200",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true,
+          "validation": {
+            "errorMessage": "Age must be between 21 and 58 years",
+            "maxAge": 58,
+            "minAge": 21
+          }
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Quick, Easy Personal Loan up to ₹5,00,000",
+      "keyBenefits": [
+        "Loan up to ₹5,00,000",
+        "Collateral-Free Loan",
+        "Low Interest Rates",
+        "Minimal Processing Fees",
+        "24x7 App Access",
+        "Simple EMI Repayment"
+      ]
+    }
+  },
+  {
+    "id": "au_sfb_cc",
+    "code": "AU_SFB_CC",
+    "name": "AU Small Finance Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "AU Small Finance Bank",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/89/AU-Bank-new-logo-for-GBM_1024X1024_%28cropped%29.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 170,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/AUC",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "AU Small Finance Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Lifetime Free Credit Card on Select Variants",
+        "Cashback and Reward Points on Every Spend",
+        "Shopping, Fuel, Travel and Dining Benefits",
+        "Instant Virtual Card with Digital Onboarding"
+      ]
+    }
+  },
+  {
+    "id": "axis_cc",
+    "code": "AXIS_CC",
+    "name": "Axis Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "Axis Bank",
+    "imageUrl": "https://eu-images.contentstack.com/v3/assets/blt7dacf616844cf077/blt13fea86cb15c61a6/679971ff6c6824228e38b7e9/axis-bank-logo.jpg?width=1280&auto=webp&quality=80&format=jpg&disable=upscale",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 180,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/ACK",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Axis Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹499+",
+        "Annual Fees: ₹499+",
+        "Multiple Credit Cards for Different Lifestyles",
+        "Complimentary Airport Lounge Access on Select Cards",
+        "Attractive Rewards and Cashback Benefits"
+      ]
+    }
+  },
+  {
+    "id": "bobcard_uni_goldx_cc",
+    "code": "BOBCARD_UNI_GOLDX_CC",
+    "name": "BOBCARD Uni GoldX Credit Card",
+    "category": "Credit Card",
+    "lender": "Bank of Baroda",
+    "imageUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQGkMK5X85JswA/company-logo_200_200/company-logo_200_200/0/1630636605840/uni_cards_logo?e=2147483647&v=beta&t=Yr2by-T6ZVXvfPxKWOq9s8iyJbLtvvL1YOkY2OmYL4g",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 190,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/UG",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "BOBCARD Uni GoldX Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Zero Joining and Annual Fee",
+        "1 Percent Assured Gold Cashback on Spends",
+        "Up to 5 Percent Gold on Partner Brands",
+        "Zero Forex Markup"
+      ]
+    }
+  },
+  {
+    "id": "equitas_cc",
+    "code": "EQUITAS_CC",
+    "name": "Equitas Credit Card",
+    "category": "Credit Card",
+    "lender": "Equitas Small Finance Bank",
+    "imageUrl": "https://images.indianexpress.com/2020/10/equitas-small-finance-bank-1200.jpeg",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 210,
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/QE",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        },
+        {
+          "section": "Card Selection",
+          "label": "Preferred Card Variant",
+          "type": "select",
+          "key": "cardVariant",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Equitas Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹500",
+        "UPI-enabled RuPay Credit Card",
+        "3X Rewards on Select Categories",
+        "Instant Digital Approval & Virtual Card",
+        "Lounge Access on PowerMiles Variant",
+        "Annual Fee Waiver on Spend Thresholds"
+      ]
+    }
+  },
+  {
+    "id": "hdfc_cc",
+    "code": "HDFC_CC",
+    "name": "HDFC Credit Card",
+    "category": "Credit Card",
+    "lender": "HDFC Bank",
+    "imageUrl": "https://images.assettype.com/fortune-india/import/company/logos/HDFC%20Bank.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 220,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/HY",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "HDFC Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹1000+",
+        "Annual Fees: ₹1000+",
+        "Reward Points and Cashback on Online Spends",
+        "Welcome Benefits and Monthly Vouchers",
+        "Complimentary Airport Lounge Access",
+        "Fuel Surcharge Waiver"
+      ]
+    }
+  },
+  {
+    "id": "icici_cc",
+    "code": "ICICI_CC",
+    "name": "ICICI Credit Card",
+    "category": "Credit Card",
+    "lender": "ICICI Bank",
+    "imageUrl": "https://www.boardinfinity.com/blog/content/images/2025/02/Company-Blog-Creatives----2025-02-25T175113.886.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 230,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/IK",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Annual Income",
+          "type": "number",
+          "key": "annualIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "ICICI Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Shopping and Dining Discounts",
+        "Cash Rewards and ICICI Bank Offers",
+        "Complimentary Airport Lounge Access",
+        "Fuel Surcharge Waiver",
+        "No Joining or Annual Fee on Select Cards"
+      ]
+    }
+  },
+  {
+    "id": "idfc_cc",
+    "code": "IDFC_CC",
+    "name": "IDFC FIRST Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "IDFC FIRST Bank",
+    "imageUrl": "https://assets.thehansindia.com/h-upload/2023/06/27/1361099-idfc-first-bank.jpg",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 240,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/IF",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "IDFC FIRST Bank Lifetime Free Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹199",
+        "Annual Fees: ₹0",
+        "Lifetime Free - No Annual Fee",
+        "10X Rewards on Incremental Spends",
+        "Points Never Expire",
+        "Movie & Dining Discounts"
+      ]
+    }
+  },
+  {
+    "id": "incred_pl",
+    "code": "INCRED_PL",
+    "name": "InCred Personal Loan",
+    "category": "Personal Loan",
+    "lender": "InCred",
+    "imageUrl": "https://www.incredgroup.com/wp-content/uploads/2022/07/InCred-Group-Logo-01.png",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 250,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹ (50,000 - 15,00,000)"
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Years)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in years (1-5)"
+      },
+      {
+        "section": "Financial Details",
+        "label": "Net Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter net monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://www.incred.com/personal-loan/?partnerId=5924685198961082P&utm_source=NSHS200",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 1)",
+          "type": "text",
+          "key": "addressLine1",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 2)",
+          "type": "text",
+          "key": "addressLine2",
+          "required": false
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Mode of Salary/Income Received",
+          "type": "select",
+          "key": "incomeMode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Net Monthly Salary/Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan Amount Required",
+          "type": "number",
+          "key": "loanAmount",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan Tenure (Years)",
+          "type": "number",
+          "key": "loanTenure",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Instant Personal Loan up to ₹15 Lakhs",
+      "keyBenefits": [
+        "15-Minute Disbursal",
+        "No Collateral Required",
+        "Instant Loan Approval",
+        "For Salaried & Self-Employed",
+        "Minimal Paperwork",
+        "No Hidden Charges"
+      ]
+    }
+  },
+  {
+    "id": "indianoil_rbl_xtra_cc",
+    "code": "INDIANOIL_RBL_XTRA_CC",
+    "name": "IndianOil RBL Bank XTRA Credit Card",
+    "category": "Credit Card",
+    "lender": "RBL Bank",
+    "imageUrl": "https://yt3.googleusercontent.com/U4_QJjAwGhUYDStdq5EbjMx8KOooiXTHu9AStxkKcQEpJwc8D94LC7CwPi2KQoRbXe6gd7scUg=s900-c-k-c0x00ffffff-no-rj",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 260,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/RI",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "IndianOil RBL Bank XTRA Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹1,500 +",
+        "Annual Fees: ₹1,500 +",
+        "8.5 percent Valueback on IndianOil Fuel",
+        "Up to 250 Litres Free Fuel Annually",
+        "Fuel Points on Every IndianOil Spend",
+        "Annual Fee Waiver on Spend Milestone"
+      ]
+    }
+  },
+  {
+    "id": "indusind_tiger_cc",
+    "code": "INDUSIND_TIGER_CC",
+    "name": "IndusInd Bank Tiger Credit Card",
+    "category": "Credit Card",
+    "lender": "IndusInd Bank",
+    "imageUrl": "https://yt3.googleusercontent.com/ytc/AIdro_lrGegp6ZaJYoTk_fCeOgguHPZtuGQnV7d1nc4j1RqxtuA=s900-c-k-c0x00ffffff-no-rj",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 270,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/IT",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "IndusInd Bank Tiger Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Zero Joining and Annual Fee",
+        "Domestic and International Lounge Access",
+        "Up to 6X Reward Points",
+        "Free Movie Ticket Every 6 Months",
+        "Concierge and Auto Assist Services"
+      ]
+    }
+  },
+  {
+    "id": "jupiter_rupay_cc",
+    "code": "JUPITER_RUPAY_CC",
+    "name": "Jupiter RuPay Credit Card",
+    "category": "Credit Card",
+    "lender": "Federal Bank",
+    "imageUrl": "https://jupiter.money/content/images/2021/07/Frame-12.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 280,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/ZF",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Jupiter RuPay Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "10 Percent Cashback on Top Shopping Brands",
+        "5 Percent Cashback on Travel Bookings",
+        "1 Percent Cashback on All Other Spends",
+        "Earn High-Value Reward Jewels"
+      ]
+    }
+  },
+  {
+    "id": "kotak_811",
+    "code": "KOTAK_SAVINGS",
+    "name": "Kotak 811 Savings Account",
+    "category": "Savings Account",
+    "lender": "Kotak Mahindra Bank",
+    "imageUrl": "https://s3.ap-south-1.amazonaws.com/finology-images/Select/e1997dc85127420da395a8f01d0d6861.jpg",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 300,
+    "additionalFields": [
+      {
+        "section": "Account Details",
+        "label": "Expected Monthly Balance",
+        "type": "number",
+        "key": "expectedBalance",
+        "required": true,
+        "placeholder": "Enter expected balance in ₹"
+      },
+      {
+        "section": "Account Details",
+        "label": "Primary Usage Purpose",
+        "type": "select",
+        "key": "usagePurpose",
+        "required": true,
+        "options": [
+          "Salary Account",
+          "Savings",
+          "Digital Payments",
+          "Business Transactions",
+          "Investments"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/KT",
+      "formFields": [
+        {
+          "label": "Customer Name",
+          "type": "text",
+          "key": "fullName",
+          "required": true
+        },
+        {
+          "label": "Customer Mobile number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "label": "Customer Email Id",
+          "type": "email",
+          "key": "email",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Zero Balance Digital Savings Account",
+      "keyBenefits": [
+        "Earn up to 4% interest p.a.",
+        "Lifetime Free Virtual Debit Card",
+        "No maintenance fees",
+        "Digital banking support"
+      ]
+    }
+  },
+  {
+    "id": "lic_axis_cc",
+    "code": "LIC_AXIS_CC",
+    "name": "LIC Axis Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "Axis Bank",
+    "imageUrl": "https://liccards.in/logo/LIC_CSL_Logo.png",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 310,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/LI",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Annual Income",
+          "type": "number",
+          "key": "annualIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "LIC Axis Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "2 Reward Points per 100 on LIC Payments",
+        "Lifetime Free Credit Card",
+        "Domestic Airport Lounge Access",
+        "Fuel Surcharge Waiver"
+      ]
+    }
+  },
+  {
+    "id": "magnifi_cc",
+    "code": "MAGNIFI_CC",
+    "name": "MagniFi Credit Card",
+    "category": "Credit Card",
+    "lender": "Federal Bank",
+    "imageUrl": "https://play-lh.googleusercontent.com/IGW7XXVRgU82nt1qkGltCaYzvOVyCv3mmjN5iqklQKRmmkxlAr712G1wKTs_y6KfUtQ",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 320,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/FV",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "MagniFi Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "20 percent Instant Discounts at Partner Brands",
+        "5 percent Back on Weekend Spends",
+        "0.5 percent Back on Weekday Spends",
+        "Lifetime Free Credit Card"
+      ]
+    }
+  },
+  {
+    "id": "moneyview_pl",
+    "code": "MONEYVIEW_PL",
+    "name": "Moneyview Personal Loan",
+    "category": "Loans",
+    "lender": "Moneyview",
+    "imageUrl": "https://elasticbeanstalk-ap-south-1-812175807951.s3.ap-south-1.amazonaws.com/static-resources/notification-resources/notification_images/1694242350_Money+View_re.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 330,
+    "additionalFields": [
+      {
+        "section": "Loan Details",
+        "label": "Loan Amount Required",
+        "type": "number",
+        "key": "loanAmount",
+        "required": true,
+        "placeholder": "Enter amount in ₹"
+      },
+      {
+        "section": "Loan Details",
+        "label": "Loan Tenure (Months)",
+        "type": "number",
+        "key": "loanTenure",
+        "required": true,
+        "placeholder": "Enter tenure in months"
+      },
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://loan.indiasales.club?productCode=MONEYVIEW&journeyId=1&shortCode=ivq_6TtBZ7ztZomFbeJ8O&subCode=l&productTypeId=403&productType=Personal%20Loan&memberId=E1YH4646&transitionId=6143ab26-aa53-41c5-9b37-6f8eb799d7d7",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Middle Name",
+          "type": "text",
+          "key": "middleName",
+          "required": false
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Gender",
+          "type": "select",
+          "key": "gender",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 1)",
+          "type": "text",
+          "key": "addressLine1",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address (Line 2)",
+          "type": "text",
+          "key": "addressLine2",
+          "required": false
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "State",
+          "type": "text",
+          "key": "state",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Mode of Salary/Income received",
+          "type": "select",
+          "key": "incomeMode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Net Monthly Salary/Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan amount required",
+          "type": "number",
+          "key": "loanAmount",
+          "required": true
+        },
+        {
+          "section": "Loan Requirement Details",
+          "label": "Loan Tenure",
+          "type": "number",
+          "key": "loanTenure",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Flexible Personal Loan up to ₹5 Lakhs",
+      "keyBenefits": [
+        "Instant approval in 2 minutes",
+        "Disbursal within 24 hours",
+        "Interest rates starting 1.33% per month",
+        "Tenure up to 60 months"
+      ]
+    }
+  },
+  {
+    "id": "rbl_shoprite_cc",
+    "code": "RBL_SHOPRITE_CC",
+    "name": "RBL Shoprite Credit Card",
+    "category": "Credit Card",
+    "lender": "RBL Bank",
+    "imageUrl": "https://yt3.googleusercontent.com/U4_QJjAwGhUYDStdq5EbjMx8KOooiXTHu9AStxkKcQEpJwc8D94LC7CwPi2KQoRbXe6gd7scUg=s900-c-k-c0x00ffffff-no-rj",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 340,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/RT",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "City",
+          "type": "text",
+          "key": "city",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "RBL Shoprite Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "5 Percent Cashback on Grocery Spends",
+        "2000 Bonus Reward Points on First Swipe",
+        "Fuel Surcharge Waiver Every Month",
+        "Lifetime Free Credit Card"
+      ]
+    }
+  },
+  {
+    "id": "sbi_cc",
+    "code": "SBI_CC",
+    "name": "SBI Credit Card",
+    "category": "Credit Card",
+    "lender": "State Bank of India",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvxDUPSOY0c4zGBZlQ9bvJwfAGcphuXMDdwQ&s",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 350,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/XS",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "SBI Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹499+",
+        "Annual Fees: ₹499+",
+        "Easy & Secure Payments",
+        "Reward Points on Spends",
+        "Dining, Travel & Lifestyle Offers",
+        "Cashback & Discounts"
+      ]
+    }
+  },
+  {
+    "id": "scapia_cc",
+    "code": "SCAPIA_CC",
+    "name": "Scapia Federal Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "Federal Bank",
+    "imageUrl": "https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/hp9r6slvbhhwehhldsmh?ik-sanitizeSvg=true",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 360,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/SCP",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Email Address",
+          "type": "email",
+          "key": "email",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Current Address Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Annual Income",
+          "type": "number",
+          "key": "netIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Scapia Federal Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Lifetime Free",
+        "Zero Forex Markup",
+        "Unlimited Lounge Access",
+        "Travel Rewards"
+      ]
+    }
+  },
+  {
+    "id": "tide_prepaid_expense_upi_card",
+    "code": "TIDE_PREPAID_EXPENSE_UPI_CARD",
+    "name": "Tide Prepaid Expense UPI Card",
+    "category": "Credit Card",
+    "lender": "Transcorp International Ltd",
+    "imageUrl": "https://web-assets.tide.co/assets/images/logo/Tide_Logo_Blue_RGB.svg",
+    "status": "ACTIVE",
+    "isPanIndia": true,
+    "integration_type": "REDIRECT",
+    "ranking": 380,
+    "applicationConfig": {
+      "applyLink": "https://los-dev.dailype.in/provider/link?provider=TIDE&utm_source=customer_portal"
+    },
+    "content": {
+      "headline": "Tide Prepaid Expense UPI Card",
+      "keyBenefits": [
+        "Use referral code OM1008 for extra benefits",
+        "Spend at all RuPay merchants without extra fees",
+        "Accepted at all RuPay merchants across India",
+        "Earn rewards on every transaction",
+        "Manage and control your card anytime from the Tide app",
+        "Secure prepaid card powered by RuPay",
+        "Seamless UPI-enabled payments and transactions"
+      ]
+    }
+  },
+  {
+    "id": "yesbank_cc",
+    "code": "YESBANK_CC",
+    "name": "Yes Bank Credit Card",
+    "category": "Credit Card",
+    "lender": "Yes Bank",
+    "imageUrl": "https://etimg.etb2bimg.com/photo/116285230.cms",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 390,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/YC",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Aadhaar Number",
+          "type": "number",
+          "key": "aadhaar",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation Type",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Monthly Income",
+          "type": "number",
+          "key": "monthlyIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "Yes Bank Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹499+",
+        "Annual Fees: ₹499+",
+        "Fuel Surcharge Waiver",
+        "100 Percent Digital and Paperless Journey",
+        "Cashback on Shopping and Groceries",
+        "Rewards on Bill Payments"
+      ]
+    }
+  },
+  {
+    "id": "yes_popclub_cc",
+    "code": "YES_POPCLUB_CC",
+    "name": "YES Bank POP-CLUB Credit Card",
+    "category": "Credit Card",
+    "lender": "YES Bank",
+    "imageUrl": "https://play-lh.googleusercontent.com/2rgAaFalkONLlIDl9yB5X_7IFLdKSnmj-C9_NJQPCquZls5eCUfSViCfMRCiBWeP7oHU49gf9xGMtJ5Qpb3R",
+    "status": "ACTIVE",
+    "isPanIndia": false,
+    "integration_type": "REDIRECT",
+    "ranking": 400,
+    "additionalFields": [
+      {
+        "section": "Financial Details",
+        "label": "Monthly Income",
+        "type": "number",
+        "key": "income",
+        "required": true,
+        "placeholder": "Enter monthly income in ₹"
+      },
+      {
+        "section": "Employment Details",
+        "label": "Employment Type",
+        "type": "select",
+        "key": "employment",
+        "required": true,
+        "options": [
+          "Salaried",
+          "Self-Employed",
+          "Business Owner",
+          "Professional"
+        ]
+      },
+      {
+        "section": "Credit History",
+        "label": "Do you have existing credit cards?",
+        "type": "radio",
+        "key": "existingCards",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    ],
+    "applicationConfig": {
+      "applyLink": "https://indiasales.club/E1YH4646/E1YH4646/YP",
+      "formFields": [
+        {
+          "section": "Basic Details",
+          "label": "Applicant's Mobile Number",
+          "type": "mobile",
+          "key": "mobile",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "First Name",
+          "type": "text",
+          "key": "firstName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "Last Name",
+          "type": "text",
+          "key": "lastName",
+          "required": true
+        },
+        {
+          "section": "Basic Details",
+          "label": "PAN Number",
+          "type": "text",
+          "key": "pan",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Date of Birth",
+          "type": "date",
+          "key": "dob",
+          "required": true
+        },
+        {
+          "section": "Personal Details",
+          "label": "Residential Pincode",
+          "type": "number",
+          "key": "pincode",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Occupation",
+          "type": "select",
+          "key": "occupation",
+          "required": true
+        },
+        {
+          "section": "Professional Details",
+          "label": "Annual Income",
+          "type": "number",
+          "key": "annualIncome",
+          "required": true
+        }
+      ]
+    },
+    "content": {
+      "headline": "YES Bank POP-CLUB Credit Card",
+      "keyBenefits": [
+        "Joining Fees: ₹0",
+        "Annual Fees: ₹0",
+        "Lifetime Free RuPay Credit Card",
+        "POPcoins Rewards",
+        "UPI Credit Card Support",
+        "Partner Joining Benefits"
+      ]
+    }
+  }
+]

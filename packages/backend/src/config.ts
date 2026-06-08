@@ -21,4 +21,5 @@ export default {
   SEED_ADMIN_PASSWORD: process.env.SEED_ADMIN_PASSWORD || "",
   SEED_ADMIN_MOBILE: process.env.SEED_ADMIN_MOBILE || "",
   SEED_ADMIN_FULL_NAME: process.env.SEED_ADMIN_FULL_NAME || "System Admin",
+  SEED_PARTNER_ID: process.env.SEED_PARTNER_ID || "",
 };

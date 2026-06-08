@@ -1,3 +1,4 @@
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AppBar from "@mui/material/AppBar";
@@ -20,7 +21,10 @@ import AuthServices from "../../services/AuthServices";
 
 const drawerWidth = 260;
 
-const navItems = [{ label: "Partners", href: "/admin/partners", icon: BusinessOutlinedIcon }];
+const navItems = [
+  { label: "Partners", href: "/admin/partners", icon: BusinessOutlinedIcon },
+  { label: "Banks", href: "/admin/banks", icon: AccountBalanceOutlinedIcon },
+];
 
 export default function AdminLayout(props: { children: React.ReactNode }) {
   const router = useRouter();

@@ -111,6 +111,31 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.IPartners_ListReturnType>> {
     return this.cmsQuery("partners", args, { method: "post", route: "/List" });
   }
+  async Banks_Delete(
+    args: types.IBanks_DeleteArgs
+  ): Promise<ITHTResponse<types.IBanks_DeleteReturnType>> {
+    return this.cmsQuery("banks", args, { method: "post", route: "/Delete" });
+  }
+  async Banks_Update(
+    args: types.IBanks_UpdateArgs
+  ): Promise<ITHTResponse<types.IBanks_UpdateReturnType>> {
+    return this.cmsQuery("banks", args, { method: "post", route: "/Update" });
+  }
+  async Banks_Get(
+    args: types.IBanks_GetArgs
+  ): Promise<ITHTResponse<types.IBanks_GetReturnType>> {
+    return this.cmsQuery("banks", args, { method: "post", route: "/Get" });
+  }
+  async Banks_Create(
+    args: types.IBanks_CreateArgs
+  ): Promise<ITHTResponse<types.IBanks_CreateReturnType>> {
+    return this.cmsQuery("banks", args, { method: "post", route: "/Create" });
+  }
+  async Banks_List(
+    args: types.IBanks_ListArgs
+  ): Promise<ITHTResponse<types.IBanks_ListReturnType>> {
+    return this.cmsQuery("banks", args, { method: "post", route: "/List" });
+  }
   async Products_Get(
     args: types.IProducts_GetArgs
   ): Promise<ITHTResponse<types.IProducts_GetReturnType>> {
@@ -121,15 +146,10 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.IProducts_DeleteReturnType>> {
     return this.cmsQuery("products", args, { method: "post", route: "/Delete" });
   }
-  async Products_Update(
-    args: types.IProducts_UpdateArgs
-  ): Promise<ITHTResponse<types.IProducts_UpdateReturnType>> {
-    return this.cmsQuery("products", args, { method: "post", route: "/Update" });
-  }
-  async Products_Create(
-    args: types.IProducts_CreateArgs
-  ): Promise<ITHTResponse<types.IProducts_CreateReturnType>> {
-    return this.cmsQuery("products", args, { method: "post", route: "/Create" });
+  async Products_Save(
+    args: types.IProducts_SaveArgs
+  ): Promise<ITHTResponse<types.IProducts_SaveReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/Save" });
   }
   async Products_List(
     args: types.IProducts_ListArgs

@@ -7,13 +7,24 @@ export interface IBaseProducts {
   Title: string;
   Slug: string;
   ShortDescription: string;
-  LongDescription: string;
+  KeyBenefits?: any[];
   LoanType: string;
+  BankID: string;
   PartnerID: string;
-  MainImage?: string;
   FormFields?: {
+    Key: string;
     Label: string;
     Type: string;
+    Section?: string;
     Required: boolean;
+    Placeholder?: string;
+    Options?: any[];
+    Validation?: {
+      min?: number;
+      max?: number;
+      minAge?: number;
+      maxAge?: number;
+      errorMessage?: string;
+    };
   }[];
 }

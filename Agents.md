@@ -52,6 +52,16 @@ These rules ensure clean, uniform, error-free execution across the codebase.
 ### 2.5 Comment Only Where It Saves Reader Time
 * **Rule**: Do not write comments that narrate what the code does (e.g., `// close modal` above `setOpen(false)`). Only use comments to explain **non-obvious intent**, **edge cases**, or **business logic choices**.
 
+### 2.6 Prefer Linear, Self-Contained Functions
+* **Rule**: Write code so a reader can follow the full story in one pass — top to bottom, in one place. Prefer one clear, reasonably-sized function over a chain of small helpers that each do one tiny step.
+* **Why**: A linear function is easier to read, debug, and change. Splitting too early spreads logic across files and forces the reader to jump around for a task that belongs together.
+* **When to extract**:
+  * **`utils/`** — genuinely shared, cross-cutting work used in **3+ unrelated places** (e.g. slugify, password hashing).
+  * **Service methods** — entity-specific logic reused across **multiple entry points** on that collection.
+  * **Local helpers** — only when the same block is needed **more than twice in the same file**.
+* **Default**: If something is used once or twice, keep it inline. Do not create entity-specific helper files or one-off wrappers for a single flow.
+* **Same operation, same shape**: When create and update (or equivalent paired operations) share the same payload and workflow, use one entry point — e.g. a `/Save` RPC with optional `_id` — with the logic written inline in that handler. Split only when the two paths are genuinely different (different fields, side effects, or multi-step setup).
+
 ---
 
 ## 3. Backend Architecture & Core Concepts
@@ -133,7 +143,7 @@ Files are stored in S3. There is **no public S3 bucket URL** — all reads go th
    # e.g., node scripts/generateFN.js customer-loan ApplyForLoan
    ```
    This scaffolds the Yup-validated handler inside `src/api/<collection-key>/fns/<FunctionName>.ts` and registers it in `<collection-key>Controller.ts`.
-2. Implement your business logic inside the callback.
+2. Implement your business logic inside the callback (see **§2.6** — keep handlers linear and self-contained).
 3. Run `npm run cmd syncSDK` to auto-regenerate SDK client methods and types inside `packages/backendsdk`.
 
 ### 4.3 Create a New Cron Job
