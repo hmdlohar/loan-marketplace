@@ -24,8 +24,7 @@ export default async function authDecode(req: AppRequest, res: AppResponse, next
         };
       }
     } catch (ex) {
-      res.status(403).send({ status: false, message: "Token malformed or expired." });
-      return;
+      // Ignore invalid/expired tokens — treat the request as public unless the route requires auth.
     }
   }
 

@@ -3,6 +3,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
@@ -14,36 +15,39 @@ import { lendingCoreTokens } from "../../theme/tokens";
 const light = lendingCoreTokens.colors.light;
 const dark = lendingCoreTokens.colors.dark;
 
-const stats = [
-  { value: "50+", label: "Partner lenders" },
-  { value: "₹500Cr+", label: "Loans matched" },
-  { value: "48 hrs", label: "Avg. offer turnaround" },
-];
+function HeroStats(props: { lenderCount?: number; productCount?: number; loading?: boolean }) {
+  const stats = [
+    {
+      value: props.loading ? "—" : `${props.lenderCount || 0}+`,
+      label: "Partner lenders",
+    },
+    {
+      value: props.loading ? "—" : `${props.productCount || 0}+`,
+      label: "Live products",
+    },
+    { value: "48 hrs", label: "Avg. offer turnaround" },
+  ];
 
-function HeroStats() {
   return (
     <Grid container spacing={{ xs: 2, sm: 2 }} sx={{ pt: { xs: 0.5, md: 1 } }}>
       {stats.map((stat, index) => (
         <Grid key={stat.label} size={{ xs: index === 2 ? 12 : 6, sm: 4 }}>
-          <Box
-            sx={{
-              px: { xs: 1, sm: 0 },
-              py: { xs: 1.5, sm: 0 },
-              borderRadius: 2,
-              height: "100%",
-            }}
-          >
-            <Typography
-              variant="h4"
-              sx={(theme) => ({
-                fontVariantNumeric: "tabular-nums",
-                fontSize: { xs: "1.5rem", sm: "2.125rem" },
-                color: light.primary,
-                ...theme.applyStyles("dark", { color: dark.secondaryFixed }),
-              })}
-            >
-              {stat.value}
-            </Typography>
+          <Box sx={{ px: { xs: 1, sm: 0 }, py: { xs: 1.5, sm: 0 }, borderRadius: 2, height: "100%" }}>
+            {props.loading ? (
+              <Skeleton width={80} height={40} />
+            ) : (
+              <Typography
+                variant="h4"
+                sx={(theme) => ({
+                  fontVariantNumeric: "tabular-nums",
+                  fontSize: { xs: "1.5rem", sm: "2.125rem" },
+                  color: light.primary,
+                  ...theme.applyStyles("dark", { color: dark.secondaryFixed }),
+                })}
+              >
+                {stat.value}
+              </Typography>
+            )}
             <Typography
               variant="caption"
               sx={(theme) => ({
@@ -64,7 +68,13 @@ function HeroStats() {
   );
 }
 
-function HeroTrustBadge() {
+function HeroTrustBadge(props: { lenderCount?: number; loading?: boolean }) {
+  const label = props.loading
+    ? "Loading partners..."
+    : props.lenderCount
+      ? `Trusted by ${props.lenderCount}+ lenders`
+      : "Trusted partner marketplace";
+
   return (
     <Box
       sx={(theme) => ({
@@ -102,7 +112,7 @@ function HeroTrustBadge() {
           ...theme.applyStyles("dark", { color: dark.secondaryFixed }),
         })}
       >
-        Trusted by 50+ banks
+        {label}
       </Typography>
     </Box>
   );
@@ -111,8 +121,6 @@ function HeroTrustBadge() {
 function HeroCopy() {
   return (
     <Stack spacing={{ xs: 2.5, md: 3 }}>
-      <HeroTrustBadge />
-
       <Typography
         variant="h1"
         component="h1"
@@ -137,8 +145,7 @@ function HeroCopy() {
           ...theme.applyStyles("dark", { color: dark.primaryFixed, opacity: 0.92 }),
         })}
       >
-        Compare offers from leading lenders. One guided journey from eligibility to approval — engineered for clarity at
-        every step.
+        Browse real offers from banks and NBFCs. No login needed to explore — verify with OTP only when you apply.
       </Typography>
     </Stack>
   );
@@ -157,7 +164,7 @@ function HeroActions() {
         fullWidth
         sx={{ width: { sm: "auto" } }}
       >
-        Check eligibility
+        Browse products
       </Button>
       <Button
         component={NextLink}
@@ -190,7 +197,11 @@ function HeroActions() {
   );
 }
 
-export default function HeroSection() {
+export default function HeroSection(props: {
+  lenderCount?: number;
+  productCount?: number;
+  loading?: boolean;
+}) {
   return (
     <Box
       sx={(theme) => ({
@@ -200,19 +211,13 @@ export default function HeroSection() {
         ...heroSectionSx(theme),
       })}
     >
-      <Box
-        sx={{
-          display: { xs: "block", md: "none" },
-          px: 2,
-          pt: 2,
-          pb: 4,
-        }}
-      >
+      <Box sx={{ display: { xs: "block", md: "none" }, px: 2, pt: 2, pb: 4 }}>
         <Stack spacing={3}>
+          <HeroTrustBadge lenderCount={props.lenderCount} loading={props.loading} />
           <HeroCopy />
           <HeroIllustration />
           <HeroActions />
-          <HeroStats />
+          <HeroStats lenderCount={props.lenderCount} productCount={props.productCount} loading={props.loading} />
         </Stack>
       </Box>
 
@@ -221,9 +226,10 @@ export default function HeroSection() {
           <Grid container spacing={6} alignItems="center">
             <Grid size={7}>
               <Stack spacing={3}>
+                <HeroTrustBadge lenderCount={props.lenderCount} loading={props.loading} />
                 <HeroCopy />
                 <HeroActions />
-                <HeroStats />
+                <HeroStats lenderCount={props.lenderCount} productCount={props.productCount} loading={props.loading} />
               </Stack>
             </Grid>
             <Grid size={5}>

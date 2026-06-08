@@ -66,6 +66,16 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.ICronLog_RunCronJobReturnType>> {
     return this.cmsQuery("cron-log", args, { method: "post", route: "/RunCronJob" });
   }
+  async User_VerifyOtp(
+    args: types.IUser_VerifyOtpArgs
+  ): Promise<ITHTResponse<types.IUser_VerifyOtpReturnType>> {
+    return this.cmsQuery("user", args, { method: "post", route: "/VerifyOtp" });
+  }
+  async User_SendOtp(
+    args: types.IUser_SendOtpArgs
+  ): Promise<ITHTResponse<types.IUser_SendOtpReturnType>> {
+    return this.cmsQuery("user", args, { method: "post", route: "/SendOtp" });
+  }
   async User_GetProfile(
     args: types.IUser_GetProfileArgs
   ): Promise<ITHTResponse<types.IUser_GetProfileReturnType>> {
@@ -136,6 +146,16 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.IBanks_ListReturnType>> {
     return this.cmsQuery("banks", args, { method: "post", route: "/List" });
   }
+  async Products_GetPublic(
+    args: types.IProducts_GetPublicArgs
+  ): Promise<ITHTResponse<types.IProducts_GetPublicReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/GetPublic" });
+  }
+  async Products_ListPublic(
+    args: types.IProducts_ListPublicArgs
+  ): Promise<ITHTResponse<types.IProducts_ListPublicReturnType>> {
+    return this.cmsQuery("products", args, { method: "post", route: "/ListPublic" });
+  }
   async Products_Get(
     args: types.IProducts_GetArgs
   ): Promise<ITHTResponse<types.IProducts_GetReturnType>> {
@@ -155,6 +175,41 @@ export class BackendSDK {
     args: types.IProducts_ListArgs
   ): Promise<ITHTResponse<types.IProducts_ListReturnType>> {
     return this.cmsQuery("products", args, { method: "post", route: "/List" });
+  }
+  async Customers_SaveProfile(
+    args: types.ICustomers_SaveProfileArgs
+  ): Promise<ITHTResponse<types.ICustomers_SaveProfileReturnType>> {
+    return this.cmsQuery("customers", args, { method: "post", route: "/SaveProfile" });
+  }
+  async Customers_Get(
+    args: types.ICustomers_GetArgs
+  ): Promise<ITHTResponse<types.ICustomers_GetReturnType>> {
+    return this.cmsQuery("customers", args, { method: "post", route: "/Get" });
+  }
+  async Applications_Get(
+    args: types.IApplications_GetArgs
+  ): Promise<ITHTResponse<types.IApplications_GetReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/Get" });
+  }
+  async Applications_List(
+    args: types.IApplications_ListArgs
+  ): Promise<ITHTResponse<types.IApplications_ListReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/List" });
+  }
+  async Applications_Save(
+    args: types.IApplications_SaveArgs
+  ): Promise<ITHTResponse<types.IApplications_SaveReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/Save" });
+  }
+  async Documents_List(
+    args: types.IDocuments_ListArgs
+  ): Promise<ITHTResponse<types.IDocuments_ListReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/List" });
+  }
+  async Documents_Upload(
+    args: types.IDocuments_UploadArgs
+  ): Promise<ITHTResponse<types.IDocuments_UploadReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/Upload" });
   }
 
   // Methods End

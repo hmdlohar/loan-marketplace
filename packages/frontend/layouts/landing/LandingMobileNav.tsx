@@ -16,7 +16,7 @@ import { useState } from "react";
 import { APP_NAME } from "commonlib";
 
 const navLinks = [
-  { label: "Products", href: "/#products" },
+  { label: "Products", href: "/app/products" },
   { label: "How it works", href: "/#how-it-works" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -102,7 +102,7 @@ export default function LandingMobileNav() {
               size="large"
               onClick={close}
             >
-              Check eligibility
+              Browse products
             </Button>
             <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1.5, textAlign: "center" }}>
               Compare offers from partner lenders

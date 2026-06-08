@@ -13,7 +13,7 @@ import ThemeModeToggle from "../../components/common/ThemeModeToggle";
 import LandingMobileNav from "./LandingMobileNav";
 
 const navLinks = [
-  { label: "Products", href: "/#products" },
+  { label: "Products", href: "/app/products" },
   { label: "How it works", href: "/#how-it-works" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -70,7 +70,7 @@ export default function LandingHeader() {
                 flexShrink: 0,
               }}
             >
-              Check eligibility
+              Browse products
             </Button>
             <LandingMobileNav />
           </Stack>

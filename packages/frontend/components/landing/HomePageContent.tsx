@@ -5,18 +5,22 @@ import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
 import PageContainer from "../common/PageContainer";
+import ProductCard from "../customer/ProductCard";
 import HeroSection from "./HeroSection";
 import HowItWorksInfographic from "./HowItWorksInfographic";
 import PartnerBankLogos from "./PartnerBankLogos";
 import { footerSectionSx, iconWellSx, trustShadowSx } from "../../theme/styleHelpers";
 import { lendingCoreTokens } from "../../theme/tokens";
+import { useMarketplaceCatalog } from "../../services/useMarketplaceCatalog";
 
 const dark = lendingCoreTokens.colors.dark;
 
@@ -38,21 +42,19 @@ const features = [
   },
 ];
 
-const products = [
-  { label: "Home Loan", apr: "From 8.4% APR", amount: "Up to ₹5 Cr" },
-  { label: "LAP", apr: "From 9.1% APR", amount: "Up to ₹10 Cr" },
-  { label: "Personal Loan", apr: "From 10.5% APR", amount: "Up to ₹25 L" },
-  { label: "Working Capital", apr: "From 11.2% APR", amount: "Up to ₹2 Cr" },
-  { label: "Credit Card", apr: "Rewards & lounge", amount: "Limit up to ₹5 L" },
-];
-
-
 export default function HomePageContent() {
+  const catalogQuery = useMarketplaceCatalog();
+  const catalog = catalogQuery.data;
+
   return (
     <>
-      <HeroSection />
+      <HeroSection
+        lenderCount={catalog?.lenderCount}
+        productCount={catalog?.productCount}
+        loading={catalogQuery.isLoading}
+      />
 
-      <PartnerBankLogos />
+      <PartnerBankLogos banks={catalog?.banks} loading={catalogQuery.isLoading} />
 
       <PageContainer pt={{ xs: 1, md: 1.5 }} pb={{ xs: 3, md: 4 }}>
         <HowItWorksInfographic />
@@ -64,53 +66,101 @@ export default function HomePageContent() {
             Products we match
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: 640 }}>
-            From home loans to working capital — select a product and we route you to the right lenders.
+            Choose a loan type to browse live offers from our partner lenders. No account required to explore.
           </Typography>
+
+          {catalogQuery.error ? (
+            <Typography color="error" sx={{ mb: 3 }}>
+              {(catalogQuery.error as Error).message}
+            </Typography>
+          ) : null}
+
           <Grid container spacing={2}>
-            {products.map((product) => (
-              <Grid key={product.label} size={{ xs: 12, sm: 6, md: 4 }}>
-                <Card
-                  sx={(theme) => ({
-                    height: "100%",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                    ...theme.applyStyles("dark", {
-                      bgcolor: dark.surfaceContainerLow,
-                      borderColor: "rgba(74, 225, 131, 0.14)",
-                    }),
-                    "&:hover": {
-                      transform: "translateY(-2px)",
-                      ...trustShadowSx(theme),
-                    },
-                  })}
-                >
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      {product.label}
-                    </Typography>
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1.5 }}>
-                      <Chip
-                        label={product.apr}
-                        color="secondary"
-                        size="small"
-                        variant="outlined"
-                        sx={(theme) =>
-                          theme.applyStyles("dark", {
-                            borderColor: "rgba(74, 225, 131, 0.45)",
-                            color: dark.secondary,
-                          })
-                        }
-                      />
-                    </Stack>
-                    <Typography variant="body2" color="text.secondary">
-                      {product.amount} · verified partner lenders
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+            {catalogQuery.isLoading
+              ? [1, 2, 3, 4, 5].map((item) => (
+                  <Grid key={item} size={{ xs: 12, sm: 6, md: 4 }}>
+                    <Skeleton variant="rounded" height={160} />
+                  </Grid>
+                ))
+              : (catalog?.categories || []).map((category) => (
+                  <Grid key={category.loanType} size={{ xs: 12, sm: 6, md: 4 }}>
+                    <Card
+                      sx={(theme) => ({
+                        height: "100%",
+                        transition: "transform 0.2s, box-shadow 0.2s",
+                        opacity: category.count ? 1 : 0.72,
+                        ...theme.applyStyles("dark", {
+                          bgcolor: dark.surfaceContainerLow,
+                          borderColor: "rgba(74, 225, 131, 0.14)",
+                        }),
+                        "&:hover": category.count
+                          ? {
+                              transform: "translateY(-2px)",
+                              ...trustShadowSx(theme),
+                            }
+                          : {},
+                      })}
+                    >
+                      <CardActionArea
+                        component={NextLink}
+                        href={`/app/products?type=${category.loanType}`}
+                        disabled={!category.count}
+                        sx={{ height: "100%" }}
+                      >
+                        <CardContent>
+                          <Typography variant="h6" gutterBottom>
+                            {category.label}
+                          </Typography>
+                          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1.5 }}>
+                            <Chip
+                              label={category.count ? `${category.count} live offers` : "Coming soon"}
+                              color={category.count ? "secondary" : "default"}
+                              size="small"
+                              variant="outlined"
+                              sx={(theme) =>
+                                theme.applyStyles("dark", {
+                                  borderColor: category.count ? "rgba(74, 225, 131, 0.45)" : undefined,
+                                  color: category.count ? dark.secondary : undefined,
+                                })
+                              }
+                            />
+                          </Stack>
+                          <Typography variant="body2" color="text.secondary">
+                            {category.description}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                ))}
           </Grid>
         </Box>
       </PageContainer>
+
+      {(catalog?.featured || []).length ? (
+        <PageContainer pb={{ xs: 4, md: 6 }}>
+          <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems={{ sm: "center" }} spacing={2} sx={{ mb: 3 }}>
+            <Box>
+              <Typography variant="h2" gutterBottom>
+                Featured offers
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                Popular products you can apply for right now.
+              </Typography>
+            </Box>
+            <Button component={NextLink} href="/app/products" variant="outlined" endIcon={<ArrowForwardIcon />}>
+              View all
+            </Button>
+          </Stack>
+          <Grid container spacing={2}>
+            {(catalog?.featured || []).map((product: any) => (
+              <Grid key={product._id} size={{ xs: 12, md: 6, lg: 4 }}>
+                <ProductCard product={product} />
+              </Grid>
+            ))}
+          </Grid>
+        </PageContainer>
+      ) : null}
 
       <Box
         sx={(theme) => ({
@@ -165,7 +215,7 @@ export default function HomePageContent() {
                 Ready to compare your options?
               </Typography>
               <Typography variant="body1" sx={{ opacity: 0.9, maxWidth: 520, fontSize: { xs: "0.9375rem", md: "1rem" } }}>
-                Start with eligibility — no obligation. See matched offers before you commit.
+                Browse {catalog?.productCount || "live"} products — no obligation. See matched offers before you commit.
               </Typography>
             </Box>
             <Button
@@ -178,7 +228,7 @@ export default function HomePageContent() {
               fullWidth
               sx={{ flexShrink: 0, width: { xs: "100%", md: "auto" } }}
             >
-              Start your application
+              Browse products
             </Button>
           </Stack>
         </PageContainer>

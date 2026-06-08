@@ -142,3 +142,24 @@ export async function uploadBankLogo(
     logoUrl: getFileProxyUrl(key),
   };
 }
+
+export function getApplicationDocumentPath(applicationId: string, documentType: string, fileName: string) {
+  const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  return `private/applications/${applicationId}/${documentType}/${Date.now()}-${safeName}`;
+}
+
+export async function uploadApplicationDocument(
+  applicationId: string,
+  documentType: string,
+  fileBuffer: Buffer,
+  contentType: string,
+  fileName: string
+) {
+  const key = getApplicationDocumentPath(applicationId, documentType, fileName);
+  await uploadS3Object(key, fileBuffer, contentType);
+
+  return {
+    key,
+    fileUrl: getFileProxyUrl(key),
+  };
+}
