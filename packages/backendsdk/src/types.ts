@@ -199,6 +199,7 @@ export type IApplications_ListArgs = {
 export type IApplications_ListReturnType = any;
 export type IApplications_SaveArgs = {
   _id?: string;
+  LoanType?: string;
   ProductID?: string;
   FormData?: {
 
@@ -216,6 +217,17 @@ export type IApplications_SaveArgs = {
 };
 
 export type IApplications_SaveReturnType = any;
+export type IApplications_GetRecommendationsArgs = {
+  ApplicationID?: string;
+};
+
+export type IApplications_GetRecommendationsReturnType = any;
+export type IApplications_SelectProductArgs = {
+  ApplicationID?: string;
+  ProductID?: string;
+};
+
+export type IApplications_SelectProductReturnType = any;
 export type IDocuments_ListArgs = {
   ApplicationID?: string;
 };
@@ -230,3 +242,27 @@ export type IDocuments_UploadArgs = {
 };
 
 export type IDocuments_UploadReturnType = any;
+export type IDocuments_UploadVaultArgs = {
+  DocumentType?: string;
+  Name?: string;
+  FileBase64?: string;
+  ContentType?: string;
+};
+
+export type IDocuments_UploadVaultReturnType = any;
+export type IDocuments_ListVaultArgs = {
+
+};
+
+export type IDocuments_ListVaultReturnType = any;
+export type IDocuments_ParseArgs = {
+  DocumentID?: string;
+};
+
+export type IDocuments_ParseReturnType = any;
+export type IDocuments_AttachToApplicationArgs = {
+  ApplicationID?: string;
+  DocumentID?: string;
+};
+
+export type IDocuments_AttachToApplicationReturnType = any;

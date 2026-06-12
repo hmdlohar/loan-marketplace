@@ -53,7 +53,7 @@ export async function List(args: IListArgs, context: ICMSContext): Promise<IList
     }
 
     enrichedItems.push({
-      ...application,
+      ...applicationObj,
       Product: product
         ? {
             _id: product._id,

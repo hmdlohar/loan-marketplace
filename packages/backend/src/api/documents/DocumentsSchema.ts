@@ -31,5 +31,6 @@ export const DocumentsSchema = new Schema({
 
 DocumentsSchema.index({ "Context.ApplicationID": 1 });
 DocumentsSchema.index({ "Context.UserID": 1 });
+DocumentsSchema.index({ "Context.UserID": 1, DocumentType: 1 });
 
 export type IDocuments = InferSchemaType<typeof DocumentsSchema> & {};

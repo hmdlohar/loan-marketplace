@@ -66,7 +66,7 @@ class AuthServices {
     if (AuthServices.isPartner()) {
       return "/partner/products";
     }
-    return "/app/products";
+    return "/app/dashboard";
   }
 }
 

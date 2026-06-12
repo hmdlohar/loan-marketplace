@@ -39,18 +39,27 @@ export async function Get(args: IGetArgs, context: ICMSContext): Promise<IGetRet
     }
   }
 
-  const documentIds = (applicationObj.DocumentIDs || {}) as Record<string, string>;
+  const rawDocumentIds = applicationObj.DocumentIDs || {};
+  const documentIdEntries = [
+    ["PAN", rawDocumentIds.PAN],
+    ["AADHAAR", rawDocumentIds.AADHAAR],
+    ["SALARY_SLIP", rawDocumentIds.SALARY_SLIP],
+    ["BANK_STATEMENT", rawDocumentIds.BANK_STATEMENT],
+    ["ITR", rawDocumentIds.ITR],
+    ["GST_RETURN", rawDocumentIds.GST_RETURN],
+    ["PROPERTY_DOCUMENT", rawDocumentIds.PROPERTY_DOCUMENT],
+  ] as const;
   const documents = [];
-  const docKeys = Object.keys(documentIds);
-  for (let i = 0; i < docKeys.length; i++) {
-    const docType = docKeys[i];
-    const docId = documentIds[docType];
+  for (let i = 0; i < documentIdEntries.length; i++) {
+    const docType = documentIdEntries[i][0];
+    const docId = documentIdEntries[i][1];
     if (!docId) {
       continue;
     }
     const document = await DocumentsService.context(context).findOne({ _id: docId });
     if (document) {
-      documents.push(document);
+      const documentObj = document.toObject ? document.toObject() : document;
+      documents.push(documentObj);
     }
   }
 

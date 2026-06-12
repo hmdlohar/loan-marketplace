@@ -145,7 +145,7 @@ function HeroCopy() {
           ...theme.applyStyles("dark", { color: dark.primaryFixed, opacity: 0.92 }),
         })}
       >
-        Browse real offers from banks and NBFCs. No login needed to explore — verify with OTP only when you apply.
+        Pick your loan type, upload documents, and get matched to the best bank products for your profile.
       </Typography>
     </Stack>
   );
@@ -156,7 +156,7 @@ function HeroActions() {
     <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: { xs: "100%", sm: "auto" } }}>
       <Button
         component={NextLink}
-        href="/app/products"
+        href="/app/apply"
         variant="contained"
         color="secondary"
         size="large"
@@ -164,7 +164,7 @@ function HeroActions() {
         fullWidth
         sx={{ width: { sm: "auto" } }}
       >
-        Browse products
+        Apply for a loan
       </Button>
       <Button
         component={NextLink}

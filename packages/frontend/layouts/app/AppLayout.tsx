@@ -24,11 +24,10 @@ import AuthServices from "../../services/AuthServices";
 const drawerWidth = 260;
 
 const navItems = [
-  { label: "Select product", href: "/app/products", icon: AccountBalanceOutlinedIcon },
-  { label: "Eligibility form", href: "/app/apply", icon: AssignmentOutlinedIcon },
+  { label: "Apply for loan", href: "/app/apply", icon: AccountBalanceOutlinedIcon },
   { label: "Documents", href: "/app/apply/documents", icon: DescriptionOutlinedIcon },
-  { label: "Finding matches", href: "/app/matching", icon: SearchOutlinedIcon },
-  { label: "Offers", href: "/app/offers", icon: CompareArrowsOutlinedIcon },
+  { label: "Application form", href: "/app/apply/form", icon: AssignmentOutlinedIcon },
+  { label: "Recommendations", href: "/app/apply/recommendations", icon: SearchOutlinedIcon },
   { label: "Dashboard", href: "/app/dashboard", icon: DashboardOutlinedIcon },
 ];
 

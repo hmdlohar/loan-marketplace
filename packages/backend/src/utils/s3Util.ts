@@ -163,3 +163,24 @@ export async function uploadApplicationDocument(
     fileUrl: getFileProxyUrl(key),
   };
 }
+
+export function getCustomerVaultDocumentPath(userId: string, documentType: string, fileName: string) {
+  const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  return `private/customers/${userId}/${documentType}/${Date.now()}-${safeName}`;
+}
+
+export async function uploadCustomerVaultDocument(
+  userId: string,
+  documentType: string,
+  fileBuffer: Buffer,
+  contentType: string,
+  fileName: string
+) {
+  const key = getCustomerVaultDocumentPath(userId, documentType, fileName);
+  await uploadS3Object(key, fileBuffer, contentType);
+
+  return {
+    key,
+    fileUrl: getFileProxyUrl(key),
+  };
+}

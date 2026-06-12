@@ -75,3 +75,55 @@ export async function upsertCustomerProfileFromApplication(
 
   return CustomersService.context(context).create(payload);
 }
+
+export async function upsertCustomerProfileFromParsedData(
+  context: ICMSContext,
+  userId: string,
+  parsedFields: Record<string, any>
+) {
+  const existing = await CustomersService.context(context).findOne({ UserID: userId });
+  const profilePatch = extractCustomerProfileFromFormData(parsedFields);
+  const mobile = profilePatch.Mobile || existing?.Mobile || "";
+
+  if (!mobile && !existing) {
+    return null;
+  }
+
+  const payload = {
+    UserID: userId,
+    Mobile: mobile,
+    FirstName: profilePatch.FirstName,
+    MiddleName: profilePatch.MiddleName,
+    LastName: profilePatch.LastName,
+    FullName: profilePatch.FullName,
+    Email: profilePatch.Email,
+    DOB: profilePatch.DOB,
+    Gender: profilePatch.Gender,
+    PANNumber: profilePatch.PANNumber,
+    AddressLine1: profilePatch.AddressLine1,
+    AddressLine2: profilePatch.AddressLine2,
+    PinCode: profilePatch.PinCode,
+    City: profilePatch.City,
+    State: profilePatch.State,
+    EmploymentType: profilePatch.EmploymentType,
+    NetIncome: profilePatch.NetIncome,
+  };
+
+  if (existing) {
+    const updatePayload: Record<string, any> = {};
+    const keys = Object.keys(payload) as (keyof typeof payload)[];
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (key === "UserID") {
+        continue;
+      }
+      const value = payload[key];
+      if (value !== undefined && value !== null && value !== "") {
+        updatePayload[key] = value;
+      }
+    }
+    return CustomersService.context(context).update(existing._id, updatePayload);
+  }
+
+  return CustomersService.context(context).create(payload);
+}

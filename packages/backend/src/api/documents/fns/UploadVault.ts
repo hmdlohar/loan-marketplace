@@ -3,39 +3,30 @@ import { IRPCFunctionDefinition } from "@root/types/rpc";
 import { ICMSContext } from "@root/types/cms";
 import { DOCUMENT_TYPE, USER_ROLE } from "commonlib";
 import DocumentsService from "@root/api/documents/DocumentsService";
-import ApplicationsService from "@root/api/applications/ApplicationsService";
 import CustomersService from "@root/api/customers/CustomersService";
 import { uploadCustomerVaultDocument, guessContentType } from "@root/utils/s3Util";
 import { buildDummyParsedData } from "@root/utils/documentParseUtil";
 import { upsertCustomerProfileFromParsedData } from "@root/utils/customerProfileUtil";
-import { getFileProxyUrl } from "@root/utils/s3Util";
 
 const argsSchema = yup.object({
-  ApplicationID: yup.string().required(),
   DocumentType: yup.string().oneOf(Object.values(DOCUMENT_TYPE)).required(),
   Name: yup.string().required(),
   FileBase64: yup.string().required(),
   ContentType: yup.string().optional(),
 });
-export type IUploadArgs = yup.InferType<typeof argsSchema>;
+export type IUploadVaultArgs = yup.InferType<typeof argsSchema>;
 
-type IUploadReturnType = any;
+type IUploadVaultReturnType = any;
 
-export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<IUploadReturnType> {
+export async function UploadVault(args: IUploadVaultArgs, context: ICMSContext): Promise<IUploadVaultReturnType> {
   if (!context.SystemUserID || context.SystemUserID === "DEFAULT") {
     throw new Error("Authentication required.");
-  }
-
-  const application = await ApplicationsService.context(context).get_Throwable(args.ApplicationID);
-  if (application.UserID !== context.SystemUserID) {
-    throw new Error("You do not have access to this application.");
   }
 
   const userId = context.SystemUserID;
   const base64Data = args.FileBase64.includes(",") ? args.FileBase64.split(",")[1] : args.FileBase64;
   const buffer = Buffer.from(base64Data, "base64");
   const contentType = args.ContentType || guessContentType(args.Name);
-  const documentType = args.DocumentType as DOCUMENT_TYPE;
 
   const uploaded = await uploadCustomerVaultDocument(
     userId,
@@ -46,6 +37,7 @@ export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<I
   );
 
   const customer = await CustomersService.context(context).findOne({ UserID: userId });
+  const documentType = args.DocumentType as DOCUMENT_TYPE;
   const parsedData = buildDummyParsedData(documentType);
 
   const document = await DocumentsService.context(context).create({
@@ -56,8 +48,6 @@ export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<I
     Context: {
       UserID: userId,
       CustomerID: customer?._id,
-      ApplicationID: args.ApplicationID,
-      ProductID: application.ProductID,
     },
   });
 
@@ -65,32 +55,15 @@ export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<I
     await upsertCustomerProfileFromParsedData(context, userId, parsedData);
   }
 
-  const applicationObj = application.toObject ? application.toObject() : application;
-  const existingDocIds = applicationObj.DocumentIDs || {};
-  const documentIds = {
-    PAN: existingDocIds.PAN,
-    AADHAAR: existingDocIds.AADHAAR,
-    SALARY_SLIP: existingDocIds.SALARY_SLIP,
-    BANK_STATEMENT: existingDocIds.BANK_STATEMENT,
-    ITR: existingDocIds.ITR,
-    GST_RETURN: existingDocIds.GST_RETURN,
-    PROPERTY_DOCUMENT: existingDocIds.PROPERTY_DOCUMENT,
-  };
-  documentIds[documentType as keyof typeof documentIds] = document._id;
-
-  await ApplicationsService.context(context).update(args.ApplicationID, {
-    DocumentIDs: documentIds,
-  });
-
   return {
     ...(document.toObject ? document.toObject() : document),
-    FileUrl: getFileProxyUrl(uploaded.key),
+    FileUrl: uploaded.fileUrl,
     ParsedData: parsedData,
   };
 }
 
 const definition: IRPCFunctionDefinition = {
-  callback: Upload,
+  callback: UploadVault,
   argsSchema,
   access: {
     allow: [USER_ROLE.AUTHENTICATED, USER_ROLE.CUSTOMER],

@@ -1,14 +1,15 @@
 import * as yup from "yup";
 import { IRPCFunctionDefinition } from "@root/types/rpc";
 import { ICMSContext } from "@root/types/cms";
-import { APPLICATION_STATUS, USER_ROLE } from "commonlib";
+import { APPLICATION_STATUS, LOAN_PRODUCT, USER_ROLE } from "commonlib";
 import ApplicationsService from "@root/api/applications/ApplicationsService";
 import ProductsService from "@root/api/products/ProductsService";
 import { upsertCustomerProfileFromApplication } from "@root/utils/customerProfileUtil";
 
 const argsSchema = yup.object({
   _id: yup.string().optional(),
-  ProductID: yup.string().required(),
+  LoanType: yup.string().oneOf(Object.values(LOAN_PRODUCT)).optional(),
+  ProductID: yup.string().optional(),
   FormData: yup.object().default({}),
   Status: yup
     .string()
@@ -35,7 +36,6 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
     throw new Error("Authentication required.");
   }
 
-  await ProductsService.context(context).get_Throwable(args.ProductID);
   const userId = context.SystemUserID;
   const formData = (args.FormData || {}) as Record<string, any>;
   const status = args.Status || APPLICATION_STATUS.CREATED;
@@ -46,6 +46,15 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
       throw new Error("You do not have access to this application.");
     }
 
+    if (args.ProductID) {
+      const product = await ProductsService.context(context).get_Throwable(args.ProductID);
+      const productObj = product.toObject ? product.toObject() : product;
+      const applicationObj = application.toObject ? application.toObject() : application;
+      if (productObj.LoanType !== applicationObj.LoanType) {
+        throw new Error("Product loan type does not match the application.");
+      }
+    }
+
     const updatePayload: Record<string, any> = {
       FormData: formData,
       Status: status,
@@ -53,12 +62,16 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
     if (args.DocumentIDs) {
       updatePayload.DocumentIDs = args.DocumentIDs;
     }
+    if (args.ProductID) {
+      updatePayload.ProductID = args.ProductID;
+    }
 
     let updated = await ApplicationsService.context(context).update(args._id, updatePayload);
 
     if (
       status === APPLICATION_STATUS.UNDER_REVIEW ||
       status === APPLICATION_STATUS.PENDING_DOCUMENTS ||
+      status === APPLICATION_STATUS.PENDING_FORM ||
       status === APPLICATION_STATUS.PARTNER_ASSIGNED
     ) {
       const mobile = formData.mobile || "";
@@ -73,9 +86,22 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
     return updated;
   }
 
+  if (!args.LoanType) {
+    throw new Error("LoanType is required when creating an application.");
+  }
+
+  if (args.ProductID) {
+    const product = await ProductsService.context(context).get_Throwable(args.ProductID);
+    const productObj = product.toObject ? product.toObject() : product;
+    if (productObj.LoanType !== args.LoanType) {
+      throw new Error("Product loan type does not match the application loan type.");
+    }
+  }
+
   const application = await ApplicationsService.context(context).create({
     UserID: userId,
-    ProductID: args.ProductID,
+    LoanType: args.LoanType,
+    ProductID: args.ProductID || undefined,
     Status: status,
     FormData: formData,
     DocumentIDs: args.DocumentIDs || {},

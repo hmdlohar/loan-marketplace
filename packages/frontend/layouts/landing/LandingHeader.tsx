@@ -13,7 +13,7 @@ import ThemeModeToggle from "../../components/common/ThemeModeToggle";
 import LandingMobileNav from "./LandingMobileNav";
 
 const navLinks = [
-  { label: "Products", href: "/app/products" },
+  { label: "Apply", href: "/app/apply" },
   { label: "How it works", href: "/#how-it-works" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -59,7 +59,7 @@ export default function LandingHeader() {
             <ThemeModeToggle />
             <Button
               component={NextLink}
-              href="/app/products"
+              href="/app/apply"
               variant="contained"
               color="secondary"
               size="small"
@@ -70,7 +70,7 @@ export default function LandingHeader() {
                 flexShrink: 0,
               }}
             >
-              Browse products
+              Apply for a loan
             </Button>
             <LandingMobileNav />
           </Stack>

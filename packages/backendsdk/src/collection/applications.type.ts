@@ -6,7 +6,8 @@ export interface IBaseApplications {
   _id?: string;
   UserID: string;
   CustomerID?: string;
-  ProductID: string;
+  LoanType: string;
+  ProductID?: string;
   Status: string;
   FormData?: any;
   DocumentIDs?: {

@@ -179,11 +179,14 @@ Files are stored in S3. There is **no public S3 bucket URL** — all reads go th
 | Area | Path | Layout |
 |------|------|--------|
 | Landing & static | `/`, `/about`, `/contact` | `LandingLayout` |
-| Borrower app flow | `/app/products`, `/app/apply`, `/app/apply/documents`, `/app/matching`, `/app/offers`, `/app/dashboard` | `AppLayout` + `AuthGuard` |
+| Borrower app flow | `/app/apply` (loan type), `/app/apply/documents`, `/app/apply/form`, `/app/apply/recommendations`, `/app/dashboard` | `CustomerAppLayout` + `CustomerAuthGuard` on protected steps |
+| Legacy redirects | `/app/products`, `/app/matching`, `/app/offers` | Redirect to new funnel routes |
 | Admin panel | `/admin/partners`, … | `AdminLayout` + `AuthGuard` + `RoleGuard` |
 | Partner panel | `/partner/products`, … | `PartnerLayout` + `AuthGuard` + `RoleGuard` |
 
-Post-login redirect (`AuthServices.getDefaultRoute()`): admin → `/admin/partners`, partner → `/partner/products`, customer → `/app/products`.
+Post-login redirect (`AuthServices.getDefaultRoute()`): admin → `/admin/partners`, partner → `/partner/products`, customer → `/app/dashboard`.
+
+Borrower funnel (loan-type-first): select loan type → OTP auth → upload loan-type documents (saved-doc vault) → parse & prefill profile → loan-type static form (`getStaticFormFields`) → dummy recommendation engine (3 products) → select product → dashboard.
 
 ### 5.4 Shared UI (`components/common/`)
 - **`AppDataTable`** — MUI X DataGrid wrapper; use for all list/table views (never hand-roll tables per page).
@@ -192,10 +195,13 @@ Post-login redirect (`AuthServices.getDefaultRoute()`): admin → `/admin/partne
 - **`LogoUploadField`** — presigned S3 upload; logos served via `/api/files/public/banks/logos/{partnerId}.png`.
 - **CRUD rule**: all create/edit/delete flows use modals, not inline forms or separate routes.
 
-### 5.5 Mock Data (borrower flow)
-- UI-first: `services/mock/applicationMock.ts` supplies products, offers, application state on `/app/*`.
-- Admin/partner panels call `bSdk` RPCs (`Partners_*`, `Products_*`, `User_*`).
-- Mock data shapes must align with `commonlib` enums (`LOAN_PRODUCT`, `APPLICATION_STATUS`, etc.).
+### 5.5 Borrower flow (backend-driven)
+- Customer funnel calls `bSdk` RPCs: `Applications_*`, `Documents_*`, `Customers_Get`.
+- Loan-type document requirements: `commonlib` → `getRequiredDocuments(loanType)`.
+- Loan-type forms only: `getStaticFormFields(loanType)` — not product `FormFields`.
+- Document vault: `Documents_UploadVault`, `Documents_ListVault`, `Documents_AttachToApplication`; parse via `Documents_Parse` (dummy OCR for now).
+- Recommendations: `Applications_GetRecommendations` (dummy engine); product selection via `Applications_SelectProduct`.
+- `services/mock/applicationMock.ts` remains for legacy helpers only.
 
 ### 5.6 SDK Usage
 - Import `bSdk` from `services/BackendSDKService` only. Do not instantiate `BackendSDK` elsewhere.

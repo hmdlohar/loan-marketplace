@@ -103,7 +103,7 @@ export default function HomePageContent() {
                     >
                       <CardActionArea
                         component={NextLink}
-                        href={`/app/products?type=${category.loanType}`}
+                        href={`/app/apply?type=${category.loanType}`}
                         disabled={!category.count}
                         sx={{ height: "100%" }}
                       >
@@ -148,8 +148,8 @@ export default function HomePageContent() {
                 Popular products you can apply for right now.
               </Typography>
             </Box>
-            <Button component={NextLink} href="/app/products" variant="outlined" endIcon={<ArrowForwardIcon />}>
-              View all
+            <Button component={NextLink} href="/app/apply" variant="outlined" endIcon={<ArrowForwardIcon />}>
+              Apply now
             </Button>
           </Stack>
           <Grid container spacing={2}>
@@ -215,12 +215,12 @@ export default function HomePageContent() {
                 Ready to compare your options?
               </Typography>
               <Typography variant="body1" sx={{ opacity: 0.9, maxWidth: 520, fontSize: { xs: "0.9375rem", md: "1rem" } }}>
-                Browse {catalog?.productCount || "live"} products — no obligation. See matched offers before you commit.
+                Choose your loan type, upload documents once, and get matched to the best products for your profile.
               </Typography>
             </Box>
             <Button
               component={NextLink}
-              href="/app/products"
+              href="/app/apply"
               variant="contained"
               color="secondary"
               size="large"
@@ -228,7 +228,7 @@ export default function HomePageContent() {
               fullWidth
               sx={{ flexShrink: 0, width: { xs: "100%", md: "auto" } }}
             >
-              Browse products
+              Apply for a loan
             </Button>
           </Stack>
         </PageContainer>

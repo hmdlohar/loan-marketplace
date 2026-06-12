@@ -1,7 +1,7 @@
 import { Schema, InferSchemaType } from "mongoose";
 import { dataModifierSchema } from "@lib/dataModifierSchema";
 import { createOIdString } from "@root/utils/commonUtils";
-import { APPLICATION_STATUS } from "commonlib";
+import { APPLICATION_STATUS, LOAN_PRODUCT } from "commonlib";
 
 export const ApplicationsCollectionKey = "applications";
 
@@ -23,7 +23,13 @@ export const ApplicationsSchema = new Schema({
   _id: { type: String, default: createOIdString },
   UserID: { type: String, required: true, index: true },
   CustomerID: { type: String, required: false, index: true },
-  ProductID: { type: String, required: true, index: true },
+  LoanType: {
+    type: String,
+    required: true,
+    enum: Object.values(LOAN_PRODUCT),
+    index: true,
+  },
+  ProductID: { type: String, required: false, index: true },
   Status: {
     type: String,
     required: true,
@@ -35,5 +41,6 @@ export const ApplicationsSchema = new Schema({
 });
 
 ApplicationsSchema.index({ UserID: 1, ProductID: 1 });
+ApplicationsSchema.index({ UserID: 1, LoanType: 1 });
 
 export type IApplications = InferSchemaType<typeof ApplicationsSchema> & {};

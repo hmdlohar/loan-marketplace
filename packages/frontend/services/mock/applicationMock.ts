@@ -141,6 +141,7 @@ export function getStatusLabel(status: APPLICATION_STATUS) {
   const labels: Record<APPLICATION_STATUS, string> = {
     [APPLICATION_STATUS.CREATED]: "Draft",
     [APPLICATION_STATUS.PENDING_DOCUMENTS]: "Pending documents",
+    [APPLICATION_STATUS.PENDING_FORM]: "Pending form",
     [APPLICATION_STATUS.UNDER_REVIEW]: "Under review",
     [APPLICATION_STATUS.PARTNER_ASSIGNED]: "Partner assigned",
     [APPLICATION_STATUS.APPROVED]: "Approved",

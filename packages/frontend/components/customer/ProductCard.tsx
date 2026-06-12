@@ -30,7 +30,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard(props: ProductCardProps) {
-  const href = props.href || `/app/products/${props.product.Slug}`;
+  const href = props.href || "/app/apply";
   const bankName = props.product.Bank?.Name || "Partner bank";
   const logoUrl = props.product.Bank?.LogoPath ? getFileProxyUrl(props.product.Bank.LogoPath) : "";
 

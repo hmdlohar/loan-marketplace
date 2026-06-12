@@ -201,6 +201,16 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.IApplications_SaveReturnType>> {
     return this.cmsQuery("applications", args, { method: "post", route: "/Save" });
   }
+  async Applications_GetRecommendations(
+    args: types.IApplications_GetRecommendationsArgs
+  ): Promise<ITHTResponse<types.IApplications_GetRecommendationsReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/GetRecommendations" });
+  }
+  async Applications_SelectProduct(
+    args: types.IApplications_SelectProductArgs
+  ): Promise<ITHTResponse<types.IApplications_SelectProductReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/SelectProduct" });
+  }
   async Documents_List(
     args: types.IDocuments_ListArgs
   ): Promise<ITHTResponse<types.IDocuments_ListReturnType>> {
@@ -210,6 +220,26 @@ export class BackendSDK {
     args: types.IDocuments_UploadArgs
   ): Promise<ITHTResponse<types.IDocuments_UploadReturnType>> {
     return this.cmsQuery("documents", args, { method: "post", route: "/Upload" });
+  }
+  async Documents_UploadVault(
+    args: types.IDocuments_UploadVaultArgs
+  ): Promise<ITHTResponse<types.IDocuments_UploadVaultReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/UploadVault" });
+  }
+  async Documents_ListVault(
+    args: types.IDocuments_ListVaultArgs
+  ): Promise<ITHTResponse<types.IDocuments_ListVaultReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/ListVault" });
+  }
+  async Documents_Parse(
+    args: types.IDocuments_ParseArgs
+  ): Promise<ITHTResponse<types.IDocuments_ParseReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/Parse" });
+  }
+  async Documents_AttachToApplication(
+    args: types.IDocuments_AttachToApplicationArgs
+  ): Promise<ITHTResponse<types.IDocuments_AttachToApplicationReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/AttachToApplication" });
   }
 
   // Methods End

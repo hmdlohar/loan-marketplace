@@ -20,7 +20,7 @@ import ThemeModeToggle from "../../components/common/ThemeModeToggle";
 import AuthServices from "../../services/AuthServices";
 
 const navLinks = [
-  { label: "Browse products", href: "/app/products", icon: AccountBalanceOutlinedIcon },
+  { label: "Apply for loan", href: "/app/apply", icon: AccountBalanceOutlinedIcon },
   { label: "My applications", href: "/app/dashboard", icon: DashboardOutlinedIcon, auth: true },
 ];
 
@@ -66,7 +66,7 @@ export default function CustomerAppLayout(props: { children: React.ReactNode }) 
             startIcon={<LogoutOutlinedIcon />}
             onClick={() => {
               AuthServices.onLogout();
-              window.location.href = "/app/products";
+              window.location.href = "/app/apply";
             }}
           >
             Sign out
@@ -156,8 +156,8 @@ export default function CustomerAppLayout(props: { children: React.ReactNode }) 
           }}
         >
           <Stack direction="row">
-            <Button fullWidth component={NextLink} href="/app/products" color="secondary">
-              Browse
+            <Button fullWidth component={NextLink} href="/app/apply" color="secondary">
+              Apply
             </Button>
             <Button fullWidth component={NextLink} href="/app/dashboard">
               Applications
