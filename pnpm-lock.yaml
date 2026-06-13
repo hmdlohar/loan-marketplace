@@ -15,8 +15,8 @@ importers:
         specifier: ^3.2.5
         version: 3.8.3
       typescript:
-        specifier: ^5.4.5
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/backend:
     dependencies:
@@ -60,8 +60,8 @@ importers:
         specifier: ^1.8.17
         version: 1.8.17
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
       yup:
         specifier: ^1.4.0
         version: 1.7.1
@@ -95,8 +95,8 @@ importers:
         version: 1.16.1
     devDependencies:
       typescript:
-        specifier: ^5.4.5
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/commonlib:
     dependencies:
@@ -108,8 +108,8 @@ importers:
         version: 1.7.1
     devDependencies:
       typescript:
-        specifier: ^5.4.5
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/frontend:
     dependencies:
@@ -160,8 +160,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.7(@types/react@18.3.29)
       typescript:
-        specifier: ^5.4.5
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
 packages:
 
@@ -1892,8 +1892,8 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -3814,7 +3814,7 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
-  typescript@5.9.3: {}
+  typescript@6.0.3: {}
 
   undici-types@6.21.0: {}
 

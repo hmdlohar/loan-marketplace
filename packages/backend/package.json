@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.22.3"
   },
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/app.ts",
-    "build": "pnpm exec tsc && pnpm exec tsc-alias -p tsconfig.json",
+    "build": "node ./node_modules/typescript/bin/tsc && node ./node_modules/tsc-alias/dist/bin/index.js -p tsconfig.json",
     "start": "node dist/app.js",
     "cmd": "tsx src/cmd",
     "syncSDK": "tsx src/cmd/syncSDK.ts",
@@ -29,7 +29,7 @@
     "mongoose": "^7.6.8",
     "node-schedule": "^2.1.1",
     "tsc-alias": "^1.8.17",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "yup": "^1.4.0"
   },
   "devDependencies": {
