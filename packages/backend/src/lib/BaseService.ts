@@ -11,6 +11,7 @@ import {
   AnyObject,
   FilterQuery,
   HydratedDocument,
+  Model,
   PipelineStage,
   ProjectionType,
   QueryOptions,
@@ -28,8 +29,8 @@ export interface IMutationData<T = any> {
 
 export type IMutationOperation = "create" | "delete" | "deleteMany" | "updateMany" | "updateOne";
 
-function lazyGetModal<T>(key: string) {
-  return require("./cms").getModal<T>(key);
+function lazyGetModal<T>(key: string): Model<T> {
+  return require("./cms").getModal(key) as Model<T>;
 }
 
 function lazyGetCollection(key: string) {

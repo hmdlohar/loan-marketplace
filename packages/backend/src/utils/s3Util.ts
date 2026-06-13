@@ -1,4 +1,8 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import config from "@root/config";
 
@@ -11,9 +15,12 @@ function assertS3Config() {
   if (!config.AWS_ACCESS_KEY_ID || !config.AWS_SECRET_ACCESS_KEY) {
     throw new Error("AWS S3 credentials are not configured.");
   }
-  if (config.AWS_S3_BUCKET.includes("idrivee2.com") || config.AWS_S3_BUCKET.startsWith("s3.")) {
+  if (
+    config.AWS_S3_BUCKET.includes("idrivee2.com") ||
+    config.AWS_S3_BUCKET.startsWith("s3.")
+  ) {
     throw new Error(
-      "AWS_S3_BUCKET must be your bucket name, not the endpoint URL. Set AWS_S3_ENDPOINT for custom S3 endpoints."
+      "AWS_S3_BUCKET must be your bucket name, not the endpoint URL. Set AWS_S3_ENDPOINT for custom S3 endpoints.",
     );
   }
 }
@@ -31,7 +38,9 @@ export function getS3Client() {
     };
 
     if (config.AWS_S3_ENDPOINT) {
+      // @ts-ignore
       clientConfig.endpoint = config.AWS_S3_ENDPOINT;
+      // @ts-ignore
       clientConfig.forcePathStyle = config.AWS_S3_FORCE_PATH_STYLE;
     }
 
@@ -85,18 +94,22 @@ export async function getS3Object(key: string) {
     new GetObjectCommand({
       Bucket: config.AWS_S3_BUCKET,
       Key: key,
-    })
+    }),
   );
 }
 
-export async function uploadS3Object(key: string, body: Buffer, contentType: string) {
+export async function uploadS3Object(
+  key: string,
+  body: Buffer,
+  contentType: string,
+) {
   await getS3Client().send(
     new PutObjectCommand({
       Bucket: config.AWS_S3_BUCKET,
       Key: key,
       Body: body,
       ContentType: contentType,
-    })
+    }),
   );
 }
 
@@ -108,7 +121,9 @@ export async function getPartnerLogoUploadUrl(partnerId: string) {
     ContentType: "image/png",
   });
 
-  const uploadUrl = await getSignedUrl(getS3Client(), command, { expiresIn: 900 });
+  const uploadUrl = await getSignedUrl(getS3Client(), command, {
+    expiresIn: 900,
+  });
   const publicUrl = getFileProxyUrl(key);
 
   return {
@@ -118,7 +133,11 @@ export async function getPartnerLogoUploadUrl(partnerId: string) {
   };
 }
 
-export async function uploadPartnerLogo(partnerId: string, fileBuffer: Buffer, contentType: string) {
+export async function uploadPartnerLogo(
+  partnerId: string,
+  fileBuffer: Buffer,
+  contentType: string,
+) {
   const key = getPartnerLogoPath(partnerId);
   await uploadS3Object(key, fileBuffer, contentType);
 
@@ -132,7 +151,7 @@ export async function uploadBankLogo(
   bankId: string,
   fileBuffer: Buffer,
   contentType: string,
-  extension: string
+  extension: string,
 ) {
   const key = getBankLogoPath(bankId, extension);
   await uploadS3Object(key, fileBuffer, contentType);
@@ -143,7 +162,11 @@ export async function uploadBankLogo(
   };
 }
 
-export function getApplicationDocumentPath(applicationId: string, documentType: string, fileName: string) {
+export function getApplicationDocumentPath(
+  applicationId: string,
+  documentType: string,
+  fileName: string,
+) {
   const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
   return `private/applications/${applicationId}/${documentType}/${Date.now()}-${safeName}`;
 }
@@ -153,7 +176,7 @@ export async function uploadApplicationDocument(
   documentType: string,
   fileBuffer: Buffer,
   contentType: string,
-  fileName: string
+  fileName: string,
 ) {
   const key = getApplicationDocumentPath(applicationId, documentType, fileName);
   await uploadS3Object(key, fileBuffer, contentType);
@@ -164,7 +187,11 @@ export async function uploadApplicationDocument(
   };
 }
 
-export function getCustomerVaultDocumentPath(userId: string, documentType: string, fileName: string) {
+export function getCustomerVaultDocumentPath(
+  userId: string,
+  documentType: string,
+  fileName: string,
+) {
   const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
   return `private/customers/${userId}/${documentType}/${Date.now()}-${safeName}`;
 }
@@ -174,7 +201,7 @@ export async function uploadCustomerVaultDocument(
   documentType: string,
   fileBuffer: Buffer,
   contentType: string,
-  fileName: string
+  fileName: string,
 ) {
   const key = getCustomerVaultDocumentPath(userId, documentType, fileName);
   await uploadS3Object(key, fileBuffer, contentType);

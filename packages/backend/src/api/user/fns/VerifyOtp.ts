@@ -12,6 +12,7 @@ import config from "@root/config";
 
 const mobileSchema = yup
   .string()
+  .required()
   .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number.");
 
 const argsSchema = yup.object({

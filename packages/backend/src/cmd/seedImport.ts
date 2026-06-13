@@ -8,6 +8,7 @@ import {
 import BanksService from "@root/api/banks/BanksService";
 import ProductsService from "@root/api/products/ProductsService";
 import PartnersService from "@root/api/partners/PartnersService";
+import { IProducts } from "@root/api/products/ProductsSchema";
 import { slugifyTitle } from "@root/utils/slugUtil";
 import {
   extensionFromImageUrl,
@@ -155,6 +156,10 @@ async function seedImport() {
       existing = bank;
     }
 
+    if (!existing) {
+      throw new Error(`Failed to resolve bank record for "${lenderName}".`);
+    }
+
     if (!remoteLogoUrl || !bankId) {
       continue;
     }
@@ -242,7 +247,7 @@ async function seedImport() {
       Slug: slug,
     });
 
-    const productPayload = {
+    const productPayload: Partial<IProducts> = {
       Title: item.name,
       Slug: slug,
       ShortDescription: headline,
@@ -250,7 +255,7 @@ async function seedImport() {
       LoanType: loanType,
       BankID: bankId,
       PartnerID: partnerId,
-      FormFields: formFields,
+      FormFields: formFields as IProducts["FormFields"],
     };
 
     if (existing) {
