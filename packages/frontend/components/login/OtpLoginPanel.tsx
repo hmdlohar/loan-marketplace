@@ -3,11 +3,19 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { APP_NAME } from "commonlib";
 import AppLogo from "../common/AppLogo";
 import AuthServices from "../../services/AuthServices";
 import { bSdk } from "../../services/BackendSDKService";
+import {
+  MSG91_CAPTCHA_RENDER_ID,
+  ensureMsg91WidgetReady,
+  isMsg91CaptchaEnabled,
+  msg91WidgetRetryOtp,
+  msg91WidgetSendOtp,
+  useDevOtpFlow,
+} from "../../services/Msg91OtpService";
 
 export default function OtpLoginPanel(props: {
   onSuccess: () => void;
@@ -17,8 +25,61 @@ export default function OtpLoginPanel(props: {
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [fullName, setFullName] = useState("");
+  const [reqId, setReqId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const devOtpFlow = useDevOtpFlow();
+
+  useEffect(() => {
+    if (!devOtpFlow) {
+      ensureMsg91WidgetReady().catch(() => {
+        setError("Failed to load MSG91 OTP widget.");
+      });
+    }
+  }, [devOtpFlow]);
+
+  const sendOtp = async () => {
+    if (devOtpFlow) {
+      const response = await bSdk.User_SendOtp({ Mobile: mobile });
+      if (!response.status) {
+        throw new Error(response.message || "Failed to send OTP.");
+      }
+      return;
+    }
+
+    const result = await msg91WidgetSendOtp(mobile);
+    setReqId(result.reqId);
+  };
+
+  const verifyAndLogin = async () => {
+    if (devOtpFlow) {
+      const response = await bSdk.User_VerifyOtp({
+        Mobile: mobile,
+        Otp: otp,
+        FullName: fullName.trim() || undefined,
+      });
+      if (!response.status || !response.data?.token) {
+        throw new Error(response.message || "OTP verification failed.");
+      }
+      AuthServices.setToken(response.data.token);
+      AuthServices.setUserData(response.data.user);
+      props.onSuccess();
+      return;
+    }
+
+    const response = await bSdk.User_VerifyOtp({
+      Mobile: mobile,
+      Otp: otp,
+      ReqId: reqId,
+      FullName: fullName.trim() || undefined,
+    });
+    if (!response.status || !response.data?.token) {
+      throw new Error(response.message || "OTP verification failed.");
+    }
+    AuthServices.setToken(response.data.token);
+    AuthServices.setUserData(response.data.user);
+    props.onSuccess();
+  };
 
   return (
     <Box
@@ -52,6 +113,18 @@ export default function OtpLoginPanel(props: {
           </Box>
         )}
 
+        {!devOtpFlow && isMsg91CaptchaEnabled() ? (
+          <Box
+            id={MSG91_CAPTCHA_RENDER_ID}
+            sx={{
+              minHeight: 78,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          />
+        ) : null}
+
         {step === "mobile" ? (
           <>
             <TextField
@@ -71,10 +144,7 @@ export default function OtpLoginPanel(props: {
                 setLoading(true);
                 setError("");
                 try {
-                  const response = await bSdk.User_SendOtp({ Mobile: mobile });
-                  if (!response.status) {
-                    throw new Error(response.message || "Failed to send OTP.");
-                  }
+                  await sendOtp();
                   setStep("otp");
                 } catch (ex: any) {
                   setError(ex.response?.data?.message || ex.message || "Failed to send OTP.");
@@ -112,17 +182,7 @@ export default function OtpLoginPanel(props: {
                   setLoading(true);
                   setError("");
                   try {
-                    const response = await bSdk.User_VerifyOtp({
-                      Mobile: mobile,
-                      Otp: otp,
-                      FullName: fullName.trim() || undefined,
-                    });
-                    if (!response.status || !response.data?.token) {
-                      throw new Error(response.message || "OTP verification failed.");
-                    }
-                    AuthServices.setToken(response.data.token);
-                    AuthServices.setUserData(response.data.user);
-                    props.onSuccess();
+                    await verifyAndLogin();
                   } catch (ex: any) {
                     setError(ex.response?.data?.message || ex.message || "OTP verification failed.");
                   } finally {
@@ -139,7 +199,12 @@ export default function OtpLoginPanel(props: {
                   setLoading(true);
                   setError("");
                   try {
-                    await bSdk.User_SendOtp({ Mobile: mobile });
+                    if (devOtpFlow) {
+                      await bSdk.User_SendOtp({ Mobile: mobile });
+                    } else {
+                      const result = await msg91WidgetRetryOtp(reqId);
+                      setReqId(result.reqId);
+                    }
                   } catch (ex: any) {
                     setError(ex.response?.data?.message || ex.message || "Failed to resend OTP.");
                   } finally {
@@ -150,7 +215,14 @@ export default function OtpLoginPanel(props: {
                 Resend
               </Button>
             </Stack>
-            <Button variant="text" onClick={() => setStep("mobile")}>
+            <Button
+              variant="text"
+              onClick={() => {
+                setStep("mobile");
+                setOtp("");
+                setReqId("");
+              }}
+            >
               Change mobile number
             </Button>
           </>

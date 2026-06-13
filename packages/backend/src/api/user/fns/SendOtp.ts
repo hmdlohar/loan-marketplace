@@ -2,7 +2,7 @@ import * as yup from "yup";
 import { IRPCFunctionDefinition } from "@root/types/rpc";
 import { ICMSContext } from "@root/types/cms";
 import { USER_ROLE } from "commonlib";
-import { msg91SendOtp } from "@root/utils/msg91Util";
+import config from "@root/config";
 
 const argsSchema = yup.object({
   Mobile: yup
@@ -18,10 +18,13 @@ type ISendOtpReturnType = {
 };
 
 export async function SendOtp(args: ISendOtpArgs, context: ICMSContext): Promise<ISendOtpReturnType> {
-  await msg91SendOtp(args.Mobile);
+  if (!config.MSG91_OTP_DEV_MODE) {
+    throw new Error("OTP is sent via the MSG91 widget on the client.");
+  }
+
   return {
     success: true,
-    message: "OTP sent successfully.",
+    message: `Dev OTP mode: use code ${config.MSG91_OTP_DEV_CODE}.`,
   };
 }
 

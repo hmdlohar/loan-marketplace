@@ -6,6 +6,8 @@ export type ICronLog_RunCronJobArgs = {
 
 export type ICronLog_RunCronJobReturnType = any;
 export type IUser_VerifyOtpArgs = {
+  AccessToken?: string;
+  ReqId?: string;
   Mobile?: string;
   Otp?: string;
   FullName?: string;

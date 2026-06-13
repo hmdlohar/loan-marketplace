@@ -1,97 +1,145 @@
 import config from "@root/config";
 
-type Msg91Response = {
-  type?: string;
-  message?: string;
-};
+type Msg91Response = Record<string, unknown>;
+
+const MSG91_WIDGET_API = "https://control.msg91.com/api/v5/widget";
 
 function normalizeIndianMobile(mobile: string) {
   const digits = mobile.replace(/\D/g, "");
   if (digits.length === 10) {
-    return `91${digits}`;
+    return digits;
   }
   if (digits.length === 12 && digits.startsWith("91")) {
-    return digits;
+    return digits.slice(2);
   }
   throw new Error("Enter a valid 10-digit mobile number.");
 }
 
-async function parseMsg91Response(response: Response) {
+function extractMobileFromIdentifier(identifier: string) {
+  const digits = identifier.replace(/\D/g, "");
+  if (digits.length === 10) {
+    return digits;
+  }
+  if (digits.length === 12 && digits.startsWith("91")) {
+    return digits.slice(2);
+  }
+  throw new Error("MSG91 did not return a valid mobile number.");
+}
+
+function extractMobileFromWidgetResponse(parsed: Msg91Response, fallbackMobile?: string) {
+  const data = parsed.data as Msg91Response | undefined;
+  const candidates = [
+    parsed.identifier,
+    parsed.mobile,
+    data?.identifier,
+    data?.mobile,
+  ];
+
+  for (const value of candidates) {
+    if (typeof value !== "string") {
+      continue;
+    }
+    try {
+      return extractMobileFromIdentifier(value);
+    } catch {
+      // try next field
+    }
+  }
+
+  if (fallbackMobile) {
+    return normalizeIndianMobile(fallbackMobile);
+  }
+
+  throw new Error("MSG91 did not return a mobile number.");
+}
+
+function mapMsg91ErrorMessage(message: string) {
+  if (message === "AuthenticationFailure") {
+    return "MSG91 authentication failed. Check MSG91_WIDGET_TOKEN and MSG91_AUTH_KEY in backend env.";
+  }
+  return message;
+}
+
+async function parseMsg91JsonResponse(response: Response) {
   const text = await response.text();
   let parsed: Msg91Response = {};
   try {
-    parsed = JSON.parse(text);
+    parsed = JSON.parse(text) as Msg91Response;
   } catch {
     throw new Error(text || "MSG91 request failed.");
-  }
-  if (parsed.type !== "success") {
-    throw new Error(parsed.message || "MSG91 request failed.");
   }
   return parsed;
 }
 
-export async function msg91SendOtp(mobile: string) {
-  if (config.MSG91_OTP_DEV_MODE) {
-    return { type: "success", message: "Dev OTP mode enabled." };
+export async function msg91WidgetVerifyOtpServer(reqId: string, otp: string, fallbackMobile?: string) {
+  if (!config.MSG91_WIDGET_ID) {
+    throw new Error("MSG91_WIDGET_ID is not configured.");
+  }
+  if (!config.MSG91_WIDGET_TOKEN) {
+    throw new Error("MSG91_WIDGET_TOKEN is not configured.");
   }
 
-  if (!config.MSG91_AUTH_KEY) {
-    throw new Error("MSG91_AUTH_KEY is not configured.");
-  }
-
-  const normalizedMobile = normalizeIndianMobile(mobile);
-  const params = new URLSearchParams({
-    authkey: config.MSG91_AUTH_KEY,
-    mobile: normalizedMobile,
-    otp_expiry: String(config.MSG91_OTP_EXPIRY_MINUTES || 10),
-    otp_length: String(config.MSG91_OTP_LENGTH || 6),
+  const response = await fetch(`${MSG91_WIDGET_API}/verifyOtp`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      widgetId: config.MSG91_WIDGET_ID,
+      tokenAuth: config.MSG91_WIDGET_TOKEN,
+      reqId: reqId.trim(),
+      otp: otp.trim(),
+    }),
   });
 
-  if (config.MSG91_SENDER_ID) {
-    params.set("sender", config.MSG91_SENDER_ID);
+  const parsed = await parseMsg91JsonResponse(response);
+  if (parsed.type !== "success") {
+    const message = String(parsed.message || "Invalid OTP.");
+    throw new Error(mapMsg91ErrorMessage(message));
   }
 
-  const response = await fetch(`https://api.msg91.com/api/sendotp.php?${params.toString()}`);
-  return parseMsg91Response(response);
+  return extractMobileFromWidgetResponse(parsed, fallbackMobile);
 }
 
-export async function msg91VerifyOtp(mobile: string, otp: string) {
-  if (config.MSG91_OTP_DEV_MODE) {
-    if (otp.trim() !== config.MSG91_OTP_DEV_CODE) {
-      throw new Error("Invalid OTP.");
-    }
-    return { type: "success", message: "Dev OTP verified." };
-  }
-
+export async function msg91VerifyAccessTokenMobile(accessToken: string) {
   if (!config.MSG91_AUTH_KEY) {
     throw new Error("MSG91_AUTH_KEY is not configured.");
   }
 
-  const normalizedMobile = normalizeIndianMobile(mobile);
+  const token = accessToken.trim();
+  if (!token) {
+    throw new Error("Access token is required.");
+  }
+
   const params = new URLSearchParams({
     authkey: config.MSG91_AUTH_KEY,
-    mobile: normalizedMobile,
-    otp: otp.trim(),
+    "access-token": token,
   });
 
-  const response = await fetch(`https://api.msg91.com/api/verifyRequestOTP.php?${params.toString()}`);
-  return parseMsg91Response(response);
+  if (config.MSG91_WIDGET_ID) {
+    params.set("widgetId", config.MSG91_WIDGET_ID);
+  }
+
+  const response = await fetch(`${MSG91_WIDGET_API}/verifyAccessToken`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      authkey: config.MSG91_AUTH_KEY,
+    },
+    body: params.toString(),
+  });
+
+  const parsed = await parseMsg91JsonResponse(response);
+  if (parsed.type !== "success") {
+    const message = String(parsed.message || "Invalid access token.");
+    throw new Error(mapMsg91ErrorMessage(message));
+  }
+
+  return extractMobileFromWidgetResponse(parsed);
 }
 
-export async function msg91ResendOtp(mobile: string) {
-  if (!config.MSG91_AUTH_KEY) {
-    throw new Error("MSG91_AUTH_KEY is not configured.");
+export function msg91VerifyDevOtp(otp: string) {
+  if (otp.trim() !== config.MSG91_OTP_DEV_CODE) {
+    throw new Error("Invalid OTP.");
   }
-
-  const normalizedMobile = normalizeIndianMobile(mobile);
-  const params = new URLSearchParams({
-    authkey: config.MSG91_AUTH_KEY,
-    mobile: normalizedMobile,
-    retrytype: "text",
-  });
-
-  const response = await fetch(`https://api.msg91.com/api/retryotp.php?${params.toString()}`);
-  return parseMsg91Response(response);
 }
 
 export { normalizeIndianMobile };

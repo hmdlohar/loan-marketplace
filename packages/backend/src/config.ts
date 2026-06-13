@@ -23,9 +23,8 @@ export default {
   SEED_ADMIN_FULL_NAME: process.env.SEED_ADMIN_FULL_NAME || "System Admin",
   SEED_PARTNER_ID: process.env.SEED_PARTNER_ID || "",
   MSG91_AUTH_KEY: process.env.MSG91_AUTH_KEY || "",
-  MSG91_SENDER_ID: process.env.MSG91_SENDER_ID || "",
-  MSG91_OTP_EXPIRY_MINUTES: Number(process.env.MSG91_OTP_EXPIRY_MINUTES || 10),
-  MSG91_OTP_LENGTH: Number(process.env.MSG91_OTP_LENGTH || 6),
+  MSG91_WIDGET_ID: process.env.MSG91_WIDGET_ID || "",
+  MSG91_WIDGET_TOKEN: process.env.MSG91_WIDGET_TOKEN || "",
   MSG91_OTP_DEV_MODE: process.env.MSG91_OTP_DEV_MODE === "true",
   MSG91_OTP_DEV_CODE: process.env.MSG91_OTP_DEV_CODE || "123456",
 };

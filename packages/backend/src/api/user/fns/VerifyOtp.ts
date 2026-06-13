@@ -6,15 +6,19 @@ import UserService from "@root/api/user/UserService";
 import CustomersService from "@root/api/customers/CustomersService";
 import { hashPassword } from "@root/utils/passwordUtil";
 import { signUserToken, toPublicUser } from "@root/utils/jwtUtil";
-import { msg91VerifyOtp } from "@root/utils/msg91Util";
+import { msg91WidgetVerifyOtpServer, msg91VerifyAccessTokenMobile, msg91VerifyDevOtp } from "@root/utils/msg91Util";
 import { createOIdString } from "@root/utils/commonUtils";
+import config from "@root/config";
+
+const mobileSchema = yup
+  .string()
+  .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number.");
 
 const argsSchema = yup.object({
-  Mobile: yup
-    .string()
-    .required()
-    .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number."),
-  Otp: yup.string().required().min(4).max(9),
+  AccessToken: yup.string().trim().optional(),
+  ReqId: yup.string().trim().optional(),
+  Mobile: yup.string().optional(),
+  Otp: yup.string().optional(),
   FullName: yup.string().optional(),
 });
 export type IVerifyOtpArgs = yup.InferType<typeof argsSchema>;
@@ -25,9 +29,33 @@ type IVerifyOtpReturnType = {
 };
 
 export async function VerifyOtp(args: IVerifyOtpArgs, context: ICMSContext): Promise<IVerifyOtpReturnType> {
-  await msg91VerifyOtp(args.Mobile, args.Otp);
+  let mobile: string;
 
-  const mobile = args.Mobile.trim();
+  if (config.MSG91_OTP_DEV_MODE) {
+    if (!args.Mobile?.trim()) {
+      throw new Error("Mobile is required.");
+    }
+    const mobileValue = await mobileSchema.validate(args.Mobile.trim());
+    if (!args.Otp?.trim()) {
+      throw new Error("OTP is required.");
+    }
+    msg91VerifyDevOtp(args.Otp);
+    mobile = mobileValue;
+  } else if (args.AccessToken?.trim()) {
+    mobile = await msg91VerifyAccessTokenMobile(args.AccessToken.trim());
+  } else {
+    const reqId = args.ReqId?.trim();
+    const otp = args.Otp?.trim();
+    if (!reqId || !otp) {
+      throw new Error("ReqId and OTP are required.");
+    }
+    if (!args.Mobile?.trim()) {
+      throw new Error("Mobile is required.");
+    }
+    const mobileValue = await mobileSchema.validate(args.Mobile.trim());
+    mobile = await msg91WidgetVerifyOtpServer(reqId, otp, mobileValue);
+  }
+
   let user = await UserService.context(context).findOne({ Mobile: mobile });
 
   if (!user) {
@@ -44,6 +72,10 @@ export async function VerifyOtp(args: IVerifyOtpArgs, context: ICMSContext): Pro
         PartnerIDs: [],
       },
     });
+
+    if (!user) {
+      throw new Error("Unable to create user.");
+    }
 
     const customer = await CustomersService.context(context).create({
       UserID: user._id,
