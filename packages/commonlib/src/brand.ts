@@ -1,10 +1,12 @@
 /** Single source of truth for product branding. Change `APP_NAME` to rename the app everywhere. */
-export const APP_NAME = "CashPeCash";
+export const APP_NAME = "Paisefic";
+
+export const APP_DOMAIN = "paisefic.com";
 
 export const APP_TAGLINE = "Compare and apply for loans";
 
 export const APP_DESCRIPTION =
-  "Compare loan offers from banks and NBFCs. Apply once, get matched to the right product.";
+  "Compare loan offers from banks and NBFCs. Apply once on Paisefic and get matched to the right product.";
 
 export const APP_PAGE_TITLE = `${APP_NAME} — ${APP_TAGLINE}`;
 
