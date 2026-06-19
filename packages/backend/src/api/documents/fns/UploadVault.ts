@@ -5,7 +5,7 @@ import { DOCUMENT_TYPE, USER_ROLE } from "commonlib";
 import DocumentsService from "@root/api/documents/DocumentsService";
 import CustomersService from "@root/api/customers/CustomersService";
 import { uploadCustomerVaultDocument, guessContentType } from "@root/utils/s3Util";
-import { parseDocumentData } from "@root/api/documents/fns/parseDocumentData";
+import { parseDocumentWithStatus, buildDocumentParseFields } from "@root/api/documents/fns/parseDocumentWithStatus";
 import { upsertCustomerProfileFromParsedData } from "@root/api/customers/fns/upsertProfileFromFormData";
 
 const argsSchema = yup.object({
@@ -38,25 +38,30 @@ export async function UploadVault(args: IUploadVaultArgs, context: ICMSContext):
 
   const customer = await CustomersService.context(context).findOne({ UserID: userId });
   const documentType = args.DocumentType as DOCUMENT_TYPE;
-  const parsedData = await parseDocumentData({
+  const parseResult = await parseDocumentWithStatus({
     documentType,
     fileBuffer: buffer,
     contentType,
     fileName: args.Name,
   });
+  const parseFields = buildDocumentParseFields(parseResult);
+  const parsedData = parseFields.ParsedData;
 
   const document = await DocumentsService.context(context).create({
     Name: args.Name,
     Path: uploaded.key,
     DocumentType: documentType,
-    ParsedData: parsedData,
+    ...parseFields,
     Context: {
       UserID: userId,
       CustomerID: customer?._id,
     },
   });
 
-  if (documentType === DOCUMENT_TYPE.PAN || documentType === DOCUMENT_TYPE.AADHAAR) {
+  if (
+    parseFields.ParseStatus === "PARSED" &&
+    (documentType === DOCUMENT_TYPE.PAN || documentType === DOCUMENT_TYPE.AADHAAR)
+  ) {
     await upsertCustomerProfileFromParsedData(context, userId, parsedData);
   }
 

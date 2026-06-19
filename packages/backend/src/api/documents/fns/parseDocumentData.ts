@@ -1,6 +1,8 @@
 import { DOCUMENT_TYPE } from "commonlib";
 import { generateText } from "@utils/llm";
+import type { LlmImageInput } from "@utils/llm/types";
 import { getS3Object, guessContentType } from "@root/utils/s3Util";
+import { pdfBufferToPngImages } from "@root/utils/pdfToImages";
 
 export type ParseDocumentDataArgs = {
   documentType: DOCUMENT_TYPE;
@@ -13,6 +15,39 @@ const PAN_NUMBER_REGEX = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
 
 function isImageContentType(contentType: string) {
   return contentType.startsWith("image/");
+}
+
+function isPdfContentType(contentType: string) {
+  return contentType === "application/pdf" || contentType.endsWith("/pdf");
+}
+
+function getMaxPdfPages(documentType: DOCUMENT_TYPE) {
+  if (
+    documentType === DOCUMENT_TYPE.BANK_STATEMENT ||
+    documentType === DOCUMENT_TYPE.ITR ||
+    documentType === DOCUMENT_TYPE.GST_RETURN
+  ) {
+    return 3;
+  }
+  return 1;
+}
+
+async function buildLlmImages(args: ParseDocumentDataArgs): Promise<LlmImageInput[]> {
+  if (isImageContentType(args.contentType)) {
+    return [{ data: args.fileBuffer, mediaType: args.contentType }];
+  }
+
+  if (isPdfContentType(args.contentType)) {
+    const pngBuffers = await pdfBufferToPngImages(args.fileBuffer, {
+      maxPages: getMaxPdfPages(args.documentType),
+    });
+    return pngBuffers.map((buffer) => ({ data: buffer, mediaType: "image/png" }));
+  }
+
+  const label = getDocumentLabel(args.documentType);
+  throw new Error(
+    `Document parsing supports image and PDF uploads. Upload a JPG, PNG, or PDF of the ${label}.`,
+  );
 }
 
 function extractJsonObject(text: string) {
@@ -61,16 +96,17 @@ function extractJsonObject(text: string) {
 function buildParseSystemPrompt() {
   return [
     "You extract structured data from Indian identity and financial documents.",
-    "Return ONLY a JSON object. No markdown, no explanation.",
+    "Return ONLY one raw JSON object. No markdown, no code fences, no explanation.",
     "Use empty string for missing text fields.",
     "Dates must be YYYY-MM-DD when present.",
+    "Keep the response short.",
   ].join(" ");
 }
 
 function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
   if (documentType === DOCUMENT_TYPE.PAN) {
     return [
-      "This image is an Indian PAN card.",
+      "This document is an Indian PAN card.",
       "Extract JSON with keys: firstName, lastName, panNumber, dob.",
       "panNumber must be 10 characters: 5 letters, 4 digits, 1 letter (e.g. ABCDE1234F).",
     ].join(" ");
@@ -78,7 +114,7 @@ function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
 
   if (documentType === DOCUMENT_TYPE.AADHAAR) {
     return [
-      "This image is an Indian Aadhaar card.",
+      "This document is an Indian Aadhaar card.",
       "Extract JSON with keys: firstName, lastName, gender, dob, addressLine1, addressLine2, pinCode, city, state.",
       "gender should be Male, Female, or Other when visible.",
     ].join(" ");
@@ -86,7 +122,7 @@ function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
 
   if (documentType === DOCUMENT_TYPE.SALARY_SLIP) {
     return [
-      "This image is a salary slip.",
+      "This document is a salary slip.",
       "Extract JSON with keys: firstName, lastName, employer, netIncome, payPeriod.",
       "netIncome should be a number (monthly net pay in INR). payPeriod as YYYY-MM when visible.",
     ].join(" ");
@@ -94,7 +130,7 @@ function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
 
   if (documentType === DOCUMENT_TYPE.BANK_STATEMENT) {
     return [
-      "This image is a bank statement.",
+      "This document is a bank statement.",
       "Extract JSON with keys: bankName, accountHolderName, statementPeriod.",
       "statementPeriod as a human-readable range when visible.",
     ].join(" ");
@@ -102,7 +138,7 @@ function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
 
   if (documentType === DOCUMENT_TYPE.ITR) {
     return [
-      "This image is an Indian income tax return (ITR) document.",
+      "This document is an Indian income tax return (ITR) document.",
       "Extract JSON with keys: firstName, lastName, panNumber, assessmentYear, totalIncome.",
       "totalIncome as a number when visible.",
     ].join(" ");
@@ -110,7 +146,7 @@ function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
 
   if (documentType === DOCUMENT_TYPE.GST_RETURN) {
     return [
-      "This image is a GST return document.",
+      "This document is a GST return document.",
       "Extract JSON with keys: businessName, gstin, returnPeriod, taxableTurnover.",
       "taxableTurnover as a number when visible.",
     ].join(" ");
@@ -118,7 +154,7 @@ function buildParseUserPrompt(documentType: DOCUMENT_TYPE) {
 
   if (documentType === DOCUMENT_TYPE.PROPERTY_DOCUMENT) {
     return [
-      "This image is a property document.",
+      "This document is a property document.",
       "Extract JSON with keys: ownerName, propertyAddress, city, state, pinCode.",
     ].join(" ");
   }
@@ -195,27 +231,46 @@ function getDocumentLabel(documentType: DOCUMENT_TYPE) {
   return documentType.replace(/_/g, " ").toLowerCase();
 }
 
+const PARSE_LLM_MAX_OUTPUT_TOKENS = 4096;
+const PARSE_LLM_MAX_ATTEMPTS = 3;
+
+function collectLlmResponseText(result: { text?: string; reasoningText?: string }) {
+  const text = result.text?.trim() || "";
+  if (text) {
+    return text;
+  }
+  return result.reasoningText?.trim() || "";
+}
+
 /**
- * Parse a document image buffer with the LLM and return structured fields for storage in `ParsedData`.
+ * Parse a document buffer (image or PDF) with the LLM and return structured fields for storage in `ParsedData`.
  */
 export async function parseDocumentData(args: ParseDocumentDataArgs) {
-  if (!isImageContentType(args.contentType)) {
-    const label = getDocumentLabel(args.documentType);
-    throw new Error(
-      `Document parsing supports image uploads only. Upload a JPG or PNG photo of the ${label}.`,
-    );
+  const images = await buildLlmImages(args);
+  let userPrompt = buildParseUserPrompt(args.documentType);
+  if (images.length > 1) {
+    userPrompt = `${userPrompt} ${images.length} pages are attached in order.`;
   }
 
-  const result = await generateText({
-    system: buildParseSystemPrompt(),
-    text: buildParseUserPrompt(args.documentType),
-    images: [{ data: args.fileBuffer, mediaType: args.contentType }],
-    maxOutputTokens: 2048,
-    temperature: 0.1,
-  });
+  let lastError: Error | undefined;
+  for (let attempt = 1; attempt <= PARSE_LLM_MAX_ATTEMPTS; attempt++) {
+    try {
+      const result = await generateText({
+        system: buildParseSystemPrompt(),
+        text: userPrompt,
+        images,
+        maxOutputTokens: PARSE_LLM_MAX_OUTPUT_TOKENS,
+        temperature: 0.1,
+      });
 
-  const raw = extractJsonObject(result.text);
-  return normalizeParsedFields(args.documentType, raw);
+      const raw = extractJsonObject(collectLlmResponseText(result));
+      return normalizeParsedFields(args.documentType, raw);
+    } catch (ex: any) {
+      lastError = ex instanceof Error ? ex : new Error(ex?.message || "Document parse failed.");
+    }
+  }
+
+  throw lastError || new Error("Document parse failed.");
 }
 
 /**

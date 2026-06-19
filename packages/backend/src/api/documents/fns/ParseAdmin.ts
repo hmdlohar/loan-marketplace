@@ -7,27 +7,23 @@ import { reparseDocument } from "@root/api/documents/fns/reparseDocument";
 const argsSchema = yup.object({
   DocumentID: yup.string().required(),
 });
-export type IParseArgs = yup.InferType<typeof argsSchema>;
+export type IParseAdminArgs = yup.InferType<typeof argsSchema>;
 
-type IParseReturnType = any;
+type IParseAdminReturnType = any;
 
-export async function Parse(args: IParseArgs, context: ICMSContext): Promise<IParseReturnType> {
-  if (!context.SystemUserID || context.SystemUserID === "DEFAULT") {
-    throw new Error("Authentication required.");
-  }
-
+export async function ParseAdmin(args: IParseAdminArgs, context: ICMSContext): Promise<IParseAdminReturnType> {
   return reparseDocument({
     context,
     documentId: args.DocumentID,
-    force: false,
+    force: true,
   });
 }
 
 const definition: IRPCFunctionDefinition = {
-  callback: Parse,
+  callback: ParseAdmin,
   argsSchema,
   access: {
-    allow: [USER_ROLE.AUTHENTICATED, USER_ROLE.CUSTOMER],
+    allow: [USER_ROLE.SYSTEM_ADMIN],
   },
 };
 export default definition;

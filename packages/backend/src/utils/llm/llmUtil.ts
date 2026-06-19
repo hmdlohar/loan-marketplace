@@ -13,6 +13,16 @@ import type {
 /** Default provider when `provider` is omitted and env has no override. */
 export const DEFAULT_LLM_PROVIDER: LlmProviderId = "opencode-zen";
 
+const DEFAULT_VISION_MODELS: Record<LlmProviderId, string> = {
+  "opencode-zen": "mimo-v2.5-free",
+  openrouter: "google/gemini-2.0-flash-001",
+  openai: "gpt-4o-mini",
+};
+
+function isTextOnlyModel(modelId: string) {
+  return /^deepseek-v4/i.test(modelId);
+}
+
 function resolveProviderId(provider?: LlmProviderId): LlmProviderId {
   const providerId = provider || (config.LLM_DEFAULT_PROVIDER as LlmProviderId) || DEFAULT_LLM_PROVIDER;
   return providerId;
@@ -21,6 +31,32 @@ function resolveProviderId(provider?: LlmProviderId): LlmProviderId {
 function resolveModel(providerId: LlmProviderId, model?: string) {
   const provider = getLlmProvider(providerId);
   return model || provider.defaultModel;
+}
+
+function resolveProviderAndModel(options: GenerateTextOptions) {
+  const hasImages = !!options.images?.length;
+  if (!hasImages) {
+    const providerId = resolveProviderId(options.provider);
+    return {
+      providerId,
+      modelId: resolveModel(providerId, options.model),
+    };
+  }
+
+  const providerId = resolveProviderId(
+    options.provider || (config.LLM_VISION_PROVIDER as LlmProviderId) || undefined
+  );
+  let modelId =
+    options.model ||
+    config.LLM_VISION_MODEL ||
+    DEFAULT_VISION_MODELS[providerId] ||
+    resolveModel(providerId);
+
+  if (isTextOnlyModel(modelId)) {
+    modelId = config.LLM_VISION_MODEL || DEFAULT_VISION_MODELS[providerId] || modelId;
+  }
+
+  return { providerId, modelId };
 }
 
 function normalizeImageData(data: LlmImageInput["data"]) {
@@ -109,7 +145,9 @@ function mapUsage(usage: {
  *
  * Import from `@utils/llm` — do not call provider APIs directly.
  *
- * @param options - See {@link GenerateTextOptions} for every argument.
+ * When `images` are included, a vision-capable model is used automatically
+ * (`LLM_VISION_PROVIDER` / `LLM_VISION_MODEL`, or provider defaults such as `mimo-v2.5-free` on OpenCode Zen).
+ * Text-only models like `deepseek-v4-flash-free` cannot accept images.
  * @returns Generated text, optional reasoning text, provider/model used, and token usage.
  *
  * @example
@@ -126,8 +164,7 @@ function mapUsage(usage: {
  * ```
  */
 export async function generateText(options: GenerateTextOptions): Promise<GenerateTextResult> {
-  const providerId = resolveProviderId(options.provider);
-  const modelId = resolveModel(providerId, options.model);
+  const { providerId, modelId } = resolveProviderAndModel(options);
   const provider = getLlmProvider(providerId);
 
   provider.getApiKey();

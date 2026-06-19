@@ -13,6 +13,7 @@
     "syncSDK": "tsx src/cmd/syncSDK.ts",
     "seedAdmin": "tsx src/cmd/seedAdmin.ts",
     "seedImport": "tsx src/cmd/seedImport.ts",
+    "test:parse": "tsx scripts/testDocumentParse.ts",
     "gfn": "node scripts/generateFN.js"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "jsonwebtoken": "9.0.2",
     "mongoose": "7.6.8",
     "node-schedule": "2.1.1",
+    "pdf-to-png-converter": "3.18.0",
     "tsc-alias": "1.8.17",
     "typescript": "6.0.3",
     "yup": "1.4.0"

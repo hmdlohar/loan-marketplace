@@ -188,6 +188,12 @@ export type ICustomers_GetArgs = {
 };
 
 export type ICustomers_GetReturnType = any;
+export type ICustomers_ListForAdminArgs = {
+  search?: string;
+  pageSize?: number;
+};
+
+export type ICustomers_ListForAdminReturnType = any;
 export type IApplications_GetArgs = {
   _id?: string;
 };
@@ -235,6 +241,29 @@ export type IDocuments_ListArgs = {
 };
 
 export type IDocuments_ListReturnType = any;
+export type IDocuments_ListAdminArgs = {
+  page?: number;
+  pageSize?: number;
+  sort?: string;
+  sortOrder?: string;
+  customerId?: string;
+  documentType?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  parseStatus?: string;
+};
+
+export type IDocuments_ListAdminReturnType = any;
+export type IDocuments_ParseAdminArgs = {
+  DocumentID?: string;
+};
+
+export type IDocuments_ParseAdminReturnType = any;
+export type IDocuments_DeleteAdminArgs = {
+  _id?: string;
+};
+
+export type IDocuments_DeleteAdminReturnType = any;
 export type IDocuments_UploadArgs = {
   ApplicationID?: string;
   DocumentType?: string;

@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 
 export default function AppDataTable(props: {
   rows: any[];
@@ -8,11 +8,15 @@ export default function AppDataTable(props: {
   rowCount?: number;
   paginationModel?: GridPaginationModel;
   onPaginationModelChange?: (model: GridPaginationModel) => void;
+  sortModel?: GridSortModel;
+  onSortModelChange?: (model: GridSortModel) => void;
+  sortingMode?: "client" | "server";
   pageSizeOptions?: number[];
   getRowId?: (row: any) => string;
 }) {
   const pageSizeOptions = props.pageSizeOptions || [10, 20, 50];
   const getRowId = props.getRowId || ((row: any) => row._id);
+  const sortingMode = props.sortingMode || (props.onSortModelChange ? "server" : "client");
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -25,6 +29,9 @@ export default function AppDataTable(props: {
         disableRowSelectionOnClick
         pageSizeOptions={pageSizeOptions}
         paginationMode={props.rowCount !== undefined ? "server" : "client"}
+        sortingMode={sortingMode}
+        sortModel={props.sortModel}
+        onSortModelChange={props.onSortModelChange}
         rowCount={props.rowCount}
         paginationModel={props.paginationModel}
         onPaginationModelChange={props.onPaginationModelChange}

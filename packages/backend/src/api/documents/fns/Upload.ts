@@ -6,7 +6,7 @@ import DocumentsService from "@root/api/documents/DocumentsService";
 import ApplicationsService from "@root/api/applications/ApplicationsService";
 import CustomersService from "@root/api/customers/CustomersService";
 import { uploadCustomerVaultDocument, guessContentType } from "@root/utils/s3Util";
-import { parseDocumentData } from "@root/api/documents/fns/parseDocumentData";
+import { parseDocumentWithStatus, buildDocumentParseFields } from "@root/api/documents/fns/parseDocumentWithStatus";
 import { upsertCustomerProfileFromParsedData } from "@root/api/customers/fns/upsertProfileFromFormData";
 import { getFileProxyUrl } from "@root/utils/s3Util";
 
@@ -46,18 +46,20 @@ export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<I
   );
 
   const customer = await CustomersService.context(context).findOne({ UserID: userId });
-  const parsedData = await parseDocumentData({
+  const parseResult = await parseDocumentWithStatus({
     documentType,
     fileBuffer: buffer,
     contentType,
     fileName: args.Name,
   });
+  const parseFields = buildDocumentParseFields(parseResult);
+  const parsedData = parseFields.ParsedData;
 
   const document = await DocumentsService.context(context).create({
     Name: args.Name,
     Path: uploaded.key,
     DocumentType: documentType,
-    ParsedData: parsedData,
+    ...parseFields,
     Context: {
       UserID: userId,
       CustomerID: customer?._id,
@@ -66,7 +68,10 @@ export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<I
     },
   });
 
-  if (documentType === DOCUMENT_TYPE.PAN || documentType === DOCUMENT_TYPE.AADHAAR) {
+  if (
+    parseFields.ParseStatus === "PARSED" &&
+    (documentType === DOCUMENT_TYPE.PAN || documentType === DOCUMENT_TYPE.AADHAAR)
+  ) {
     await upsertCustomerProfileFromParsedData(context, userId, parsedData);
   }
 

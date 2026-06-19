@@ -186,6 +186,11 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.ICustomers_GetReturnType>> {
     return this.cmsQuery("customers", args, { method: "post", route: "/Get" });
   }
+  async Customers_ListForAdmin(
+    args: types.ICustomers_ListForAdminArgs
+  ): Promise<ITHTResponse<types.ICustomers_ListForAdminReturnType>> {
+    return this.cmsQuery("customers", args, { method: "post", route: "/ListForAdmin" });
+  }
   async Applications_Get(
     args: types.IApplications_GetArgs
   ): Promise<ITHTResponse<types.IApplications_GetReturnType>> {
@@ -215,6 +220,21 @@ export class BackendSDK {
     args: types.IDocuments_ListArgs
   ): Promise<ITHTResponse<types.IDocuments_ListReturnType>> {
     return this.cmsQuery("documents", args, { method: "post", route: "/List" });
+  }
+  async Documents_ListAdmin(
+    args: types.IDocuments_ListAdminArgs
+  ): Promise<ITHTResponse<types.IDocuments_ListAdminReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/ListAdmin" });
+  }
+  async Documents_ParseAdmin(
+    args: types.IDocuments_ParseAdminArgs
+  ): Promise<ITHTResponse<types.IDocuments_ParseAdminReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/ParseAdmin" });
+  }
+  async Documents_DeleteAdmin(
+    args: types.IDocuments_DeleteAdminArgs
+  ): Promise<ITHTResponse<types.IDocuments_DeleteAdminReturnType>> {
+    return this.cmsQuery("documents", args, { method: "post", route: "/DeleteAdmin" });
   }
   async Documents_Upload(
     args: types.IDocuments_UploadArgs

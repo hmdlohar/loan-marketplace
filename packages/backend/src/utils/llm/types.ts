@@ -26,7 +26,7 @@ export type LlmImageInput = {
 export type GenerateTextOptions = {
   /** User prompt — plain text sent to the model. */
   text: string;
-  /** Optional images sent together with `text` (e.g. PAN/Aadhaar scans). */
+  /** Optional images sent together with `text` (e.g. PAN/Aadhaar scans). Routes to a vision-capable model automatically. */
   images?: LlmImageInput[];
   /** System instructions prepended to the conversation. */
   system?: string;

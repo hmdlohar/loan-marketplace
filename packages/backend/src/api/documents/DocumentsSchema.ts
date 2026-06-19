@@ -27,10 +27,21 @@ export const DocumentsSchema = new Schema({
   },
   Context: { type: DocumentContextSchema, default: {} },
   ParsedData: { type: Schema.Types.Mixed, required: false },
+  ParseStatus: {
+    type: String,
+    required: false,
+    enum: ["PENDING", "PARSED", "FAILED"],
+    default: "PENDING",
+  },
+  ParseError: { type: String, required: false },
 });
 
 DocumentsSchema.index({ "Context.ApplicationID": 1 });
 DocumentsSchema.index({ "Context.UserID": 1 });
 DocumentsSchema.index({ "Context.UserID": 1, DocumentType: 1 });
+DocumentsSchema.index({ CreatedAt: -1 });
+DocumentsSchema.index({ DocumentType: 1 });
+DocumentsSchema.index({ "Context.CustomerID": 1 });
+DocumentsSchema.index({ ParseStatus: 1 });
 
 export type IDocuments = InferSchemaType<typeof DocumentsSchema> & {};

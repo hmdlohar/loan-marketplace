@@ -142,7 +142,8 @@ All backend LLM work goes through **`@utils/llm`**. Import **`generateText`** on
 
 * **Module**: `packages/backend/src/utils/llm/`
 * **Arguments & return shape**: documented in JSDoc on `generateText` and the types in `utils/llm/types.ts` (`GenerateTextOptions`, `GenerateTextResult`, etc.)
-* **Defaults**: `provider` and `model` are optional; env vars in `packages/backend/.env.example` (`LLM_DEFAULT_PROVIDER`, `LLM_DEFAULT_MODEL`, provider API keys)
+* **Defaults**: `provider` and `model` are optional; env vars in `packages/backend/.env.example` (`LLM_DEFAULT_PROVIDER`, `LLM_DEFAULT_MODEL`, `LLM_VISION_PROVIDER`, `LLM_VISION_MODEL`, provider API keys)
+* **Vision**: calls with `images` auto-route to a vision-capable model (`mimo-v2.5-free` on OpenCode Zen by default). Text-only models such as `deepseek-v4-flash-free` cannot parse document images.
 * **Document parsing**: `generateText` is called from `api/documents/fns/parseDocumentData.ts` — consumed by `Documents_Parse`, `Documents_Upload`, and `Documents_UploadVault`
 
 ---

@@ -30,6 +30,8 @@ export default {
   ZEN_API_KEY: process.env.ZEN_API_KEY || "",
   LLM_DEFAULT_PROVIDER: process.env.LLM_DEFAULT_PROVIDER || "opencode-zen",
   LLM_DEFAULT_MODEL: process.env.LLM_DEFAULT_MODEL || "deepseek-v4-flash-free",
+  LLM_VISION_PROVIDER: process.env.LLM_VISION_PROVIDER || "",
+  LLM_VISION_MODEL: process.env.LLM_VISION_MODEL || "",
   OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || "",
   OPENROUTER_DEFAULT_MODEL: process.env.OPENROUTER_DEFAULT_MODEL || "openai/gpt-4o-mini",
   OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",

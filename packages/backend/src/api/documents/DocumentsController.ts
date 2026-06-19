@@ -1,4 +1,7 @@
 import ListDefinition from "./fns/List";
+import ListAdminDefinition from "./fns/ListAdmin";
+import ParseAdminDefinition from "./fns/ParseAdmin";
+import DeleteAdminDefinition from "./fns/DeleteAdmin";
 import UploadDefinition from "./fns/Upload";
 import UploadVaultDefinition from "./fns/UploadVault";
 import ListVaultDefinition from "./fns/ListVault";
@@ -11,6 +14,18 @@ export default createController(DocumentsCollectionKey, [
   rpcItem({
     route: "/List",
     definition: ListDefinition,
+  }),
+  rpcItem({
+    route: "/ListAdmin",
+    definition: ListAdminDefinition,
+  }),
+  rpcItem({
+    route: "/ParseAdmin",
+    definition: ParseAdminDefinition,
+  }),
+  rpcItem({
+    route: "/DeleteAdmin",
+    definition: DeleteAdminDefinition,
   }),
   rpcItem({
     route: "/Upload",
