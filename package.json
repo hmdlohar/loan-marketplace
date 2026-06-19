@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "22.22.3"
+    "node": "^22.22.0"
   },
   "scripts": {
     "watchlib": "concurrently \"pnpm --filter commonlib watch\" \"pnpm --filter backendsdk watch\"",
@@ -13,8 +13,8 @@
     "format": "prettier --write --ignore-unknown ."
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "prettier": "^3.2.5",
+    "concurrently": "8.2.2",
+    "prettier": "3.2.5",
     "typescript": "6.0.3"
   }
 }

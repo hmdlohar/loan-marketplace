@@ -9,8 +9,8 @@
     "watch": "tsc --build --watch"
   },
   "dependencies": {
-    "mongoose": "^7.6.8",
-    "yup": "^1.4.0"
+    "mongoose": "7.6.8",
+    "yup": "1.4.0"
   },
   "devDependencies": {
     "typescript": "6.0.3"

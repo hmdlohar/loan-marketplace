@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "22.22.3"
+    "node": "^22.22.0"
   },
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/app.ts",
@@ -16,29 +16,29 @@
     "gfn": "node scripts/generateFN.js"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1063.0",
-    "@aws-sdk/s3-request-presigner": "^3.1063.0",
-    "axios": "^1.7.9",
+    "@aws-sdk/client-s3": "3.1063.0",
+    "@aws-sdk/s3-request-presigner": "3.1063.0",
+    "axios": "1.7.9",
     "backendsdk": "workspace:*",
-    "bcryptjs": "^3.0.2",
+    "bcryptjs": "3.0.2",
     "commonlib": "workspace:*",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.6.8",
-    "node-schedule": "^2.1.1",
-    "tsc-alias": "^1.8.17",
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "jsonwebtoken": "9.0.2",
+    "mongoose": "7.6.8",
+    "node-schedule": "2.1.1",
+    "tsc-alias": "1.8.17",
     "typescript": "6.0.3",
-    "yup": "^1.4.0"
+    "yup": "1.4.0"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^22.10.2",
-    "@types/node-schedule": "^2.1.7",
-    "tsx": "^4.19.2"
+    "@types/bcryptjs": "2.4.6",
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.0",
+    "@types/jsonwebtoken": "9.0.7",
+    "@types/node": "22.10.2",
+    "@types/node-schedule": "2.1.7",
+    "tsx": "4.19.2"
   }
 }
