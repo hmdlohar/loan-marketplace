@@ -4,7 +4,7 @@ import { ICMSContext } from "@root/types/cms";
 import { APPLICATION_STATUS, LOAN_PRODUCT, USER_ROLE } from "commonlib";
 import ApplicationsService from "@root/api/applications/ApplicationsService";
 import ProductsService from "@root/api/products/ProductsService";
-import { upsertCustomerProfileFromApplication } from "@root/utils/customerProfileUtil";
+import { upsertCustomerProfileFromApplication } from "@root/api/customers/fns/upsertProfileFromFormData";
 
 const argsSchema = yup.object({
   _id: yup.string().optional(),

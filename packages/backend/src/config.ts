@@ -27,4 +27,11 @@ export default {
   MSG91_WIDGET_TOKEN: process.env.MSG91_WIDGET_TOKEN || "",
   MSG91_OTP_DEV_MODE: process.env.MSG91_OTP_DEV_MODE === "true",
   MSG91_OTP_DEV_CODE: process.env.MSG91_OTP_DEV_CODE || "123456",
+  ZEN_API_KEY: process.env.ZEN_API_KEY || "",
+  LLM_DEFAULT_PROVIDER: process.env.LLM_DEFAULT_PROVIDER || "opencode-zen",
+  LLM_DEFAULT_MODEL: process.env.LLM_DEFAULT_MODEL || "deepseek-v4-flash-free",
+  OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || "",
+  OPENROUTER_DEFAULT_MODEL: process.env.OPENROUTER_DEFAULT_MODEL || "openai/gpt-4o-mini",
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",
+  OPENAI_DEFAULT_MODEL: process.env.OPENAI_DEFAULT_MODEL || "gpt-4o-mini",
 };

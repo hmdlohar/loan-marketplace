@@ -17,15 +17,20 @@ type ILoginReturnType = {
   user: ReturnType<typeof toPublicUser>;
 };
 
-export async function Login(args: ILoginArgs, context: ICMSContext): Promise<ILoginReturnType> {
-  const user = await UserService.context(context).findOne({ Email: args.Email.toLowerCase().trim() });
+export async function Login(
+  args: ILoginArgs,
+  context: ICMSContext,
+): Promise<ILoginReturnType> {
+  const user = await UserService.context(context).findOne({
+    Email: args.Email.toLowerCase().trim(),
+  });
   if (!user) {
-    throw new Error("Invalid email or password.");
+    throw new Error("Invalid Email or password.");
   }
 
   const passwordValid = await verifyPassword(args.Password, user.PasswordHash);
   if (!passwordValid) {
-    throw new Error("Invalid email or password.");
+    throw new Error("Invalid email or Password.");
   }
 
   const token = signUserToken(user);

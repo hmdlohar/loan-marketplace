@@ -11,7 +11,7 @@ import { APPLICATION_STATUS, FormFieldDefinition, getStaticFormFields, LOAN_PROD
 import PageContainer from "../../../components/common/PageContainer";
 import DynamicFormFields from "../../../components/customer/DynamicFormFields";
 import CustomerAppLayout from "../../../layouts/app/CustomerAppLayout";
-import CustomerAuthGuard from "../../../guards/CustomerAuthGuard";
+import AuthGuard from "../../../guards/AuthGuard";
 import { bSdk } from "../../../services/BackendSDKService";
 import { buildInitialFormValues, loanProductLabels } from "../../../services/customerUtil";
 
@@ -68,7 +68,7 @@ const ApplyFormPage: NextPage = () => {
   }, [fields, profileQuery.data, applicationQuery.data]);
 
   return (
-    <CustomerAuthGuard>
+    <AuthGuard login="otp">
       <CustomerAppLayout>
         <PageContainer maxWidth="md">
           {applicationQuery.isLoading ? <Typography>Loading application form...</Typography> : null}
@@ -143,7 +143,7 @@ const ApplyFormPage: NextPage = () => {
           ) : null}
         </PageContainer>
       </CustomerAppLayout>
-    </CustomerAuthGuard>
+    </AuthGuard>
   );
 };
 

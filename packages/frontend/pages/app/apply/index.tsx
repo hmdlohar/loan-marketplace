@@ -12,9 +12,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { APPLICATION_STATUS, LOAN_PRODUCT } from "commonlib";
 import PageContainer from "../../../components/common/PageContainer";
-import OtpLoginModal from "../../../components/customer/OtpLoginModal";
 import CustomerAppLayout from "../../../layouts/app/CustomerAppLayout";
-import AuthServices from "../../../services/AuthServices";
+import AuthGuard from "../../../guards/AuthGuard";
 import { bSdk } from "../../../services/BackendSDKService";
 import {
   loanProductDescriptions,
@@ -27,15 +26,14 @@ const ApplyPage: NextPage = () => {
   const router = useRouter();
   const queryType = typeof router.query.type === "string" ? router.query.type : "";
   const [selectedType, setSelectedType] = useState<LOAN_PRODUCT | "">("");
-  const [otpOpen, setOtpOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (queryType && loanProductOrder.includes(queryType as LOAN_PRODUCT)) {
       setSelectedType(queryType as LOAN_PRODUCT);
     }
   }, [queryType]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const startApplication = async () => {
     if (!selectedType) {
@@ -61,20 +59,17 @@ const ApplyPage: NextPage = () => {
   };
 
   const handleContinue = () => {
-    if (!selectedType) {
-      return;
-    }
-    if (!AuthServices.isAuthenticated()) {
-      setOtpOpen(true);
+    if (!selectedType || loading) {
       return;
     }
     startApplication();
   };
 
   return (
-    <CustomerAppLayout>
-      <PageContainer maxWidth="lg">
-        <Stack spacing={4}>
+    <AuthGuard login="otp">
+      <CustomerAppLayout>
+        <PageContainer maxWidth="lg">
+          <Stack spacing={4}>
           <Stack spacing={1}>
             <Typography variant="h3" component="h1" sx={{ fontSize: { xs: "2rem", md: "2.75rem" }, fontWeight: 800 }}>
               What kind of loan do you need?
@@ -130,18 +125,10 @@ const ApplyPage: NextPage = () => {
               {loading ? "Starting..." : "Continue"}
             </Button>
           </Box>
-        </Stack>
-      </PageContainer>
-
-      <OtpLoginModal
-        open={otpOpen}
-        onClose={() => setOtpOpen(false)}
-        onSuccess={() => {
-          setOtpOpen(false);
-          startApplication();
-        }}
-      />
-    </CustomerAppLayout>
+          </Stack>
+        </PageContainer>
+      </CustomerAppLayout>
+    </AuthGuard>
   );
 };
 

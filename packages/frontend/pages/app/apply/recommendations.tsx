@@ -14,7 +14,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import PageContainer from "../../../components/common/PageContainer";
 import CustomerAppLayout from "../../../layouts/app/CustomerAppLayout";
-import CustomerAuthGuard from "../../../guards/CustomerAuthGuard";
+import AuthGuard from "../../../guards/AuthGuard";
 import { bSdk } from "../../../services/BackendSDKService";
 import { getFileProxyUrl } from "../../../services/fileProxyUtil";
 import { loanProductLabels } from "../../../services/customerUtil";
@@ -53,7 +53,7 @@ const RecommendationsPage: NextPage = () => {
   const loanType = applicationQuery.data?.LoanType || "";
 
   return (
-    <CustomerAuthGuard>
+    <AuthGuard login="otp">
       <CustomerAppLayout>
         <PageContainer maxWidth="lg">
           <Stack spacing={1} sx={{ mb: 4 }}>
@@ -153,7 +153,7 @@ const RecommendationsPage: NextPage = () => {
           ) : null}
         </PageContainer>
       </CustomerAppLayout>
-    </CustomerAuthGuard>
+    </AuthGuard>
   );
 };
 

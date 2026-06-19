@@ -5,8 +5,8 @@ import { DOCUMENT_TYPE, USER_ROLE } from "commonlib";
 import DocumentsService from "@root/api/documents/DocumentsService";
 import CustomersService from "@root/api/customers/CustomersService";
 import { uploadCustomerVaultDocument, guessContentType } from "@root/utils/s3Util";
-import { buildDummyParsedData } from "@root/utils/documentParseUtil";
-import { upsertCustomerProfileFromParsedData } from "@root/utils/customerProfileUtil";
+import { parseDocumentData } from "@root/api/documents/fns/parseDocumentData";
+import { upsertCustomerProfileFromParsedData } from "@root/api/customers/fns/upsertProfileFromFormData";
 
 const argsSchema = yup.object({
   DocumentType: yup.string().oneOf(Object.values(DOCUMENT_TYPE)).required(),
@@ -38,7 +38,12 @@ export async function UploadVault(args: IUploadVaultArgs, context: ICMSContext):
 
   const customer = await CustomersService.context(context).findOne({ UserID: userId });
   const documentType = args.DocumentType as DOCUMENT_TYPE;
-  const parsedData = buildDummyParsedData(documentType);
+  const parsedData = await parseDocumentData({
+    documentType,
+    fileBuffer: buffer,
+    contentType,
+    fileName: args.Name,
+  });
 
   const document = await DocumentsService.context(context).create({
     Name: args.Name,

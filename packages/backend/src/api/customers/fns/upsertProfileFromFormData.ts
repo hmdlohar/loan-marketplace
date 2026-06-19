@@ -28,18 +28,14 @@ export function extractCustomerProfileFromFormData(formData: Record<string, any>
   };
 }
 
-export async function upsertCustomerProfileFromApplication(
-  context: ICMSContext,
+function buildProfilePayload(
   userId: string,
-  mobile: string,
-  formData: Record<string, any>
+  profilePatch: ReturnType<typeof extractCustomerProfileFromFormData>,
+  mobile: string
 ) {
-  const profilePatch = extractCustomerProfileFromFormData(formData);
-  const existing = await CustomersService.context(context).findOne({ UserID: userId });
-
-  const payload = {
+  return {
     UserID: userId,
-    Mobile: profilePatch.Mobile || mobile,
+    Mobile: mobile,
     FirstName: profilePatch.FirstName,
     MiddleName: profilePatch.MiddleName,
     LastName: profilePatch.LastName,
@@ -56,6 +52,13 @@ export async function upsertCustomerProfileFromApplication(
     EmploymentType: profilePatch.EmploymentType,
     NetIncome: profilePatch.NetIncome,
   };
+}
+
+async function upsertCustomerProfile(
+  context: ICMSContext,
+  payload: ReturnType<typeof buildProfilePayload>
+) {
+  const existing = await CustomersService.context(context).findOne({ UserID: payload.UserID });
 
   if (existing) {
     const updatePayload: Record<string, any> = {};
@@ -76,6 +79,17 @@ export async function upsertCustomerProfileFromApplication(
   return CustomersService.context(context).create(payload);
 }
 
+export async function upsertCustomerProfileFromApplication(
+  context: ICMSContext,
+  userId: string,
+  mobile: string,
+  formData: Record<string, any>
+) {
+  const profilePatch = extractCustomerProfileFromFormData(formData);
+  const payload = buildProfilePayload(userId, profilePatch, profilePatch.Mobile || mobile);
+  return upsertCustomerProfile(context, payload);
+}
+
 export async function upsertCustomerProfileFromParsedData(
   context: ICMSContext,
   userId: string,
@@ -89,41 +103,6 @@ export async function upsertCustomerProfileFromParsedData(
     return null;
   }
 
-  const payload = {
-    UserID: userId,
-    Mobile: mobile,
-    FirstName: profilePatch.FirstName,
-    MiddleName: profilePatch.MiddleName,
-    LastName: profilePatch.LastName,
-    FullName: profilePatch.FullName,
-    Email: profilePatch.Email,
-    DOB: profilePatch.DOB,
-    Gender: profilePatch.Gender,
-    PANNumber: profilePatch.PANNumber,
-    AddressLine1: profilePatch.AddressLine1,
-    AddressLine2: profilePatch.AddressLine2,
-    PinCode: profilePatch.PinCode,
-    City: profilePatch.City,
-    State: profilePatch.State,
-    EmploymentType: profilePatch.EmploymentType,
-    NetIncome: profilePatch.NetIncome,
-  };
-
-  if (existing) {
-    const updatePayload: Record<string, any> = {};
-    const keys = Object.keys(payload) as (keyof typeof payload)[];
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (key === "UserID") {
-        continue;
-      }
-      const value = payload[key];
-      if (value !== undefined && value !== null && value !== "") {
-        updatePayload[key] = value;
-      }
-    }
-    return CustomersService.context(context).update(existing._id, updatePayload);
-  }
-
-  return CustomersService.context(context).create(payload);
+  const payload = buildProfilePayload(userId, profilePatch, mobile);
+  return upsertCustomerProfile(context, payload);
 }

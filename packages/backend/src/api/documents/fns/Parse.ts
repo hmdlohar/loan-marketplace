@@ -3,8 +3,8 @@ import { IRPCFunctionDefinition } from "@root/types/rpc";
 import { ICMSContext } from "@root/types/cms";
 import { DOCUMENT_TYPE, USER_ROLE } from "commonlib";
 import DocumentsService from "@root/api/documents/DocumentsService";
-import { buildDummyParsedData } from "@root/utils/documentParseUtil";
-import { upsertCustomerProfileFromParsedData } from "@root/utils/customerProfileUtil";
+import { parseDocumentFromStorage } from "@root/api/documents/fns/parseDocumentData";
+import { upsertCustomerProfileFromParsedData } from "@root/api/customers/fns/upsertProfileFromFormData";
 
 const argsSchema = yup.object({
   DocumentID: yup.string().required(),
@@ -27,7 +27,11 @@ export async function Parse(args: IParseArgs, context: ICMSContext): Promise<IPa
 
   let parsedData = docObj.ParsedData;
   if (!parsedData || Object.keys(parsedData).length === 0) {
-    parsedData = buildDummyParsedData(docObj.DocumentType as DOCUMENT_TYPE);
+    parsedData = await parseDocumentFromStorage({
+      documentType: docObj.DocumentType as DOCUMENT_TYPE,
+      storagePath: docObj.Path,
+      fileName: docObj.Name,
+    });
     await DocumentsService.context(context).update(args.DocumentID, { ParsedData: parsedData });
   }
 

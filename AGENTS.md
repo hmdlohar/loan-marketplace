@@ -56,8 +56,8 @@ These rules ensure clean, uniform, error-free execution across the codebase.
 * **Rule**: Write code so a reader can follow the full story in one pass — top to bottom, in one place. Prefer one clear, reasonably-sized function over a chain of small helpers that each do one tiny step.
 * **Why**: A linear function is easier to read, debug, and change. Splitting too early spreads logic across files and forces the reader to jump around for a task that belongs together.
 * **When to extract**:
-  * **`utils/`** — genuinely shared, cross-cutting work used in **3+ unrelated places** (e.g. slugify, password hashing).
-  * **Service methods** — entity-specific logic reused across **multiple entry points** on that collection.
+  * **`utils/`** — genuinely shared, cross-cutting work used in **3+ unrelated entities** (e.g. slugify, password hashing, S3, JWT, LLM gateway).
+  * **Entity `fns/` or Service** — logic that belongs to one collection (documents, customers, applications, …). See **§3.2**.
   * **Local helpers** — only when the same block is needed **more than twice in the same file**.
 * **Default**: If something is used once or twice, keep it inline. Do not create entity-specific helper files or one-off wrappers for a single flow.
 * **Same operation, same shape**: When create and update (or equivalent paired operations) share the same payload and workflow, use one entry point — e.g. a `/Save` RPC with optional `_id` — with the logic written inline in that handler. Split only when the two paths are genuinely different (different fields, side effects, or multi-step setup).
@@ -66,7 +66,21 @@ These rules ensure clean, uniform, error-free execution across the codebase.
 
 ## 3. Backend Architecture & Core Concepts
 
-### 3.1 Contexted Service Execution (`serviceWithContext`)
+### 3.2 Entity Colocation (`fns/` + Service)
+
+Keep entity-specific code inside that entity's folder under `src/api/<collection>/`.
+
+| Location | Use for |
+|----------|---------|
+| `<collection>Service.ts` | Context-bound DB access via `BaseService`; add methods when logic is reused across several handlers on the same collection. |
+| `<collection>/fns/*.ts` | Handlers and entity-specific helpers. **Every file in `fns/` is a function module by default.** |
+| `utils/` | Cross-entity infrastructure only (S3, JWT, LLM gateway, slugify, …). **Never** put document parsing, customer profile upsert, or similar entity logic here. |
+
+**RPC vs plain `fns`**: export a `definition: IRPCFunctionDefinition` object at the bottom of the file → it becomes an RPC endpoint (register in `<collection>Controller.ts`). **No `definition` export** → the file is a plain function module imported by other handlers (e.g. `documents/fns/parseDocumentData.ts`, `customers/fns/upsertProfileFromFormData.ts`).
+
+If a Service file grows too large, move helpers into plain `fns/` files in the same collection folder — not into `utils/`.
+
+### 3.3 Contexted Service Execution (`serviceWithContext`)
 Every service extends `BaseService<T>` and is instantiated on-the-fly per request with context via `serviceWithContext`. This injects request context (`SystemUserID`, `IsAdmin`, `req`, `res`, etc.) automatically.
 * Services are registered as context-aware singleton exporters:
   ```typescript
@@ -84,7 +98,7 @@ Every service extends `BaseService<T>` and is instantiated on-the-fly per reques
   const result = await LoanService.context(context).get(loanId);
   ```
 
-### 3.2 RPC-Only Controller Registry
+### 3.4 RPC-Only Controller Registry
 There are **no default REST CRUD endpoints**. The backend registers strictly defined RPC methods using `rpcItem` wrappers in controllers.
 * Custom RPC functions live inside `api/{collection}/fns/{FunctionName}.ts`.
 * Controllers map endpoints to these files:
@@ -100,7 +114,7 @@ There are **no default REST CRUD endpoints**. The backend registers strictly def
   ]);
   ```
 
-### 3.3 Database-Backed Cron & `CronComment` Logger
+### 3.5 Database-Backed Cron & `CronComment` Logger
 The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Every execution logs status (`RUNNING`, `SUCCESS`, `FAILED`) and a real-time progress stream to the `cron-log` collection.
 * Inside scheduled jobs, use `CronComment` to log step-by-step updates:
   ```typescript
@@ -112,7 +126,7 @@ The scheduler schedules jobs defined in `packages/backend/src/cron/cron.ts`. Eve
   }
   ```
 
-### 3.4 S3 File Storage & Proxy
+### 3.6 S3 File Storage & Proxy
 Files are stored in S3. There is **no public S3 bucket URL** — all reads go through the backend file proxy.
 
 * **Upload**: presigned PUT URLs via RPC (e.g. `partners/GetLogoUploadUrl`).
@@ -121,6 +135,15 @@ Files are stored in S3. There is **no public S3 bucket URL** — all reads go th
 * **Private files**: all other keys require a valid JWT (`authDecode` must set `req.User`).
 * **Stored URLs**: RPCs store proxy URLs built with `API_BASE_URL` + `/api/files/{key}` in fields like `Logo`; the S3 key is also kept in `LogoPath`.
 * Future: add per-key or per-prefix access rules beyond the public/private split.
+
+### 3.7 LLM
+
+All backend LLM work goes through **`@utils/llm`**. Import **`generateText`** only — never call provider APIs or third-party LLM libraries directly elsewhere in the codebase.
+
+* **Module**: `packages/backend/src/utils/llm/`
+* **Arguments & return shape**: documented in JSDoc on `generateText` and the types in `utils/llm/types.ts` (`GenerateTextOptions`, `GenerateTextResult`, etc.)
+* **Defaults**: `provider` and `model` are optional; env vars in `packages/backend/.env.example` (`LLM_DEFAULT_PROVIDER`, `LLM_DEFAULT_MODEL`, provider API keys)
+* **Document parsing**: `generateText` is called from `api/documents/fns/parseDocumentData.ts` — consumed by `Documents_Parse`, `Documents_Upload`, and `Documents_UploadVault`
 
 ---
 
@@ -173,13 +196,13 @@ Files are stored in S3. There is **no public S3 bucket URL** — all reads go th
   - Admin (`/admin/**`) → `<AuthGuard><RoleGuard roles={[SYSTEM_ADMIN]}><AdminLayout>…`
   - Partner (`/partner/**`) → `<AuthGuard><RoleGuard roles={[PARTNER]}><PartnerLayout>…`
 - **No** global layout in `_app` / `_document`. **No** pathname conditionals there.
-- **No** `/login` route. `AuthGuard` renders `LoginPanel` inline when unauthenticated.
+- **`AuthGuard`** — inline login when unauthenticated. Default `login="password"` (admin/partner). Customer app pages use `login="otp"`.
 
 ### 5.3 Routing
 | Area | Path | Layout |
 |------|------|--------|
 | Landing & static | `/`, `/about`, `/contact` | `LandingLayout` |
-| Borrower app flow | `/app/apply` (loan type), `/app/apply/documents`, `/app/apply/form`, `/app/apply/recommendations`, `/app/dashboard` | `CustomerAppLayout` + `CustomerAuthGuard` on protected steps |
+| Borrower app flow | `/app/apply`, `/app/apply/documents`, `/app/apply/form`, `/app/apply/recommendations`, `/app/dashboard` | `CustomerAppLayout` + `AuthGuard login="otp"` |
 | Legacy redirects | `/app/products`, `/app/matching`, `/app/offers` | Redirect to new funnel routes |
 | Admin panel | `/admin/partners`, … | `AdminLayout` + `AuthGuard` + `RoleGuard` |
 | Partner panel | `/partner/products`, … | `PartnerLayout` + `AuthGuard` + `RoleGuard` |
@@ -199,7 +222,7 @@ Borrower funnel (loan-type-first): select loan type → OTP auth → upload loan
 - Customer funnel calls `bSdk` RPCs: `Applications_*`, `Documents_*`, `Customers_Get`.
 - Loan-type document requirements: `commonlib` → `getRequiredDocuments(loanType)`.
 - Loan-type forms only: `getStaticFormFields(loanType)` — not product `FormFields`.
-- Document vault: `Documents_UploadVault`, `Documents_ListVault`, `Documents_AttachToApplication`; parse via `Documents_Parse` (dummy OCR for now).
+- Document vault: `Documents_UploadVault`, `Documents_ListVault`, `Documents_AttachToApplication`; parse via `Documents_Parse` (LLM via `@utils/llm` — see **§3.7**).
 - Recommendations: `Applications_GetRecommendations` (dummy engine); product selection via `Applications_SelectProduct`.
 - `services/mock/applicationMock.ts` remains for legacy helpers only.
 

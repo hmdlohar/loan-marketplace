@@ -11,7 +11,7 @@ import { APPLICATION_STATUS, DOCUMENT_TYPE, getRequiredDocuments, LOAN_PRODUCT }
 import PageContainer from "../../../components/common/PageContainer";
 import SavedDocumentPicker from "../../../components/customer/SavedDocumentPicker";
 import CustomerAppLayout from "../../../layouts/app/CustomerAppLayout";
-import CustomerAuthGuard from "../../../guards/CustomerAuthGuard";
+import AuthGuard from "../../../guards/AuthGuard";
 import { bSdk } from "../../../services/BackendSDKService";
 import { loanProductLabels } from "../../../services/customerUtil";
 
@@ -124,7 +124,7 @@ const DocumentsPage: NextPage = () => {
   const allDocsAttached = requiredDocuments.every((doc) => !!uploadedByType[doc.type]);
 
   return (
-    <CustomerAuthGuard>
+    <AuthGuard login="otp">
       <CustomerAppLayout>
         <PageContainer maxWidth="md">
           <Typography variant="h4" component="h1" fontWeight={800} gutterBottom>
@@ -209,7 +209,7 @@ const DocumentsPage: NextPage = () => {
           </Stack>
         </PageContainer>
       </CustomerAppLayout>
-    </CustomerAuthGuard>
+    </AuthGuard>
   );
 };
 

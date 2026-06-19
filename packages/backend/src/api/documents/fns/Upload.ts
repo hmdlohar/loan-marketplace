@@ -6,8 +6,8 @@ import DocumentsService from "@root/api/documents/DocumentsService";
 import ApplicationsService from "@root/api/applications/ApplicationsService";
 import CustomersService from "@root/api/customers/CustomersService";
 import { uploadCustomerVaultDocument, guessContentType } from "@root/utils/s3Util";
-import { buildDummyParsedData } from "@root/utils/documentParseUtil";
-import { upsertCustomerProfileFromParsedData } from "@root/utils/customerProfileUtil";
+import { parseDocumentData } from "@root/api/documents/fns/parseDocumentData";
+import { upsertCustomerProfileFromParsedData } from "@root/api/customers/fns/upsertProfileFromFormData";
 import { getFileProxyUrl } from "@root/utils/s3Util";
 
 const argsSchema = yup.object({
@@ -46,7 +46,12 @@ export async function Upload(args: IUploadArgs, context: ICMSContext): Promise<I
   );
 
   const customer = await CustomersService.context(context).findOne({ UserID: userId });
-  const parsedData = buildDummyParsedData(documentType);
+  const parsedData = await parseDocumentData({
+    documentType,
+    fileBuffer: buffer,
+    contentType,
+    fileName: args.Name,
+  });
 
   const document = await DocumentsService.context(context).create({
     Name: args.Name,

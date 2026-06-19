@@ -13,7 +13,7 @@ import { useQuery } from "react-query";
 import { APPLICATION_STATUS } from "commonlib";
 import PageContainer from "../../components/common/PageContainer";
 import CustomerAppLayout from "../../layouts/app/CustomerAppLayout";
-import CustomerAuthGuard from "../../guards/CustomerAuthGuard";
+import AuthGuard from "../../guards/AuthGuard";
 import AuthServices from "../../services/AuthServices";
 import { bSdk } from "../../services/BackendSDKService";
 import { getFileProxyUrl } from "../../services/fileProxyUtil";
@@ -69,7 +69,7 @@ const DashboardPage: NextPage = () => {
   });
 
   return (
-    <CustomerAuthGuard>
+    <AuthGuard login="otp">
       <CustomerAppLayout>
         <PageContainer maxWidth="md">
           <Stack spacing={3}>
@@ -172,7 +172,7 @@ const DashboardPage: NextPage = () => {
           </Stack>
         </PageContainer>
       </CustomerAppLayout>
-    </CustomerAuthGuard>
+    </AuthGuard>
   );
 };
 
