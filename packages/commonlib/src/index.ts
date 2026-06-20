@@ -1,4 +1,5 @@
 export * from "./brand";
+export * from "./documentParseUtil";
 export * from "./enums/enums";
 export * from "./loanDocumentRequirements/index";
 export * from "./productFormFields/index";

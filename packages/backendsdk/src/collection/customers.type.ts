@@ -21,4 +21,5 @@ export interface IBaseCustomers {
   State?: string;
   EmploymentType?: string;
   NetIncome?: number;
+  FormData?: any;
 }

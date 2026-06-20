@@ -24,7 +24,6 @@ export default function OtpLoginPanel(props: {
   const [step, setStep] = useState<"mobile" | "otp">("mobile");
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
-  const [fullName, setFullName] = useState("");
   const [reqId, setReqId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -56,7 +55,6 @@ export default function OtpLoginPanel(props: {
       const response = await bSdk.User_VerifyOtp({
         Mobile: mobile,
         Otp: otp,
-        FullName: fullName.trim() || undefined,
       });
       if (!response.status || !response.data?.token) {
         throw new Error(response.message || "OTP verification failed.");
@@ -71,7 +69,6 @@ export default function OtpLoginPanel(props: {
       Mobile: mobile,
       Otp: otp,
       ReqId: reqId,
-      FullName: fullName.trim() || undefined,
     });
     if (!response.status || !response.data?.token) {
       throw new Error(response.message || "OTP verification failed.");
@@ -158,12 +155,6 @@ export default function OtpLoginPanel(props: {
           </>
         ) : (
           <>
-            <TextField
-              label="Your name"
-              value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
-              fullWidth
-            />
             <TextField
               label="Enter OTP"
               value={otp}

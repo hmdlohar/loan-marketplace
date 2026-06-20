@@ -1,5 +1,6 @@
 export * from "./types";
 export * from "./fields";
+export * from "./buildFormDataValidationSchema";
 
 import { LOAN_PRODUCT } from "../enums/enums";
 import { FormFieldDefinition } from "./types";

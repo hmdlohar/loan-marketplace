@@ -5,6 +5,17 @@ import { LocalStorageUtils } from "../utils/localStorageUtils";
 const AUTH_TOKEN_KEY = "authToken";
 const USER_DATA_KEY = "userData";
 
+const AUTH_FAILURE_PATTERNS = [
+  "logged in",
+  "not allowed to access",
+  "user not found",
+  "jwt expired",
+  "invalid token",
+  "token expired",
+];
+
+let sessionValidated = false;
+
 export type AuthUserData = {
   _id: string;
   Email: string;
@@ -22,6 +33,43 @@ class AuthServices {
     LocalStorageUtils.lsSet(AUTH_TOKEN_KEY, token);
   }
 
+  static markSessionValidated() {
+    sessionValidated = true;
+  }
+
+  static isSessionValidated() {
+    return sessionValidated;
+  }
+
+  static isAuthFailureMessage(message?: string) {
+    if (!message) {
+      return false;
+    }
+    const normalized = message.toLowerCase();
+    for (let i = 0; i < AUTH_FAILURE_PATTERNS.length; i++) {
+      if (normalized.includes(AUTH_FAILURE_PATTERNS[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static isAuthFailureResponse(response?: { status?: boolean; message?: string }) {
+    if (!response || response.status) {
+      return false;
+    }
+    return AuthServices.isAuthFailureMessage(response.message);
+  }
+
+  static isAuthFailureError(ex: any) {
+    const status = ex?.response?.status;
+    if (status === 401 || status === 403) {
+      return true;
+    }
+    const message = ex?.response?.data?.message || ex?.message;
+    return AuthServices.isAuthFailureMessage(message);
+  }
+
   static getToken() {
     return LocalStorageUtils.lsGet(AUTH_TOKEN_KEY) as string | null;
   }
@@ -36,6 +84,7 @@ class AuthServices {
   }
 
   static onLogout() {
+    sessionValidated = false;
     AuthServices.setToken(null);
     LocalStorageUtils.lsDelete(USER_DATA_KEY);
     clearAllCaches();

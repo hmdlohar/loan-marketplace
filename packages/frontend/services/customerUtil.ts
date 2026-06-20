@@ -57,6 +57,29 @@ export function customerFormKeyToProfileKey(key: string) {
   return map[key] || "";
 }
 
+export function getProfileValueForFormKey(fieldKey: string, profile: Record<string, any> | null) {
+  if (!profile) {
+    return "";
+  }
+
+  const storedFormData = profile.FormData && typeof profile.FormData === "object" ? profile.FormData : null;
+  if (
+    storedFormData &&
+    storedFormData[fieldKey] !== undefined &&
+    storedFormData[fieldKey] !== null &&
+    storedFormData[fieldKey] !== ""
+  ) {
+    return String(storedFormData[fieldKey]);
+  }
+
+  const profileKey = customerFormKeyToProfileKey(fieldKey);
+  if (profileKey && profile[profileKey] !== undefined && profile[profileKey] !== null && profile[profileKey] !== "") {
+    return String(profile[profileKey]);
+  }
+
+  return "";
+}
+
 export function buildInitialFormValues(fields: { Key: string }[], profile: Record<string, any> | null) {
   const values: Record<string, string> = {};
   if (!profile) {
@@ -65,14 +88,43 @@ export function buildInitialFormValues(fields: { Key: string }[], profile: Recor
 
   for (let i = 0; i < fields.length; i++) {
     const field = fields[i];
-    const profileKey = customerFormKeyToProfileKey(field.Key);
-    if (!profileKey) {
-      continue;
+    const value = getProfileValueForFormKey(field.Key, profile);
+    if (value) {
+      values[field.Key] = value;
     }
-    const value = profile[profileKey];
+  }
+
+  return values;
+}
+
+export function buildMergedFormValues(
+  fields: { Key: string }[],
+  profile: Record<string, any> | null,
+  existingFormData: Record<string, any> | null | undefined,
+  authMobile?: string
+) {
+  const values: Record<string, string> = {};
+  for (let i = 0; i < fields.length; i++) {
+    const fieldKey = fields[i].Key;
+    values[fieldKey] = "";
+    const profileValue = getProfileValueForFormKey(fieldKey, profile);
+    if (profileValue) {
+      values[fieldKey] = profileValue;
+    }
+  }
+
+  const formData = existingFormData || {};
+  const formDataKeys = Object.keys(formData);
+  for (let i = 0; i < formDataKeys.length; i++) {
+    const key = formDataKeys[i];
+    const value = formData[key];
     if (value !== undefined && value !== null && value !== "") {
-      values[field.Key] = String(value);
+      values[key] = String(value);
     }
+  }
+
+  if (authMobile && values.mobile !== undefined && !values.mobile) {
+    values.mobile = authMobile;
   }
 
   return values;

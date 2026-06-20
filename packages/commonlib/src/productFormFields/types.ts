@@ -8,6 +8,11 @@ export interface FormFieldValidation {
   errorMessage?: string;
 }
 
+export interface FormFieldCondition {
+  Key: string;
+  Equals: string | string[];
+}
+
 export interface FormFieldDefinition {
   Key: string;
   Label: string;
@@ -17,6 +22,8 @@ export interface FormFieldDefinition {
   Placeholder?: string;
   Options?: string[];
   Validation?: FormFieldValidation;
+  RequiredWhen?: FormFieldCondition;
+  VisibleWhen?: FormFieldCondition;
 }
 
 export type StaticFormFieldsByLoanType = Record<LOAN_PRODUCT, FormFieldDefinition[]>;

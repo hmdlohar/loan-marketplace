@@ -1,16 +1,18 @@
 import * as yup from "yup";
 import { IRPCFunctionDefinition } from "@root/types/rpc";
 import { ICMSContext } from "@root/types/cms";
-import { APPLICATION_STATUS, LOAN_PRODUCT, USER_ROLE } from "commonlib";
+import { APPLICATION_STATUS, LOAN_PRODUCT, USER_ROLE, getStaticFormFields, validateFormDataOrThrow, validatePanAadhaarNameMatch } from "commonlib";
 import ApplicationsService from "@root/api/applications/ApplicationsService";
 import ProductsService from "@root/api/products/ProductsService";
-import { upsertCustomerProfileFromApplication } from "@root/api/customers/fns/upsertProfileFromFormData";
+import DocumentsService from "@root/api/documents/DocumentsService";
+import UserService from "@root/api/user/UserService";
+import { upsertCustomerProfileFromApplication, resolveApplicationFormData } from "@root/api/customers/fns/upsertProfileFromFormData";
 
 const argsSchema = yup.object({
   _id: yup.string().optional(),
   LoanType: yup.string().oneOf(Object.values(LOAN_PRODUCT)).optional(),
   ProductID: yup.string().optional(),
-  FormData: yup.object().default({}),
+  FormData: yup.mixed().default({}),
   Status: yup
     .string()
     .oneOf(Object.values(APPLICATION_STATUS))
@@ -31,13 +33,35 @@ export type ISaveArgs = yup.InferType<typeof argsSchema>;
 
 type ISaveReturnType = any;
 
+async function resolveFormDataWithAuthMobile(context: ICMSContext, userId: string, formData: Record<string, any>) {
+  if (formData.mobile) {
+    return formData;
+  }
+
+  const user = await UserService.context(context).get(userId);
+  if (!user) {
+    return formData;
+  }
+
+  const userObj = user.toObject ? user.toObject() : user;
+  if (!userObj.Mobile) {
+    return formData;
+  }
+
+  return {
+    ...formData,
+    mobile: userObj.Mobile,
+  };
+}
+
 export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISaveReturnType> {
   if (!context.SystemUserID || context.SystemUserID === "DEFAULT") {
     throw new Error("Authentication required.");
   }
 
   const userId = context.SystemUserID;
-  const formData = (args.FormData || {}) as Record<string, any>;
+  let formData = (args.FormData || {}) as Record<string, any>;
+  formData = await resolveFormDataWithAuthMobile(context, userId, formData);
   const status = args.Status || APPLICATION_STATUS.CREATED;
 
   if (args._id) {
@@ -64,6 +88,40 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
     }
     if (args.ProductID) {
       updatePayload.ProductID = args.ProductID;
+    }
+
+    const applicationObj = application.toObject ? application.toObject() : application;
+    const existingApplicationFormData =
+      applicationObj.FormData && typeof applicationObj.FormData === "object"
+        ? (applicationObj.FormData as Record<string, any>)
+        : {};
+    formData = await resolveApplicationFormData(context, userId, existingApplicationFormData, formData);
+    updatePayload.FormData = formData;
+
+    if (status === APPLICATION_STATUS.PENDING_FORM) {
+      const documentIds = args.DocumentIDs || applicationObj.DocumentIDs || {};
+      const panId = documentIds.PAN;
+      const aadhaarId = documentIds.AADHAAR;
+
+      if (panId && aadhaarId) {
+        const panDocument = await DocumentsService.context(context).get_Throwable(panId);
+        const aadhaarDocument = await DocumentsService.context(context).get_Throwable(aadhaarId);
+        const panObj = panDocument.toObject ? panDocument.toObject() : panDocument;
+        const aadhaarObj = aadhaarDocument.toObject ? aadhaarDocument.toObject() : aadhaarDocument;
+        const nameMismatchError = validatePanAadhaarNameMatch(
+          panObj.ParsedData as Record<string, unknown> | undefined,
+          aadhaarObj.ParsedData as Record<string, unknown> | undefined
+        );
+        if (nameMismatchError) {
+          throw new Error(nameMismatchError);
+        }
+      }
+    }
+
+    if (status === APPLICATION_STATUS.UNDER_REVIEW) {
+      const loanType = (args.LoanType || applicationObj.LoanType) as LOAN_PRODUCT;
+      const fields = getStaticFormFields(loanType);
+      await validateFormDataOrThrow(fields, formData);
     }
 
     let updated = await ApplicationsService.context(context).update(args._id, updatePayload);

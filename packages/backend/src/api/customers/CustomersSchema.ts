@@ -24,6 +24,7 @@ export const CustomersSchema = new Schema({
   State: { type: String, required: false },
   EmploymentType: { type: String, required: false },
   NetIncome: { type: Number, required: false },
+  FormData: { type: Schema.Types.Mixed, default: {} },
 });
 
 export type ICustomers = InferSchemaType<typeof CustomersSchema> & {};

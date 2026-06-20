@@ -14,10 +14,23 @@ export default function AuthGuard(props: {
 
   useEffect(() => {
     const token = AuthServices.getToken();
+    const userData = AuthServices.getUserData();
+
     if (!token) {
       setAuthenticated(false);
       setReady(true);
       return;
+    }
+
+    if (AuthServices.isSessionValidated() && userData) {
+      setAuthenticated(true);
+      setReady(true);
+      return;
+    }
+
+    if (userData) {
+      setAuthenticated(true);
+      setReady(true);
     }
 
     bSdk
@@ -25,15 +38,31 @@ export default function AuthGuard(props: {
       .then((response) => {
         if (response.status && response.data) {
           AuthServices.setUserData(response.data);
+          AuthServices.markSessionValidated();
           setAuthenticated(true);
           return;
         }
-        AuthServices.onLogout();
-        setAuthenticated(false);
+
+        if (AuthServices.isAuthFailureResponse(response)) {
+          AuthServices.onLogout();
+          setAuthenticated(false);
+          return;
+        }
+
+        if (!userData) {
+          setAuthenticated(false);
+        }
       })
-      .catch(() => {
-        AuthServices.onLogout();
-        setAuthenticated(false);
+      .catch((ex: any) => {
+        if (AuthServices.isAuthFailureError(ex)) {
+          AuthServices.onLogout();
+          setAuthenticated(false);
+          return;
+        }
+
+        if (!userData) {
+          setAuthenticated(false);
+        }
       })
       .finally(() => {
         setReady(true);
@@ -49,6 +78,7 @@ export default function AuthGuard(props: {
       return (
         <OtpLoginPanel
           onSuccess={() => {
+            AuthServices.markSessionValidated();
             setAuthenticated(true);
           }}
         />
@@ -58,6 +88,7 @@ export default function AuthGuard(props: {
     return (
       <LoginPanel
         onSuccess={() => {
+          AuthServices.markSessionValidated();
           setAuthenticated(true);
         }}
       />

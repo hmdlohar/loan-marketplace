@@ -57,7 +57,13 @@ function getResumeHref(application: any) {
   return "";
 }
 
-const DashboardPage: NextPage = () => {
+const DashboardPage: NextPage = () => (
+  <AuthGuard login="otp">
+    <DashboardPageContent />
+  </AuthGuard>
+);
+
+function DashboardPageContent() {
   const userData = AuthServices.getUserData() as { FullName?: string; Mobile?: string } | null;
 
   const applicationsQuery = useQuery(["customer-applications"], async () => {
@@ -69,8 +75,7 @@ const DashboardPage: NextPage = () => {
   });
 
   return (
-    <AuthGuard login="otp">
-      <CustomerAppLayout>
+    <CustomerAppLayout>
         <PageContainer maxWidth="md">
           <Stack spacing={3}>
             <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems={{ sm: "center" }} gap={2}>
@@ -171,9 +176,8 @@ const DashboardPage: NextPage = () => {
             ) : null}
           </Stack>
         </PageContainer>
-      </CustomerAppLayout>
-    </AuthGuard>
+    </CustomerAppLayout>
   );
-};
+}
 
 export default DashboardPage;

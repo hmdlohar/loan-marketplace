@@ -7,7 +7,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { APPLICATION_STATUS, DOCUMENT_TYPE, getRequiredDocuments, LOAN_PRODUCT } from "commonlib";
+import { APPLICATION_STATUS, DOCUMENT_TYPE, getRequiredDocuments, LOAN_PRODUCT, validatePanAadhaarNameMatch } from "commonlib";
 import PageContainer from "../../../components/common/PageContainer";
 import SavedDocumentPicker from "../../../components/customer/SavedDocumentPicker";
 import CustomerAppLayout from "../../../layouts/app/CustomerAppLayout";
@@ -15,7 +15,39 @@ import AuthGuard from "../../../guards/AuthGuard";
 import { bSdk } from "../../../services/BackendSDKService";
 import { loanProductLabels } from "../../../services/customerUtil";
 
-const DocumentsPage: NextPage = () => {
+function replaceApplicationDocument(current: any, document: any) {
+  if (!current) {
+    return current;
+  }
+
+  const documents = current.Documents || [];
+  const nextDocuments = [];
+  let replaced = false;
+  for (let i = 0; i < documents.length; i++) {
+    if (documents[i].DocumentType === document.DocumentType) {
+      nextDocuments.push(document);
+      replaced = true;
+    } else {
+      nextDocuments.push(documents[i]);
+    }
+  }
+  if (!replaced) {
+    nextDocuments.push(document);
+  }
+
+  return {
+    ...current,
+    Documents: nextDocuments,
+  };
+}
+
+const DocumentsPage: NextPage = () => (
+  <AuthGuard login="otp">
+    <DocumentsPageContent />
+  </AuthGuard>
+);
+
+function DocumentsPageContent() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const applicationId = typeof router.query.applicationId === "string" ? router.query.applicationId : "";
@@ -60,7 +92,7 @@ const DocumentsPage: NextPage = () => {
     return map;
   }, [applicationQuery.data]);
 
-  const vaultByType = vaultQuery.data?.items || {};
+  const vaultByType: Record<string, any[]> = vaultQuery.data?.items || {};
 
   const readFileBase64 = (file: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -89,8 +121,11 @@ const DocumentsPage: NextPage = () => {
       if (!response.status) {
         throw new Error(response.message || "Upload failed.");
       }
-      queryClient.invalidateQueries(["application-documents", applicationId]);
-      queryClient.invalidateQueries(["customer-vault-docs"]);
+      queryClient.setQueryData(["application-documents", applicationId], (current: any) =>
+        replaceApplicationDocument(current, response.data)
+      );
+      await queryClient.refetchQueries(["application-documents", applicationId]);
+      await queryClient.invalidateQueries(["customer-vault-docs"]);
     } catch (ex: any) {
       setError(ex.response?.data?.message || ex.message || "Upload failed.");
     } finally {
@@ -98,9 +133,8 @@ const DocumentsPage: NextPage = () => {
     }
   };
 
-  const handleUseSaved = async (docType: DOCUMENT_TYPE) => {
-    const savedDoc = vaultByType[docType];
-    if (!savedDoc?._id || !applicationId) {
+  const handleUseSaved = async (docType: DOCUMENT_TYPE, documentId: string) => {
+    if (!documentId || !applicationId) {
       return;
     }
     setUploadingType(docType);
@@ -108,12 +142,15 @@ const DocumentsPage: NextPage = () => {
     try {
       const response = await bSdk.Documents_AttachToApplication({
         ApplicationID: applicationId,
-        DocumentID: savedDoc._id,
+        DocumentID: documentId,
       });
       if (!response.status) {
         throw new Error(response.message || "Failed to attach saved document.");
       }
-      queryClient.invalidateQueries(["application-documents", applicationId]);
+      queryClient.setQueryData(["application-documents", applicationId], (current: any) =>
+        replaceApplicationDocument(current, response.data)
+      );
+      await queryClient.refetchQueries(["application-documents", applicationId]);
     } catch (ex: any) {
       setError(ex.response?.data?.message || ex.message || "Failed to attach saved document.");
     } finally {
@@ -124,8 +161,7 @@ const DocumentsPage: NextPage = () => {
   const allDocsAttached = requiredDocuments.every((doc) => !!uploadedByType[doc.type]);
 
   return (
-    <AuthGuard login="otp">
-      <CustomerAppLayout>
+    <CustomerAppLayout>
         <PageContainer maxWidth="md">
           <Typography variant="h4" component="h1" fontWeight={800} gutterBottom>
             Upload documents
@@ -146,10 +182,10 @@ const DocumentsPage: NextPage = () => {
                 key={doc.type}
                 documentType={doc.type}
                 label={doc.label}
-                savedDoc={vaultByType[doc.type] || null}
+                savedDocs={vaultByType[doc.type] || []}
                 attachedDoc={uploadedByType[doc.type] || null}
                 uploading={uploadingType === doc.type}
-                onUseSaved={() => handleUseSaved(doc.type)}
+                onUseSaved={(documentId) => handleUseSaved(doc.type, documentId)}
                 onUpload={(file) => handleUpload(doc.type, file)}
               />
             ))}
@@ -176,12 +212,34 @@ const DocumentsPage: NextPage = () => {
                 try {
                   const panDoc = uploadedByType[DOCUMENT_TYPE.PAN];
                   const aadhaarDoc = uploadedByType[DOCUMENT_TYPE.AADHAAR];
+                  let panParsedDoc = panDoc;
+                  let aadhaarParsedDoc = aadhaarDoc;
+                  const requiresPan = requiredDocuments.some((doc) => doc.type === DOCUMENT_TYPE.PAN);
+                  const requiresAadhaar = requiredDocuments.some((doc) => doc.type === DOCUMENT_TYPE.AADHAAR);
 
                   if (panDoc?._id) {
-                    await bSdk.Documents_Parse({ DocumentID: panDoc._id });
+                    const panResponse = await bSdk.Documents_Parse({ DocumentID: panDoc._id });
+                    if (!panResponse.status) {
+                      throw new Error(panResponse.message || "Failed to parse PAN card.");
+                    }
+                    panParsedDoc = panResponse.data;
                   }
                   if (aadhaarDoc?._id) {
-                    await bSdk.Documents_Parse({ DocumentID: aadhaarDoc._id });
+                    const aadhaarResponse = await bSdk.Documents_Parse({ DocumentID: aadhaarDoc._id });
+                    if (!aadhaarResponse.status) {
+                      throw new Error(aadhaarResponse.message || "Failed to parse Aadhaar card.");
+                    }
+                    aadhaarParsedDoc = aadhaarResponse.data;
+                  }
+
+                  if (requiresPan && requiresAadhaar && panParsedDoc && aadhaarParsedDoc) {
+                    const nameMismatchError = validatePanAadhaarNameMatch(
+                      panParsedDoc.ParsedData,
+                      aadhaarParsedDoc.ParsedData
+                    );
+                    if (nameMismatchError) {
+                      throw new Error(nameMismatchError);
+                    }
                   }
 
                   const response = await bSdk.Applications_Save({
@@ -208,9 +266,8 @@ const DocumentsPage: NextPage = () => {
             </Button>
           </Stack>
         </PageContainer>
-      </CustomerAppLayout>
-    </AuthGuard>
+    </CustomerAppLayout>
   );
-};
+}
 
 export default DocumentsPage;

@@ -14,4 +14,6 @@ export interface IBaseDocuments {
     ProductID?: string;
   };
   ParsedData?: any;
+  ParseStatus?: string;
+  ParseError?: string;
 }

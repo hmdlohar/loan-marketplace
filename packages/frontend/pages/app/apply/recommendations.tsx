@@ -20,7 +20,13 @@ import { getFileProxyUrl } from "../../../services/fileProxyUtil";
 import { loanProductLabels } from "../../../services/customerUtil";
 import { trustShadowSx } from "../../../theme/styleHelpers";
 
-const RecommendationsPage: NextPage = () => {
+const RecommendationsPage: NextPage = () => (
+  <AuthGuard login="otp">
+    <RecommendationsPageContent />
+  </AuthGuard>
+);
+
+function RecommendationsPageContent() {
   const router = useRouter();
   const applicationId = typeof router.query.applicationId === "string" ? router.query.applicationId : "";
   const [selectingId, setSelectingId] = useState("");
@@ -53,8 +59,7 @@ const RecommendationsPage: NextPage = () => {
   const loanType = applicationQuery.data?.LoanType || "";
 
   return (
-    <AuthGuard login="otp">
-      <CustomerAppLayout>
+    <CustomerAppLayout>
         <PageContainer maxWidth="lg">
           <Stack spacing={1} sx={{ mb: 4 }}>
             <Typography variant="h4" component="h1" fontWeight={800}>
@@ -152,9 +157,8 @@ const RecommendationsPage: NextPage = () => {
             </Typography>
           ) : null}
         </PageContainer>
-      </CustomerAppLayout>
-    </AuthGuard>
+    </CustomerAppLayout>
   );
-};
+}
 
 export default RecommendationsPage;

@@ -133,38 +133,12 @@ export default function CustomerAppLayout(props: { children: React.ReactNode }) 
       <Box
         component="main"
         sx={{
-          pb: 6,
           background: (theme) =>
             `linear-gradient(180deg, ${theme.palette.secondary.main}08 0%, transparent 220px)`,
         }}
       >
         {props.children}
       </Box>
-
-      {isAuthenticated ? (
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            display: { xs: "block", md: "none" },
-            borderTop: 1,
-            borderColor: "divider",
-            bgcolor: "background.paper",
-            zIndex: 10,
-          }}
-        >
-          <Stack direction="row">
-            <Button fullWidth component={NextLink} href="/app/apply" color="secondary">
-              Apply
-            </Button>
-            <Button fullWidth component={NextLink} href="/app/dashboard">
-              Applications
-            </Button>
-          </Stack>
-        </Box>
-      ) : null}
 
       {!isAuthenticated ? null : (
         <Typography variant="caption" color="text.secondary" sx={{ display: { xs: "none", md: "block" }, textAlign: "right", px: 3, pb: 2 }}>
