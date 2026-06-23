@@ -18,6 +18,65 @@ import {
 import fs from "fs";
 import path from "path";
 
+const DEFAULT_ELIGIBILITY: Record<string, IProducts["Eligibility"]> = {
+  [LOAN_PRODUCT.PERSONAL_LOAN]: {
+    InterestRateMin: 10.5,
+    InterestRateMax: 18,
+    MinLoanAmount: 50000,
+    MaxLoanAmount: 2500000,
+    MinMonthlyIncome: 25000,
+    MinAge: 21,
+    MaxAge: 60,
+    MinTenureMonths: 12,
+    MaxTenureMonths: 60,
+    AllowedEmploymentTypes: ["Salaried", "Self-Employed"],
+  },
+  [LOAN_PRODUCT.HOME_LOAN]: {
+    InterestRateMin: 8.4,
+    InterestRateMax: 10.5,
+    MinLoanAmount: 500000,
+    MaxLoanAmount: 50000000,
+    MinMonthlyIncome: 30000,
+    MinAge: 21,
+    MaxAge: 65,
+    MinTenureMonths: 60,
+    MaxTenureMonths: 360,
+    AllowedEmploymentTypes: ["Salaried", "Self-Employed", "Business Owner", "Professional"],
+  },
+  [LOAN_PRODUCT.LAP]: {
+    InterestRateMin: 9,
+    InterestRateMax: 13,
+    MinLoanAmount: 1000000,
+    MaxLoanAmount: 100000000,
+    MinMonthlyIncome: 40000,
+    MinAge: 21,
+    MaxAge: 65,
+    MinTenureMonths: 60,
+    MaxTenureMonths: 180,
+    AllowedEmploymentTypes: ["Salaried", "Self-Employed", "Business Owner", "Professional"],
+  },
+  [LOAN_PRODUCT.WORKING_CAPITAL]: {
+    InterestRateMin: 11,
+    InterestRateMax: 18,
+    MinLoanAmount: 500000,
+    MaxLoanAmount: 20000000,
+    MinMonthlyIncome: 50000,
+    MinAge: 23,
+    MaxAge: 65,
+    MinTenureMonths: 6,
+    MaxTenureMonths: 48,
+    AllowedEmploymentTypes: ["Self-Employed", "Business Owner", "Professional"],
+  },
+  [LOAN_PRODUCT.CREDIT_CARD]: {
+    InterestRateMin: 30,
+    InterestRateMax: 42,
+    MinMonthlyIncome: 20000,
+    MinAge: 21,
+    MaxAge: 60,
+    AllowedEmploymentTypes: ["Salaried", "Self-Employed", "Business Owner", "Professional"],
+  },
+};
+
 type SourceField = {
   key: string;
   label: string;
@@ -256,6 +315,7 @@ async function seedImport() {
       BankID: bankId,
       PartnerID: partnerId,
       FormFields: formFields as IProducts["FormFields"],
+      Eligibility: ((item as any).eligibility as IProducts["Eligibility"]) || DEFAULT_ELIGIBILITY[loanType],
     };
 
     if (existing) {

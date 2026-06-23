@@ -17,7 +17,7 @@ import CustomerAppLayout from "../../../layouts/app/CustomerAppLayout";
 import AuthGuard from "../../../guards/AuthGuard";
 import { bSdk } from "../../../services/BackendSDKService";
 import { getFileProxyUrl } from "../../../services/fileProxyUtil";
-import { loanProductLabels } from "../../../services/customerUtil";
+import { formatINR, loanProductLabels } from "../../../services/customerUtil";
 import { trustShadowSx } from "../../../theme/styleHelpers";
 
 const RecommendationsPage: NextPage = () => (
@@ -112,6 +112,49 @@ function RecommendationsPageContent() {
                         <Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
                           {item.reason}
                         </Typography>
+
+                        <Stack spacing={0.5}>
+                          {item.interestRate !== null && item.interestRate !== undefined ? (
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography variant="body2" color="text.secondary">
+                                Interest rate
+                              </Typography>
+                              <Typography variant="body2" fontWeight={600}>
+                                {item.interestRate}% p.a.
+                              </Typography>
+                            </Stack>
+                          ) : null}
+                          {item.emi ? (
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography variant="body2" color="text.secondary">
+                                Monthly EMI
+                              </Typography>
+                              <Typography variant="body2" fontWeight={600}>
+                                {formatINR(item.emi)}
+                              </Typography>
+                            </Stack>
+                          ) : null}
+                          {item.tenureMonths ? (
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography variant="body2" color="text.secondary">
+                                Tenure
+                              </Typography>
+                              <Typography variant="body2" fontWeight={600}>
+                                {item.tenureMonths} months
+                              </Typography>
+                            </Stack>
+                          ) : null}
+                          {item.totalRepayment ? (
+                            <Stack direction="row" justifyContent="space-between">
+                              <Typography variant="body2" color="text.secondary">
+                                Total repayment
+                              </Typography>
+                              <Typography variant="body2" fontWeight={600}>
+                                {formatINR(item.totalRepayment)}
+                              </Typography>
+                            </Stack>
+                          ) : null}
+                        </Stack>
 
                         <Typography variant="caption" color="text.secondary">
                           {product.ShortDescription}

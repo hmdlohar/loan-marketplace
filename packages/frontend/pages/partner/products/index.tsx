@@ -36,6 +36,19 @@ type BankOption = {
   LogoPath?: string;
 };
 
+type ProductEligibility = {
+  InterestRateMin?: number;
+  InterestRateMax?: number;
+  MinLoanAmount?: number;
+  MaxLoanAmount?: number;
+  MinMonthlyIncome?: number;
+  MinAge?: number;
+  MaxAge?: number;
+  MinTenureMonths?: number;
+  MaxTenureMonths?: number;
+  AllowedEmploymentTypes?: string[];
+};
+
 type ProductRow = {
   _id: string;
   Title: string;
@@ -45,7 +58,21 @@ type ProductRow = {
   KeyBenefits?: string[];
   BankID: string;
   FormFields?: FormFieldDefinition[];
+  Eligibility?: ProductEligibility;
   ModifiedAt?: string;
+};
+
+type EligibilityForm = {
+  InterestRateMin: string;
+  InterestRateMax: string;
+  MinLoanAmount: string;
+  MaxLoanAmount: string;
+  MinMonthlyIncome: string;
+  MinAge: string;
+  MaxAge: string;
+  MinTenureMonths: string;
+  MaxTenureMonths: string;
+  AllowedEmploymentTypes: string[];
 };
 
 type ProductForm = {
@@ -55,7 +82,73 @@ type ProductForm = {
   LoanType: LOAN_PRODUCT;
   BankID: string;
   FormFields: FormFieldDefinition[];
+  Eligibility: EligibilityForm;
 };
+
+const employmentTypeOptions = ["Salaried", "Self-Employed", "Business Owner", "Professional"];
+
+const eligibilityNumberFields: { key: keyof Omit<EligibilityForm, "AllowedEmploymentTypes">; label: string }[] = [
+  { key: "InterestRateMin", label: "Interest rate min (% p.a.)" },
+  { key: "InterestRateMax", label: "Interest rate max (% p.a.)" },
+  { key: "MinLoanAmount", label: "Min loan amount (₹)" },
+  { key: "MaxLoanAmount", label: "Max loan amount (₹)" },
+  { key: "MinMonthlyIncome", label: "Min monthly income (₹)" },
+  { key: "MinAge", label: "Min age" },
+  { key: "MaxAge", label: "Max age" },
+  { key: "MinTenureMonths", label: "Min tenure (months)" },
+  { key: "MaxTenureMonths", label: "Max tenure (months)" },
+];
+
+const emptyEligibility: EligibilityForm = {
+  InterestRateMin: "",
+  InterestRateMax: "",
+  MinLoanAmount: "",
+  MaxLoanAmount: "",
+  MinMonthlyIncome: "",
+  MinAge: "",
+  MaxAge: "",
+  MinTenureMonths: "",
+  MaxTenureMonths: "",
+  AllowedEmploymentTypes: [],
+};
+
+function eligibilityToForm(eligibility?: ProductEligibility): EligibilityForm {
+  if (!eligibility) {
+    return { ...emptyEligibility };
+  }
+  const numberToText = (value?: number) => (value === undefined || value === null ? "" : String(value));
+  return {
+    InterestRateMin: numberToText(eligibility.InterestRateMin),
+    InterestRateMax: numberToText(eligibility.InterestRateMax),
+    MinLoanAmount: numberToText(eligibility.MinLoanAmount),
+    MaxLoanAmount: numberToText(eligibility.MaxLoanAmount),
+    MinMonthlyIncome: numberToText(eligibility.MinMonthlyIncome),
+    MinAge: numberToText(eligibility.MinAge),
+    MaxAge: numberToText(eligibility.MaxAge),
+    MinTenureMonths: numberToText(eligibility.MinTenureMonths),
+    MaxTenureMonths: numberToText(eligibility.MaxTenureMonths),
+    AllowedEmploymentTypes: eligibility.AllowedEmploymentTypes || [],
+  };
+}
+
+function formToEligibility(form: EligibilityForm): ProductEligibility | undefined {
+  const result: ProductEligibility = {};
+  const numberKeys = eligibilityNumberFields.map((field) => field.key);
+  for (let i = 0; i < numberKeys.length; i++) {
+    const key = numberKeys[i];
+    const raw = form[key];
+    if (raw !== "" && raw !== undefined) {
+      const parsed = Number(raw);
+      if (Number.isFinite(parsed)) {
+        result[key] = parsed;
+      }
+    }
+  }
+  if (form.AllowedEmploymentTypes.length) {
+    result.AllowedEmploymentTypes = form.AllowedEmploymentTypes;
+  }
+  return Object.keys(result).length ? result : undefined;
+}
 
 const loanProductLabels: Record<string, string> = {
   [LOAN_PRODUCT.HOME_LOAN]: "Home Loan",
@@ -74,6 +167,7 @@ const emptyForm: ProductForm = {
   LoanType: LOAN_PRODUCT.PERSONAL_LOAN,
   BankID: "",
   FormFields: [],
+  Eligibility: { ...emptyEligibility },
 };
 
 function keyBenefitsToText(benefits?: string[]) {
@@ -214,6 +308,7 @@ const PartnerProductsPage: NextPage = () => {
                 LoanType: row.LoanType as LOAN_PRODUCT,
                 BankID: row.BankID,
                 FormFields: row.FormFields || [],
+                Eligibility: eligibilityToForm(row.Eligibility),
               });
               setError("");
               setModalOpen(true);
@@ -247,6 +342,7 @@ const PartnerProductsPage: NextPage = () => {
         LoanType: form.LoanType,
         BankID: form.BankID,
         FormFields: form.FormFields.filter((field) => field.Key && field.Label),
+        Eligibility: formToEligibility(form.Eligibility),
       };
 
       const response = await bSdk.Products_Save(payload);
@@ -417,6 +513,60 @@ const PartnerProductsPage: NextPage = () => {
                     {Object.values(LOAN_PRODUCT).map((loanType) => (
                       <MenuItem key={loanType} value={loanType}>
                         {loanProductLabels[loanType]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <Divider />
+                <Typography variant="subtitle2">Eligibility &amp; pricing</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Used to match this product to applicants and compute their rate/EMI. Leave a field blank to skip that
+                  criterion.
+                </Typography>
+                <Box
+                  sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 1.5 }}
+                >
+                  {eligibilityNumberFields.map((field) => (
+                    <TextField
+                      key={field.key}
+                      label={field.label}
+                      type="number"
+                      value={form.Eligibility[field.key]}
+                      onChange={(event) =>
+                        setForm({
+                          ...form,
+                          Eligibility: { ...form.Eligibility, [field.key]: event.target.value },
+                        })
+                      }
+                      fullWidth
+                    />
+                  ))}
+                </Box>
+                <FormControl fullWidth>
+                  <InputLabel id="allowed-employment-label">Allowed employment types</InputLabel>
+                  <Select
+                    labelId="allowed-employment-label"
+                    label="Allowed employment types"
+                    multiple
+                    value={form.Eligibility.AllowedEmploymentTypes}
+                    onChange={(event) =>
+                      setForm({
+                        ...form,
+                        Eligibility: {
+                          ...form.Eligibility,
+                          AllowedEmploymentTypes:
+                            typeof event.target.value === "string"
+                              ? event.target.value.split(",")
+                              : (event.target.value as string[]),
+                        },
+                      })
+                    }
+                    renderValue={(selected) => (selected as string[]).join(", ")}
+                  >
+                    {employmentTypeOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
                       </MenuItem>
                     ))}
                   </Select>

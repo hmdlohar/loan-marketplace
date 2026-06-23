@@ -30,6 +30,22 @@ const FormFieldSchema = new Schema(
   { _id: false }
 );
 
+const EligibilitySchema = new Schema(
+  {
+    InterestRateMin: { type: Number, required: false },
+    InterestRateMax: { type: Number, required: false },
+    MinLoanAmount: { type: Number, required: false },
+    MaxLoanAmount: { type: Number, required: false },
+    MinMonthlyIncome: { type: Number, required: false },
+    MinAge: { type: Number, required: false },
+    MaxAge: { type: Number, required: false },
+    MinTenureMonths: { type: Number, required: false },
+    MaxTenureMonths: { type: Number, required: false },
+    AllowedEmploymentTypes: { type: [String], default: undefined },
+  },
+  { _id: false }
+);
+
 export const ProductsSchema = new Schema({
   ...dataModifierSchema,
   _id: { type: String, default: createOIdString },
@@ -45,6 +61,7 @@ export const ProductsSchema = new Schema({
   BankID: { type: String, required: true, index: true },
   PartnerID: { type: String, required: true, index: true },
   FormFields: { type: [FormFieldSchema], default: [] },
+  Eligibility: { type: EligibilitySchema, required: false },
 });
 
 ProductsSchema.index({ PartnerID: 1, Slug: 1 }, { unique: true });

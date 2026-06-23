@@ -216,6 +216,21 @@ export class BackendSDK {
   ): Promise<ITHTResponse<types.IApplications_SelectProductReturnType>> {
     return this.cmsQuery("applications", args, { method: "post", route: "/SelectProduct" });
   }
+  async Applications_ListForReview(
+    args: types.IApplications_ListForReviewArgs
+  ): Promise<ITHTResponse<types.IApplications_ListForReviewReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/ListForReview" });
+  }
+  async Applications_GetForReview(
+    args: types.IApplications_GetForReviewArgs
+  ): Promise<ITHTResponse<types.IApplications_GetForReviewReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/GetForReview" });
+  }
+  async Applications_UpdateStatus(
+    args: types.IApplications_UpdateStatusArgs
+  ): Promise<ITHTResponse<types.IApplications_UpdateStatusReturnType>> {
+    return this.cmsQuery("applications", args, { method: "post", route: "/UpdateStatus" });
+  }
   async Documents_List(
     args: types.IDocuments_ListArgs
   ): Promise<ITHTResponse<types.IDocuments_ListReturnType>> {

@@ -27,4 +27,16 @@ export interface IBaseProducts {
       errorMessage?: string;
     };
   }[];
+  Eligibility?: {
+    InterestRateMin?: number;
+    InterestRateMax?: number;
+    MinLoanAmount?: number;
+    MaxLoanAmount?: number;
+    MinMonthlyIncome?: number;
+    MinAge?: number;
+    MaxAge?: number;
+    MinTenureMonths?: number;
+    MaxTenureMonths?: number;
+    AllowedEmploymentTypes?: any[];
+  };
 }

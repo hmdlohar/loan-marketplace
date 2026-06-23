@@ -154,6 +154,18 @@ export type IProducts_SaveArgs = {
       errorMessage?: string;
     };
   }[];
+  Eligibility?: {
+    InterestRateMin?: number;
+    InterestRateMax?: number;
+    MinLoanAmount?: number;
+    MaxLoanAmount?: number;
+    MinMonthlyIncome?: number;
+    MinAge?: number;
+    MaxAge?: number;
+    MinTenureMonths?: number;
+    MaxTenureMonths?: number;
+    AllowedEmploymentTypes?: string[];
+  };
 };
 
 export type IProducts_SaveReturnType = any;
@@ -209,9 +221,7 @@ export type IApplications_SaveArgs = {
   _id?: string;
   LoanType?: string;
   ProductID?: string;
-  FormData?: {
-
-  };
+  FormData?: any;
   Status?: string;
   DocumentIDs?: {
     PAN?: string;
@@ -236,6 +246,24 @@ export type IApplications_SelectProductArgs = {
 };
 
 export type IApplications_SelectProductReturnType = any;
+export type IApplications_ListForReviewArgs = {
+  page?: number;
+  pageSize?: number;
+  status?: string;
+};
+
+export type IApplications_ListForReviewReturnType = any;
+export type IApplications_GetForReviewArgs = {
+  _id?: string;
+};
+
+export type IApplications_GetForReviewReturnType = any;
+export type IApplications_UpdateStatusArgs = {
+  _id?: string;
+  Status?: string;
+};
+
+export type IApplications_UpdateStatusReturnType = any;
 export type IDocuments_ListArgs = {
   ApplicationID?: string;
 };

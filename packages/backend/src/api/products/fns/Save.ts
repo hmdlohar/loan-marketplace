@@ -37,6 +37,20 @@ const argsSchema = yup.object({
       })
     )
     .default([]),
+  Eligibility: yup
+    .object({
+      InterestRateMin: yup.number().optional(),
+      InterestRateMax: yup.number().optional(),
+      MinLoanAmount: yup.number().optional(),
+      MaxLoanAmount: yup.number().optional(),
+      MinMonthlyIncome: yup.number().optional(),
+      MinAge: yup.number().optional(),
+      MaxAge: yup.number().optional(),
+      MinTenureMonths: yup.number().optional(),
+      MaxTenureMonths: yup.number().optional(),
+      AllowedEmploymentTypes: yup.array().of(yup.string().required()).optional(),
+    })
+    .optional(),
 });
 export type ISaveArgs = yup.InferType<typeof argsSchema>;
 
@@ -69,6 +83,7 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
       LoanType: args.LoanType,
       BankID: args.BankID,
       FormFields: formFields,
+      Eligibility: args.Eligibility,
     });
   }
 
@@ -95,6 +110,7 @@ export async function Save(args: ISaveArgs, context: ICMSContext): Promise<ISave
     BankID: args.BankID,
     PartnerID: partnerId,
     FormFields: formFields,
+    Eligibility: args.Eligibility,
   });
 }
 

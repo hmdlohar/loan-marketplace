@@ -1,4 +1,5 @@
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -20,7 +21,10 @@ import AuthServices from "../../services/AuthServices";
 
 const drawerWidth = 260;
 
-const navItems = [{ label: "Products", href: "/partner/products", icon: AccountBalanceOutlinedIcon }];
+const navItems = [
+  { label: "Products", href: "/partner/products", icon: AccountBalanceOutlinedIcon },
+  { label: "Applications", href: "/partner/applications", icon: AssignmentOutlinedIcon },
+];
 
 export default function PartnerLayout(props: { children: React.ReactNode }) {
   const router = useRouter();

@@ -225,7 +225,6 @@ Borrower funnel (loan-type-first): select loan type → OTP auth → upload loan
 - Loan-type forms only: `getStaticFormFields(loanType)` — not product `FormFields`.
 - Document vault: `Documents_UploadVault`, `Documents_ListVault`, `Documents_AttachToApplication`; parse via `Documents_Parse` (LLM via `@utils/llm` — see **§3.7**).
 - Recommendations: `Applications_GetRecommendations` (dummy engine); product selection via `Applications_SelectProduct`.
-- `services/mock/applicationMock.ts` remains for legacy helpers only.
 
 ### 5.6 SDK Usage
 - Import `bSdk` from `services/BackendSDKService` only. Do not instantiate `BackendSDK` elsewhere.
